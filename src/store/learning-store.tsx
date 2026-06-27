@@ -1019,6 +1019,15 @@ Lặp vô hạn có điều kiện break ở giữa?
     → while (true) { ... if (...) break; }
 \`\`\`
 
+**Giải thích 2 kỹ thuật nâng cao thường gặp:**
+
+* **Đọc dữ liệu đến hết file (\`while (cin >> x)\`):**
+  * **Tình huống sử dụng**: Đề bài không cho biết trước có bao nhiêu số cần nhập, chỉ yêu cầu "đọc toàn bộ các số được cho trong đầu vào".
+  * **Cách hoạt động**: Lệnh \`cin >> x\` trả về \`true\` nếu đọc thành công và trả về \`false\` khi đã đọc hết dữ liệu (hết file). Vì vậy, \`while (cin >> x)\` sẽ tự động lặp liên tục để đọc dữ liệu và dừng lại chuẩn xác khi không còn số nào để nhập nữa.
+* **Vòng lặp vô hạn và thoát bằng \`break\` (\`while (true)\`):**
+  * **Tình huống sử dụng**: Bạn muốn vòng lặp chạy liên tục, nhưng điều kiện để dừng lại không nằm ở đầu vòng lặp mà nằm ở giữa (ví dụ: làm một vài việc trước rồi mới kiểm tra xem có nên dừng hay không).
+  * **Cách hoạt động**: \`while (true)\` tạo ra một vòng lặp chạy mãi mãi (vì điều kiện luôn luôn là \`true\`). Lệnh \`break;\` hoạt động như một "nút bấm khẩn cấp", khi chương trình chạy chạm tới lệnh này, nó sẽ thoát lập tức ra khỏi vòng lặp \`while\`.
+
 **Checklist vòng lặp:**
 - [ ] Điều kiện dừng có bao giờ thành \`false\` không? (tránh infinite loop)
 - [ ] Biến đếm đi đúng hướng (tăng/giảm phù hợp điều kiện dừng)?
