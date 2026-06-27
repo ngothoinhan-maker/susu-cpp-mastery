@@ -370,17 +370,7 @@ export default function LessonDetailPage() {
                   <span>Nộp bài (Online Judge)</span>
                   <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </a>
-                {currentLesson?.visualizerUrl && (
-                  <a 
-                    href={currentLesson.visualizerUrl} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="w-full flex items-center justify-between text-xs text-emerald-400 hover:text-emerald-300 transition-colors py-1 group"
-                  >
-                    <span>Mở Visualizer mô phỏng</span>
-                    <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                  </a>
-                )}
+
               </div>
             )}
           </aside>
@@ -537,38 +527,6 @@ export default function LessonDetailPage() {
                     </div>
                   </div>
 
-                  {/* Hộp Visualizer thuật toán (nếu có) */}
-                  {currentLesson.visualizerUrl && (
-                    <div className="glass-panel p-6 rounded-3xl space-y-4">
-                      <div className="flex items-center gap-2 text-emerald-400 font-semibold text-xs uppercase">
-                        <Compass className="w-4 h-4" />
-                        <span>Mô phỏng trực quan</span>
-                      </div>
-                      <p className="text-slate-400 text-xs leading-relaxed">
-                        Bạn có thể tương tác trực quan với thuật toán để quan sát sự thay đổi trạng thái bộ nhớ.
-                      </p>
-                      
-                      <a 
-                        href={currentLesson.visualizerUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl text-xs transition-all shadow-[0_4px_15px_rgba(16,185,129,0.2)] active:scale-95 cursor-pointer"
-                      >
-                        <Play className="w-3.5 h-3.5 fill-current" />
-                        <span>Mở Mô Phỏng Trên Tab Mới</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
-
-                      <div className="w-full h-80 rounded-xl overflow-hidden border border-white/5 relative bg-slate-900/50">
-                        <iframe 
-                          src={currentLesson.visualizerUrl} 
-                          className="w-full h-full border-0"
-                          title="Algorithm Visualizer"
-                          sandbox="allow-scripts allow-same-origin"
-                        />
-                      </div>
-                    </div>
-                  )}
                 </aside>
 
               </div>
