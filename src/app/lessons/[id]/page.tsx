@@ -58,6 +58,30 @@ function CodeBlock({ children, language }: { children: string; language: string 
     setOutput("Đang kết nối tới máy chủ biên dịch...");
     setError(null);
 
+    // 1. Chuẩn hóa sửa lỗi vỡ dòng chuỗi C++ (do lỗi escape JSON/markdown khiến dấu xuống dòng nằm giữa chuỗi nháy kép)
+    let processedCode = codeText;
+    
+    // Gộp các dòng có chuỗi bị vỡ dòng lơ lửng do nháy kép sang dòng mới
+    processedCode = processedCode.replace(/"\s*\n\s*";/g, '\\n";');
+    processedCode = processedCode.replace(/"\s*\r?\n\s*"/g, ''); // Nối các chuỗi bị cắt làm đôi
+
+    // 2. Tự động bọc cấu trúc main() nếu code chỉ là snippet thô
+    if (!processedCode.includes("int main") && !processedCode.includes("void main")) {
+      processedCode = `#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <map>
+#include <set>
+using namespace std;
+
+int main() {
+    ${processedCode.split('\n').join('\n    ')}
+    cout << endl; // Đảm bảo xuống dòng ở cuối terminal
+    return 0;
+}`;
+    }
+
     try {
       const response = await fetch("https://wandbox.org/api/compile.json", {
         method: "POST",
@@ -66,7 +90,7 @@ function CodeBlock({ children, language }: { children: string; language: string 
         },
         body: JSON.stringify({
           compiler: "gcc-head",
-          code: codeText,
+          code: processedCode,
           stdin: stdin, // Truyền chính xác stdin người dùng nhập
           save: false,
         }),
