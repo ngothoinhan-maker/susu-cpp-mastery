@@ -359,18 +359,43 @@ export default function LessonDetailPage() {
             
             {/* Cấu hình link tham khảo ngoài */}
             {!isSidebarCollapsed && (
-              <div className="border-t border-white/5 pt-4 px-2 space-y-2">
+              <div className="border-t border-white/5 pt-4 px-2 space-y-2.5">
                 <span className="text-xs font-semibold text-slate-500 tracking-wider block">Tài nguyên học thuật</span>
+                
+                {/* VNOI Wiki Link */}
                 <a 
-                  href={currentLesson?.externalJudgeUrl || "https://vnoi.info"}
+                  href="https://vnoi.info/wiki/"
                   target="_blank" 
                   rel="noreferrer"
                   className="w-full flex items-center justify-between text-xs text-violet-400 hover:text-violet-300 transition-colors py-1 group"
                 >
-                  <span>Nộp bài (Online Judge)</span>
+                  <span>Thư viện VNOI Wiki</span>
                   <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </a>
 
+                {/* VisuAlgo Link */}
+                <a 
+                  href="https://visualgo.net/en"
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="w-full flex items-center justify-between text-xs text-emerald-400 hover:text-emerald-300 transition-colors py-1 group"
+                >
+                  <span>Mô phỏng VisuAlgo</span>
+                  <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+
+                {/* Link Nộp bài (Online Judge) cụ thể của bài học nếu có */}
+                {currentLesson?.externalJudgeUrl && (
+                  <a 
+                    href={currentLesson.externalJudgeUrl}
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="w-full flex items-center justify-between text-xs text-sky-400 hover:text-sky-300 transition-colors py-1 group"
+                  >
+                    <span>Luyện tập (Online Judge)</span>
+                    <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </a>
+                )}
               </div>
             )}
           </aside>
