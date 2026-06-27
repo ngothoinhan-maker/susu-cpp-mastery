@@ -64,6 +64,10 @@ function CodeBlock({ children, language }: { children: string; language: string 
     // Gộp các dòng có chuỗi bị vỡ dòng lơ lửng do nháy kép sang dòng mới
     processedCode = processedCode.replace(/"\s*\n\s*";/g, '\\n";');
     processedCode = processedCode.replace(/"\s*\r?\n\s*"/g, ''); // Nối các chuỗi bị cắt làm đôi
+    
+    // Tự động sửa lỗi mất nháy kép trước \n do markdown parser nuốt nháy: " << \n"; -> " << "\n";
+    processedCode = processedCode.replace(/<<\s*\\n"/g, '<< "\\n"');
+    processedCode = processedCode.replace(/<<\s*---\\n"/g, '<< "---\\n"');
 
     // 2. Tự động bọc cấu trúc main() nếu code chỉ là snippet thô
     if (!processedCode.includes("int main") && !processedCode.includes("void main")) {

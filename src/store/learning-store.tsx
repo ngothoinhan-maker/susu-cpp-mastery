@@ -897,9 +897,9 @@ int main() {
     // Vòng lặp lồng: O(N×M)
     for (int i = 2; i <= 9; i++) {       // Vòng ngoài: bảng 2 đến 9
         for (int j = 1; j <= 10; j++) {   // Vòng trong: nhân 1 đến 10
-            cout << i << " x " << j << " = " << i*j << "\n";
+            cout << i << " x " << j << " = " << i*j << endl;
         }
-        cout << "---\n";
+        cout << "---" << endl;
     }
     return 0;
 }
