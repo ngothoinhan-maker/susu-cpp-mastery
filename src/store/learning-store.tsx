@@ -1222,10 +1222,6 @@ kiểu_trả_về tên_hàm(kiểu_tham_số tham_số) {
 }
 \`\`\`
 
-* **Kiểu trả về (\`long long\`):** Kiểu dữ liệu của kết quả sau cùng mà hàm tính ra được để trả về.
-* **Tham số (\`long long N\`):** Dữ liệu truyền từ bên ngoài vào cho hàm xử lý (ở đây là số $N$ cần đảo ngược).
-* **Cách gọi hàm:** Trong hàm \`main()\`, ta viết \`daoNguoc(X)\`. Chương trình sẽ nhảy lên hàm phụ \`daoNguoc\` để tính toán, lấy kết quả thu được thế chỗ cho lời gọi và lưu vào biến \`reversed\`.
-
 ---
 
 \`\`\`cpp
@@ -1257,6 +1253,13 @@ int main() {
     return 0;
 }
 \`\`\`
+
+**Giải thích chi tiết các thành phần của hàm trong ví dụ trên:**
+* **Kiểu trả về (\`long long\`):** Kiểu dữ liệu của kết quả sau cùng mà hàm tính ra được để trả về (ở đây hàm \`daoNguoc\` trả về một số \`long long\` đã đảo ngược).
+* **Tham số (\`long long N\`):** Dữ liệu truyền từ bên ngoài vào cho hàm xử lý (ở đây là số $N$ cần đảo ngược).
+* **Cách gọi hàm:** Trong hàm \`main()\`, ta viết \`daoNguoc(X)\`. Chương trình sẽ nhảy lên hàm phụ \`daoNguoc\` để tính toán, lấy kết quả thu được thế chỗ cho lời gọi và lưu vào biến \`reversed\`.
+
+---
 
 **Trace đảo ngược 12321:**
 \`\`\`
