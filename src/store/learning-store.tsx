@@ -1192,6 +1192,24 @@ Nhưng đề hỏi tổng chữ số **chẵn**, không phải tổng tất cả
 
 ### Bước 3 – Đảo ngược số (Palindrome check)
 
+### ⚡ Khái niệm bổ trợ: Hàm (Function) trong C++ là gì?
+
+Trong một chương trình, nếu ta viết tất cả code dồn vào hàm \`main()\`, code sẽ rất dài và khó kiểm soát. C++ cho phép chúng ta tự tạo ra các **hàm phụ** để thực hiện các nhiệm vụ riêng biệt.
+
+Cấu trúc cơ bản của một hàm như sau:
+\`\`\`cpp
+kiểu_trả_về tên_hàm(kiểu_tham_số tham_số) {
+    // Các câu lệnh xử lý...
+    return kết_quả; // Trả kết quả về nơi gọi hàm
+}
+\`\`\`
+
+* **Kiểu trả về (\`long long\`):** Kiểu dữ liệu của kết quả sau cùng mà hàm tính ra được để trả về.
+* **Tham số (\`long long N\`):** Dữ liệu truyền từ bên ngoài vào cho hàm xử lý (ở đây là số $N$ cần đảo ngược).
+* **Cách gọi hàm:** Trong hàm \`main()\`, ta viết \`daoNguoc(X)\`. Chương trình sẽ nhảy lên hàm phụ \`daoNguoc\` để tính toán, lấy kết quả thu được thế chỗ cho lời gọi và lưu vào biến \`reversed\`.
+
+---
+
 \`\`\`cpp
 #include <iostream>
 using namespace std;
