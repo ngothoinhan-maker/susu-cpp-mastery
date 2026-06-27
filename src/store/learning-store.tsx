@@ -629,6 +629,24 @@ tien = 15000 + (12.5 - 1) × 13000
      = 164500 ✓
 \`\`\`
 
+### ⚡ Khái niệm bổ trợ: Toán tử logic (AND, OR, NOT)
+
+Trong thực tế, điều kiện rẽ nhánh có thể gồm nhiều điều kiện nhỏ kết hợp lại. C++ cung cấp **toán tử logic** để gộp chúng:
+
+1. **Toán tử VÀ (AND) - Ký hiệu: \`&&\`**
+   * Ý nghĩa: Kết quả chỉ **ĐÚNG** khi **tất cả** các điều kiện thành phần đều ĐÚNG.
+   * Ví dụ: \`(tuoi >= 6 && tuoi <= 10)\` $\rightarrow$ Trẻ em trong độ tuổi tiểu học (tuổi vừa lớn hơn hoặc bằng 6, VÀ vừa nhỏ hơn hoặc bằng 10).
+
+2. **Toán tử HOẶC (OR) - Ký hiệu: \`||\`**
+   * Ý nghĩa: Kết quả **ĐÚNG** chỉ cần **ít nhất một** điều kiện thành phần ĐÚNG.
+   * Ví dụ: \`(diemToan == 10 || diemVan == 10)\` $\rightarrow$ Được khen thưởng nếu Toán đạt 10 HOẶC Văn đạt 10.
+
+3. **Toán tử PHỦ ĐỊNH (NOT) - Ký hiệu: \`!\`**
+   * Ý nghĩa: Đảo ngược trạng thái của điều kiện (ĐÚNG thành SAI, SAI thành ĐÚNG).
+   * Ví dụ: \`!(x % 2 == 0)\` $\rightarrow$ x KHÔNG phải số chẵn (tức là số lẻ).
+
+---
+
 ### Bước 4 – Ví dụ hoàn chỉnh: Kiểm tra năm nhuận
 
 Năm nhuận phải thỏa mãn:
