@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#004481" />
+      <stop offset="100%" stop-color="#007ACC" />
+    </linearGradient>
+    <linearGradient id="plusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#61dafb" />
+      <stop offset="100%" stop-color="#00d4ff" />
+    </linearGradient>
+  </defs>
+  <!-- Background circle/rounded rect -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  
+  <!-- C++ Graphic elements -->
+  <g transform="translate(15, 0)">
+    <!-- Big C -->
+    <path d="M 280 140 
+             C 170 140, 120 200, 120 256 
+             C 120 312, 170 372, 280 372" 
+          fill="none" 
+          stroke="#ffffff" 
+          stroke-width="64" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+          
+    <!-- First Plus (inline with C center) -->
+    <path d="M 330 256 L 410 256 M 370 216 L 370 296" 
+          fill="none" 
+          stroke="url(#plusGrad)" 
+          stroke-width="36" 
+          stroke-linecap="round" />
+          
+    <!-- Second Plus (slightly offset to the top-right) -->
+    <path d="M 415 190 L 475 190 M 445 160 L 445 220" 
+          fill="none" 
+          stroke="url(#plusGrad)" 
+          stroke-width="28" 
+          stroke-linecap="round" />
+  </g>
+</svg>
