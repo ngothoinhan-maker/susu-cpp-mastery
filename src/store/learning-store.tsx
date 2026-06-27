@@ -956,10 +956,10 @@ int main() {
 
 2. **Độ phức tạp $O(N^{2})$ (Số bước tính tăng theo bình phương của $N$):**
    * **Cách hoạt động**: Chương trình có **hai vòng lặp lồng nhau** (với mỗi bước của vòng lặp ngoài chạy $N$ lần, vòng lặp trong lại chạy tiếp $N$ lần).
-   * **Số bước tính**: Bằng $N \times N = N^{2}$ bước.
-     * Nếu $N = 100 \rightarrow$ Máy tính chạy $100 \times 100 = 10,000$ bước (siêu nhanh, chưa tới 0.001 giây).
-     * Nếu $N = 10,000$ ($10^{4}$) $\rightarrow$ Máy tính chạy $10^{4} \times 10^{4} = 10^{8}$ bước (chạy vừa vặn trong 1 giây).
-     * Nếu $N = 100,000$ ($10^{5}$) $\rightarrow$ Máy tính chạy $10^{5} \times 10^{5} = 10^{10}$ bước (máy tính cần chạy khoảng **100 giây** → **bị báo lỗi TLE ngay lập tức**!).
+   * **Số bước tính**: Bằng $N × N = N^{2}$ bước.
+     * Nếu $N = 100$ → Máy tính chạy $100 × 100 = 10,000$ bước (siêu nhanh, chưa tới 0.001 giây).
+     * Nếu $N = 10,000$ ($10^{4}$) → Máy tính chạy $10^{4} × 10^{4} = 10^{8}$ bước (chạy vừa vặn trong 1 giây).
+     * Nếu $N = 100,000$ ($10^{5}$) → Máy tính chạy $10^{5} × 10^{5} = 10^{10}$ bước (máy tính cần chạy khoảng **100 giây** → **bị báo lỗi TLE ngay lập tức**!).
 
 ---
 
