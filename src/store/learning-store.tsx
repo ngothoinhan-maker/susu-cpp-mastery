@@ -107,7 +107,7 @@ RAM (bộ nhớ)
 | Kiểu | Kích thước | Phạm vi giá trị | Dùng khi nào |
 |------|-----------|-----------------|--------------|
 | \`int\` | 4 byte | $-2^{31}$ đến $2^{31}-1$ (±2 tỷ) | Số nguyên thông thường |
-| \`long long\` | 8 byte | ±$9 \\times 10^{18}$ | Số nguyên rất lớn |
+| \`long long\` | 8 byte | ±$9 \× 10^{18}$ | Số nguyên rất lớn |
 | \`double\` | 8 byte | 14-15 chữ số có nghĩa | Số thực, điểm số |
 | \`char\` | 1 byte | 1 ký tự ('A', '1', '!') | Ký tự đơn |
 | \`bool\` | 1 byte | true / false | Đúng/sai |
@@ -374,7 +374,7 @@ int main() {
 }
 \`\`\`
 
-### Bước 3 – Bài toán thực tế: Tính $N^2 \times M^2$
+### Bước 3 – Bài toán thực tế: Tính $N^2 × M^2$
 
 \`\`\`cpp
 #include <iostream>
@@ -449,7 +449,7 @@ int main() {
 **Checklist tránh tràn số:**
 - [ ] Đọc giới hạn đầu vào trong đề bài
 - [ ] Ước lượng giá trị lớn nhất có thể xảy ra
-- [ ] So sánh với $2 \times 10^9$ (int) và $9 \times 10^{18}$ (long long)
+- [ ] So sánh với $2 × 10^9$ (int) và $9 × 10^{18}$ (long long)
 - [ ] Khi nhân hai số lớn: ép kiểu \`(long long)\` trước khi nhân
 - [ ] Độ phức tạp $O(1)$: chỉ vài phép toán → siêu nhanh`,
         homeworkProblems: [
@@ -1519,7 +1519,7 @@ bool kiemTra(long long n) {
         visualizerUrl: "https://vnoi.info/wiki/algo/prime/sieve-of-eratosthenes/",
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
-Bài toán: "Cho Q câu hỏi, mỗi câu hỏi cho số N, hãy tính tổng các số nguyên tố từ 1 đến N." Nếu Q = 100 và N = $10^6$, dùng cách kiểm tra từng số ($O(\sqrt{N})$ mỗi lần) sẽ mất $100 \times 10^6 \times 10^3 = 10^{11}$ bước → **TLE**. **Sàng Eratosthenes** xây dựng bảng nguyên tố **một lần duy nhất** rồi trả lời mọi câu hỏi trong $O(1)$!
+Bài toán: "Cho Q câu hỏi, mỗi câu hỏi cho số N, hãy tính tổng các số nguyên tố từ 1 đến N." Nếu Q = 100 và N = $10^6$, dùng cách kiểm tra từng số ($O(\sqrt{N})$ mỗi lần) sẽ mất $100 × 10^6 × 10^3 = 10^{11}$ bước → **TLE**. **Sàng Eratosthenes** xây dựng bảng nguyên tố **một lần duy nhất** rồi trả lời mọi câu hỏi trong $O(1)$!
 
 ---
 
@@ -2030,7 +2030,7 @@ int main() {
         visualizerUrl: "https://vnoi.info/wiki/algo/prime/sieve-of-eratosthenes/",
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
-**Định lý cơ bản của số học:** Mọi số nguyên lớn hơn 1 đều có thể viết duy nhất dưới dạng tích các số nguyên tố (không kể thứ tự). Ví dụ: $360 = 2^3 \times 3^2 \times 5$. Phân tích thừa số nguyên tố là chìa khóa để giải nhiều bài: đếm ước số, tìm UCLN/BCNN, phân tích cấu trúc số...
+**Định lý cơ bản của số học:** Mọi số nguyên lớn hơn 1 đều có thể viết duy nhất dưới dạng tích các số nguyên tố (không kể thứ tự). Ví dụ: $360 = 2^3 × 3^2 × 5$. Phân tích thừa số nguyên tố là chìa khóa để giải nhiều bài: đếm ước số, tìm UCLN/BCNN, phân tích cấu trúc số...
 
 ---
 
@@ -2056,12 +2056,12 @@ int main() {
 
 ### Công thức đếm số ước
 
-Nếu $N = p_1^{a_1} \times p_2^{a_2} \times \ldots \times p_k^{a_k}$, thì:
+Nếu $N = p_1^{a_1} × p_2^{a_2} × \ldots × p_k^{a_k}$, thì:
 
 $$\text{Số ước} = (a_1 + 1)(a_2 + 1) \cdots (a_k + 1)$$
 
-**Ví dụ:** $360 = 2^3 \times 3^2 \times 5^1$
-- Số ước = $(3+1)(2+1)(1+1) = 4 \times 3 \times 2 = 24$
+**Ví dụ:** $360 = 2^3 × 3^2 × 5^1$
+- Số ước = $(3+1)(2+1)(1+1) = 4 × 3 × 2 = 24$
 
 ---
 
@@ -3291,7 +3291,7 @@ Trong thực tế thi đấu và làm dự án, **std::sort** (được tối ư
 ### Sự kỳ diệu của $O(N \log N)$
 Với $N = 10^5$:
 *   $N^2 = 10^{10}$ phép tính (Mất khoảng vài chục giây → **TLE** chắc chắn).
-*   $N \log_2 N \approx 10^5 \times 17 \approx 1.7 \times 10^6$ phép tính (Mất chưa đầy **0.01 giây** → **AC** siêu nhanh).
+*   $N \log_2 N \approx 10^5 × 17 \approx 1.7 × 10^6$ phép tính (Mất chưa đầy **0.01 giây** → **AC** siêu nhanh).
 
 ### Cú pháp cơ bản của std::sort
 Mặc định, \`std::sort\` sắp xếp mảng tăng dần:
@@ -3753,7 +3753,7 @@ int findFirstOccurrence(const vector<int>& a, int target) {
 
 > [!WARNING]
 > **Bẫy 1 – Lỗi tràn số khi tính \`mid\`:**
-> Viết \`int mid = (l + r) / 2;\`. Nếu \`l\` và \`r\` rất lớn (Ví dụ $10^9$), tổng của chúng sẽ vượt quá giới hạn tối đa của kiểu \`int\` ($2 \times 10^9$), dẫn đến kết quả bị âm hoặc sai lệch hoàn toàn.
+> Viết \`int mid = (l + r) / 2;\`. Nếu \`l\` và \`r\` rất lớn (Ví dụ $10^9$), tổng của chúng sẽ vượt quá giới hạn tối đa của kiểu \`int\` ($2 × 10^9$), dẫn đến kết quả bị âm hoặc sai lệch hoàn toàn.
 > *   *Cách khắc phục:* Luôn luôn dùng công thức: \`int mid = l + (r - l) / 2;\`
 
 > [!WARNING]
@@ -4311,7 +4311,7 @@ int main() {
         visualizerUrl: "https://vnoi.info/wiki/algo/graph/bfs/",
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
-Hãy nghĩ về bảng cờ vua $8 \times 8$, bảng tính Excel với hàng ngàn dòng và cột, hay màn hình máy tính của bạn vốn là một lưới gồm hàng triệu điểm ảnh (pixels). Tất cả các hệ thống này đều được lập trình bằng một cấu trúc dữ liệu cực kỳ mạnh mẽ: **Mảng 2 chiều (2D Array)** hay còn gọi là **Ma trận/Lưới ô vuông**.
+Hãy nghĩ về bảng cờ vua $8 × 8$, bảng tính Excel với hàng ngàn dòng và cột, hay màn hình máy tính của bạn vốn là một lưới gồm hàng triệu điểm ảnh (pixels). Tất cả các hệ thống này đều được lập trình bằng một cấu trúc dữ liệu cực kỳ mạnh mẽ: **Mảng 2 chiều (2D Array)** hay còn gọi là **Ma trận/Lưới ô vuông**.
 
 Nắm vững mảng 2 chiều giúp bạn giải quyết các bài toán về đồ họa, tọa độ, bản đồ địa hình và là bước đệm bắt buộc trước khi học các thuật toán đồ thị.
 
@@ -4327,7 +4327,7 @@ Trong toán học, ta dùng hệ tọa độ Descartes $(x, y)$ với trục $y$
 
 ### 2. Khai báo Mảng 2 chiều bằng std::vector
 Để linh hoạt kích thước, ta nên khai báo vector của vector:
-*   \`vector<vector<int>> grid(n, vector<int>(m, 0));\` — Khởi tạo ma trận kích thước $N \times M$ với toàn bộ giá trị ban đầu bằng 0.
+*   \`vector<vector<int>> grid(n, vector<int>(m, 0));\` — Khởi tạo ma trận kích thước $N × M$ với toàn bộ giá trị ban đầu bằng 0.
 
 ### 3. Kỹ thuật duyệt ô kề (Mảng hướng \`dx\`, \`dy\`)
 Khi đứng ở ô \`(r, c)\`, ta muốn di chuyển sang 4 ô kề cạnh (Lên, Xuống, Trái, Phải):
@@ -4678,7 +4678,7 @@ cout << "Dien tich vung lon nhat: " << maxArea << endl;
 
 > [!WARNING]
 > **Bẫy 1 – Tràn bộ nhớ Đệ quy (Stack Overflow) khi lưới quá lớn:**
-> Nếu kích thước ma trận lớn (Ví dụ $1000 \times 1000$) và toàn bộ ô đều là \`1\` liên thông tạo thành một chuỗi đệ quy sâu $10^6$ tầng. Chương trình sẽ bị tràn bộ nhớ stack dẫn đến crash lập tức.
+> Nếu kích thước ma trận lớn (Ví dụ $1000 × 1000$) và toàn bộ ô đều là \`1\` liên thông tạo thành một chuỗi đệ quy sâu $10^6$ tầng. Chương trình sẽ bị tràn bộ nhớ stack dẫn đến crash lập tức.
 > *   *Cách khắc phục:* Chuyển sang dùng BFS (Sử dụng hàng đợi \`std::queue\` khử đệ quy) hoặc tăng kích thước stack tối đa của trình chấm.
 
 > [!WARNING]
@@ -4744,8 +4744,8 @@ cout << "Dien tich vung lon nhat: " << maxArea << endl;
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
 Hãy tưởng tượng bạn có mảng gồm $N$ số nguyên ($N ≤ 10^5$) và cần trả lời $Q$ câu hỏi dạng: *"Hãy tính tổng các số từ vị trí $L$ đến $R$?"* ($Q ≤ 10^5$).
-*   **Cách ngây thơ:** Duyệt vòng lặp từ $L$ đến $R$ để cộng dồn. Trong trường hợp xấu nhất, mỗi câu hỏi mất $O(N)$ bước. Tổng thời gian là $O(N \times Q) \approx 10^{10}$ phép tính → **TLE** (chạy mất 20 giây!).
-*   **Cách thông minh:** Chúng ta chuẩn bị trước dữ liệu bằng cách tính tổng tích lũy ngay từ đầu. Mỗi câu hỏi sau đó chỉ cần làm một phép tính trừ duy nhất → Độ phức tạp $O(1)$! Tổng thời gian chạy chỉ còn $O(N + Q) \approx 2 \times 10^5$ phép tính (Mất chưa đầy **0.01 giây** → **AC** tuyệt đối!).
+*   **Cách ngây thơ:** Duyệt vòng lặp từ $L$ đến $R$ để cộng dồn. Trong trường hợp xấu nhất, mỗi câu hỏi mất $O(N)$ bước. Tổng thời gian là $O(N × Q) \approx 10^{10}$ phép tính → **TLE** (chạy mất 20 giây!).
+*   **Cách thông minh:** Chúng ta chuẩn bị trước dữ liệu bằng cách tính tổng tích lũy ngay từ đầu. Mỗi câu hỏi sau đó chỉ cần làm một phép tính trừ duy nhất → Độ phức tạp $O(1)$! Tổng thời gian chạy chỉ còn $O(N + Q) \approx 2 × 10^5$ phép tính (Mất chưa đầy **0.01 giây** → **AC** tuyệt đối!).
 
 Kỹ thuật chuẩn bị dữ liệu ma thuật này được gọi là **Mảng cộng dồn (Prefix Sum)**.
 
@@ -4872,7 +4872,7 @@ int main() {
 
 > [!WARNING]
 > **Bẫy 2 – Tràn số (Overflow):**
-> Tổng các phần tử lớn có thể vượt quá $2 \times 10^9$ (kiểu \`int\`).
+> Tổng các phần tử lớn có thể vượt quá $2 × 10^9$ (kiểu \`int\`).
 > *   *Cách khắc phục:* Khai báo mảng \`pref\` kiểu \`long long\` thay vì \`int\`.
 
 ---
@@ -5110,7 +5110,7 @@ int main() {
 Hãy so sánh hai bài toán nâng cấp từ các bài trước:
 1.  **Bài toán 1:** Bạn cần duy trì danh sách điểm của một lớp học, cho phép điểm trùng nhau. Khi một học sinh rút hồ sơ, bạn muốn xóa **đúng 1 bản ghi** điểm của bạn đó chứ không phải xóa tất cả những bạn có cùng mức điểm.
 2.  **Bài toán 2:** Cho mảng $N$ phần tử và $Q$ truy vấn thuộc 2 loại: Thay đổi giá trị phần tử thứ $i$ thành $V$, hoặc Tính tổng từ $L$ đến $R$. 
-    *   Nếu dùng Prefix Sum tĩnh: Truy vấn tổng là $O(1)$, nhưng khi thay đổi giá trị của $a[i]$, ta phải dựng lại toàn bộ mảng cộng dồn tốn $O(N)$ → $O(N \times Q)$ bị **TLE**.
+    *   Nếu dùng Prefix Sum tĩnh: Truy vấn tổng là $O(1)$, nhưng khi thay đổi giá trị của $a[i]$, ta phải dựng lại toàn bộ mảng cộng dồn tốn $O(N)$ → $O(N × Q)$ bị **TLE**.
     *   Để giải quyết, ta cần một cấu trúc dữ liệu động có khả năng cập nhật và truy vấn tổng đoạn đều trong $O(\log N)$ cực kỳ nhanh: **Cây Fenwick (Fenwick Tree / Binary Indexed Tree - BIT)**.
 
 ---
@@ -5633,7 +5633,7 @@ int main() {
 > Số lượng hoán vị tăng cực kỳ nhanh theo cấp số nhân ($N!$).
 > *   $8! = 40,320$ bước (OK).
 > *   $11! = 39,916,800$ bước (Gần giới hạn $1$ giây).
-> *   $12! \approx 4.79 \times 10^8$ bước (Chắc chắn TLE).
+> *   $12! \approx 4.79 × 10^8$ bước (Chắc chắn TLE).
 > *   *Cách khắc phục:* Luôn đánh giá số trạng thái tối đa trước khi code Backtracking. Chỉ dùng khi $N ≤ 10$.
 
 ---
@@ -5687,7 +5687,7 @@ int main() {
         visualizerUrl: "https://vnoi.info/wiki/algo/basic/backtracking/",
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
-Hãy nghĩ về trò chơi Cờ vua: Quân hậu là quân mạnh nhất trên bàn cờ, có thể di chuyển ngang, dọc và chéo không giới hạn số ô. Bài toán **N quân hậu (N-Queens)** đặt ra thử thách: Làm thế nào để đặt $N$ quân hậu lên một bàn cờ kích thước $N \times N$ sao cho không có bất kỳ hai quân hậu nào có thể tấn công (ăn) nhau?
+Hãy nghĩ về trò chơi Cờ vua: Quân hậu là quân mạnh nhất trên bàn cờ, có thể di chuyển ngang, dọc và chéo không giới hạn số ô. Bài toán **N quân hậu (N-Queens)** đặt ra thử thách: Làm thế nào để đặt $N$ quân hậu lên một bàn cờ kích thước $N × N$ sao cho không có bất kỳ hai quân hậu nào có thể tấn công (ăn) nhau?
 
 Đây là một bài toán kinh điển trong khoa học máy tính nhằm rèn luyện tư duy tối ưu hóa nhánh cận (Pruning) và cách sử dụng các mảng đánh dấu đường chéo thông minh để kiểm tra va chạm trong thời gian $O(1)$.
 
@@ -6035,7 +6035,7 @@ int main() {
 
 Hãy tưởng tượng bạn đang xem truyền hình trực tiếp và màn hình tivi chỉ có thể hiển thị một góc máy quay có độ rộng cố định. Khi máy quay di chuyển dọc theo sân bóng, một cầu thủ mới đi vào góc quay từ bên phải (thêm phần tử mới), đồng thời một cầu thủ khác sẽ đi ra khỏi góc quay ở bên trái (bỏ phần tử cũ). 
 
-Đây chính là nguyên lý của kỹ thuật **Cửa sổ trượt (Sliding Window)**. Trong lập trình, thay vì phải tính toán lại từ đầu cho từng phân đoạn con liên tiếp (mất độ phức tạp $O(N \times K)$), ta chỉ cần "cập nhật phần chênh lệch" ở hai đầu biên trong độ phức tạp cực kỳ tối ưu $O(N)$ thời gian.
+Đây chính là nguyên lý của kỹ thuật **Cửa sổ trượt (Sliding Window)**. Trong lập trình, thay vì phải tính toán lại từ đầu cho từng phân đoạn con liên tiếp (mất độ phức tạp $O(N × K)$), ta chỉ cần "cập nhật phần chênh lệch" ở hai đầu biên trong độ phức tạp cực kỳ tối ưu $O(N)$ thời gian.
 
 ---
 
@@ -6197,7 +6197,7 @@ int main() {
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
 Hãy nâng cấp bài toán tìm hai số có tổng bằng $K$ (2Sum) lên mức độ khó hơn: Tìm ba số trong mảng có tổng đúng bằng 0 (3Sum). 
-*   **Cách ngây thơ:** Dùng 3 vòng lặp lồng nhau duyệt qua mọi bộ ba $(i, j, k)$ để kiểm tra tổng. Độ phức tạp là $O(N^3)$ $\rightarrow$ với $N = 2000$, chương trình chạy $2000^3 = 8 \times 10^9$ phép tính $\rightarrow$ **TLE** sập nguồn.
+*   **Cách ngây thơ:** Dùng 3 vòng lặp lồng nhau duyệt qua mọi bộ ba $(i, j, k)$ để kiểm tra tổng. Độ phức tạp là $O(N^3)$ $\rightarrow$ với $N = 2000$, chương trình chạy $2000^3 = 8 × 10^9$ phép tính $\rightarrow$ **TLE** sập nguồn.
 *   **Cách tối ưu:** Chúng ta sắp xếp mảng. Sau đó, cố định một số thứ nhất $a[i]$. Bài toán lúc này chuyển thành: tìm cặp số ở phần mảng còn lại từ $i + 1$ đến $N - 1$ có tổng bằng $-a[i]$ (trở về bài toán 2Sum cơ bản). 
 
 Kỹ thuật lai này giúp giảm độ phức tạp xuống $O(N^2)$, đưa thời gian chạy từ **80 giây** xuống chưa đầy **0.05 giây**!
@@ -6282,7 +6282,7 @@ int main() {
 
 > [!WARNING]
 > **Bẫy 2 – Tràn số khi cộng 3 số nguyên lớn:**
-> Nếu mảng chứa các số có giá trị lớn (Ví dụ $10^9$), tổng của 3 số có thể lên tới $3 \times 10^9$ vượt quá giới hạn \`int\`.
+> Nếu mảng chứa các số có giá trị lớn (Ví dụ $10^9$), tổng của 3 số có thể lên tới $3 × 10^9$ vượt quá giới hạn \`int\`.
 > *   *Cách khắc phục:* Ép kiểu tổng về \`long long\` trước khi cộng: \`long long sum = (long long)a[i] + a[l] + a[r];\`
 
 ---
