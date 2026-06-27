@@ -1086,6 +1086,12 @@ Cho số \`1234\`, làm thế nào để biết tổng các chữ số là \`1+2
 
 ### Nguyên lý tách chữ số
 
+**Giải thích bản chất phép toán số nguyên trong C++:**
+* **Phép chia lấy phần dư (\`%\`):** Trả về số dư của phép chia. Khi chia một số nguyên cho \`10\`, phần dư nhận được luôn chính là chữ số hàng đơn vị (chữ số cuối cùng).
+  * Ví dụ: \`1234 % 10 = 4\`.
+* **Phép chia lấy phần nguyên (\`/\`):** Trong C++, khi chia hai số nguyên cho nhau, kết quả sẽ bị **cắt bỏ toàn bộ phần thập phân** (không làm tròn). Khi thực hiện chia cho \`10\`, số đó sẽ giảm đi 10 lần và mất đi chữ số ở cuối.
+  * Ví dụ: \`1234 / 10 = 123\` (chữ số \`4\` ở phần thập phân \`.4\` bị loại bỏ).
+
 **Hai thao tác ma thuật:**
 - \`N % 10\` → Lấy chữ số **cuối cùng** (hàng đơn vị)
 - \`N / 10\` → **Xóa** chữ số cuối cùng (dịch phải 1 vị trí)
