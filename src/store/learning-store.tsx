@@ -653,6 +653,11 @@ Năm nhuận phải thỏa mãn:
 - **Chia hết cho 400**, HOẶC
 - **Chia hết cho 4** nhưng **KHÔNG chia hết cho 100**
 
+> [!NOTE]
+> **Giải thích ký hiệu \`%\` (Phép chia lấy phần dư):**
+> * Ký hiệu \`%\` dùng để tính số dư của phép chia. Ví dụ: \`5 % 2 = 1\` (vì 5 chia 2 được 2 dư 1).
+> * **Kiểm tra chia hết**: Nếu \`A % B == 0\` nghĩa là **A chia hết cho B** (số dư bằng 0). Nếu \`A % B != 0\` nghĩa là **A không chia hết cho B** (số dư khác 0).
+
 \`\`\`
 Flowchart:
          Nhập N
