@@ -254,7 +254,7 @@ int main() {
 - [ ] Tên biến có nghĩa (không dùng \`a, b, c\` lung tung)`,
         homeworkProblems: [
           {
-            id: "w1-hw1",
+            id: "w1-l1-hw1",
             title: "Bài 1: Tính diện tích và chu vi hình chữ nhật",
             description: "Cho chiều dài và chiều rộng của hình chữ nhật. Tính chu vi và diện tích của nó.",
             inputDesc: "Một dòng chứa hai số nguyên dương a và b (1 ≤ a, b ≤ 10^9).",
@@ -263,7 +263,7 @@ int main() {
             sampleOutput: "30 50"
           },
           {
-            id: "w1-hw2",
+            id: "w1-l1-hw2",
             title: "Bài 2: Đổi đơn vị nhiệt độ",
             description: "Cho nhiệt độ ở độ C (Celsius). Hãy đổi sang độ F (Fahrenheit) và độ K (Kelvin) theo công thức: F = C × 1.8 + 32, K = C + 273.15.",
             inputDesc: "Một số thực C (C ≥ -273.15).",
@@ -743,7 +743,7 @@ Bài kiểm tra giá trị cụ thể của số nguyên (==1, ==2, ==3...)?
 - [ ] Sắp xếp điều kiện từ **hẹp → rộng** (specific → general)`,
         homeworkProblems: [
           {
-            id: "w1-hw3",
+            id: "w1-l3-hw1",
             title: "Bài 1: Kiểm tra năm nhuận",
             description: "Cho năm N. Kiểm tra N có phải năm nhuận không. Năm nhuận: chia hết cho 400, hoặc chia hết cho 4 nhưng không chia hết cho 100.",
             inputDesc: "Một dòng chứa N (1 ≤ N ≤ 10^5).",
@@ -752,7 +752,7 @@ Bài kiểm tra giá trị cụ thể của số nguyên (==1, ==2, ==3...)?
             sampleOutput: "YES"
           },
           {
-            id: "w1-hw4",
+            id: "w1-l3-hw2",
             title: "Bài 2: Tính cước taxi",
             description: "Cho số km đi taxi d. Tính tiền taxi theo quy tắc: 1 km đầu giá 15000đ. Từ km thứ 2 đến km thứ 30 giá 13000đ/km. Từ km thứ 31 trở đi giá 11000đ/km.",
             inputDesc: "Một số thực d (0.1 ≤ d ≤ 500.0).",
@@ -761,7 +761,7 @@ Bài kiểm tra giá trị cụ thể của số nguyên (==1, ==2, ==3...)?
             sampleOutput: "164500"
           },
           {
-            id: "w1-hw5",
+            id: "w1-l3-hw3",
             title: "Bài 3: Xếp loại học lực",
             description: "Cho điểm trung bình môn toán M của học sinh. Xếp loại học lực: Xuất sắc nếu M ≥ 9.0; Giỏi nếu 8.0 ≤ M < 9.0; Khá nếu 6.5 ≤ M < 8.0; Trung bình nếu M < 6.5.",
             inputDesc: "Một số thực M (0.0 ≤ M ≤ 10.0).",
@@ -993,7 +993,7 @@ Lặp vô hạn có điều kiện break ở giữa?
 - [ ] Công thức nào nhanh hơn O(N)? (Gauss, v.v.)`,
         homeworkProblems: [
           {
-            id: "w2-hw1",
+            id: "w2-l1-hw1",
             title: "Bài 1: Tính tổng bình phương",
             description: "Cho số nguyên dương N. Tính tổng các bình phương từ 1 đến N: S = 1^2 + 2^2 + ... + N^2.",
             inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^6).",
@@ -1002,7 +1002,7 @@ Lặp vô hạn có điều kiện break ở giữa?
             sampleOutput: "14"
           },
           {
-            id: "w2-hw2",
+            id: "w2-l1-hw2",
             title: "Bài 2: Tính giai thừa",
             description: "Cho số nguyên dương N. Tính giai thừa của N: N! = 1 × 2 × 3 × ... × N.",
             inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 20).",
@@ -1011,7 +1011,7 @@ Lặp vô hạn có điều kiện break ở giữa?
             sampleOutput: "120"
           },
           {
-            id: "w2-hw3",
+            id: "w2-l1-hw3",
             title: "Bài 3: Tìm số chia hết",
             description: "Cho hai số nguyên dương L và R, cùng với số nguyên K. Đếm xem có bao nhiêu số trong đoạn [L, R] chia hết cho K.",
             inputDesc: "Một dòng chứa 3 số nguyên dương L, R và K (1 ≤ L ≤ R ≤ 10^9, 1 ≤ K ≤ 10^9).",
@@ -1241,7 +1241,7 @@ while (N > 0) {
 - [ ] Dùng \`long long\` vì N có thể tới $10^{18}$`,
         homeworkProblems: [
           {
-            id: "w2-hw1",
+            id: "w2-l2-hw1",
             title: "Bài 1: Tổng và đếm chữ số chẵn",
             description: "Cho số nguyên dương N. Đếm số lượng chữ số chẵn và tính tổng các chữ số chẵn trong N.",
             inputDesc: "Một dòng chứa N (1 ≤ N ≤ 10^18).",
@@ -1250,7 +1250,7 @@ while (N > 0) {
             sampleOutput: "3 14"
           },
           {
-            id: "w2-hw2",
+            id: "w2-l2-hw2",
             title: "Bài 2: Số đối xứng",
             description: "Số đối xứng là số đọc từ trái sang phải hay phải sang trái đều như nhau (VD: 12321). Kiểm tra X có phải số đối xứng không.",
             inputDesc: "Một dòng chứa X (1 ≤ X ≤ 10^18).",
@@ -1488,7 +1488,7 @@ bool kiemTra(long long n) {
 - [ ] Ước lượng được độ phức tạp và biết khi nào TLE`,
         homeworkProblems: [
           {
-            id: "w2-hw4",
+            id: "w2-l3-hw1",
             title: "Bài 1: Số hoàn hảo",
             description: "Số hoàn hảo là số bằng tổng các ước dương thực sự (không kể chính nó). VD: 6 = 1+2+3. Cho N, kiểm tra N có phải số hoàn hảo không.",
             inputDesc: "Một dòng chứa N (1 ≤ N ≤ 10^7).",
@@ -1497,7 +1497,7 @@ bool kiemTra(long long n) {
             sampleOutput: "YES"
           },
           {
-            id: "w2-hw5",
+            id: "w2-l3-hw2",
             title: "Bài 2: Số chính phương",
             description: "Số chính phương là số có căn bậc hai là một số nguyên. Cho N, kiểm tra N có phải số chính phương hay không.",
             inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^12).",
@@ -1506,7 +1506,7 @@ bool kiemTra(long long n) {
             sampleOutput: "YES"
           },
           {
-            id: "w2-hw6",
+            id: "w2-l3-hw3",
             title: "Bài 3: Tìm số nguyên tố nhỏ nhất lớn hơn N",
             description: "Viết hàm tìm số nguyên tố nhỏ nhất nhưng lớn hơn hoặc bằng N.",
             inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^5).",
@@ -1760,7 +1760,7 @@ void build_sieve(int n) {
 - [ ] Kiểm tra giới hạn bộ nhớ: $N ≤ 10^7$ là an toàn`,
         homeworkProblems: [
           {
-            id: "w3-hw1",
+            id: "w3-l1-hw1",
             title: "Bài 1: Tổng số nguyên tố",
             description: "Cho Q câu hỏi, mỗi câu cho N. Với mỗi câu, in ra tổng tất cả số nguyên tố từ 1 đến N.",
             inputDesc: "Dòng đầu: Q (1 ≤ Q ≤ 100). Q dòng tiếp: N (1 ≤ N ≤ 10^6).",
@@ -1769,7 +1769,7 @@ void build_sieve(int n) {
             sampleOutput: "10\n17"
           },
           {
-            id: "w3-hw1b",
+            id: "w3-l1-hw2",
             title: "Bài 2: Đếm số nguyên tố trong đoạn",
             description: "Cho hai số nguyên dương L và R. Đếm số lượng số nguyên tố trong đoạn [L, R] sử dụng sàng Eratosthenes.",
             inputDesc: "Một dòng chứa hai số nguyên L và R (1 ≤ L ≤ R ≤ 10^6).",
@@ -1778,7 +1778,7 @@ void build_sieve(int n) {
             sampleOutput: "4"
           },
           {
-            id: "w3-hw1c",
+            id: "w3-l1-hw3",
             title: "Bài 3: Số nguyên tố tiếp theo",
             description: "Cho số nguyên N. Hãy tìm số nguyên tố nhỏ nhất lớn hơn N.",
             inputDesc: "Một số nguyên N (1 ≤ N ≤ 10^5).",
@@ -2013,7 +2013,7 @@ int main() {
 - [ ] Với $A, B ≤ 10^{18}$: Euclid vẫn chạy tốt (max ~87 bước)`,
         homeworkProblems: [
           {
-            id: "w3-hw2",
+            id: "w3-l2-hw1",
             title: "Bài 1: Rút gọn phân số",
             description: "Cho phân số A/B. Rút gọn về dạng tối giản. Nếu mẫu = 1 sau rút gọn, chỉ in tử.",
             inputDesc: "Một dòng chứa A và B (1 ≤ A, B ≤ 10^12).",
@@ -2022,7 +2022,7 @@ int main() {
             sampleOutput: "2/3"
           },
           {
-            id: "w3-hw2b",
+            id: "w3-l2-hw2",
             title: "Bài 2: Bội chung nhỏ nhất nhiều số",
             description: "Cho N số nguyên dương. Tìm Bội chung nhỏ nhất (BCNN) của tất cả N số này.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 100). Dòng 2: N số nguyên dương (1 ≤ A_i ≤ 10^4).",
@@ -2031,7 +2031,7 @@ int main() {
             sampleOutput: "12"
           },
           {
-            id: "w3-hw2c",
+            id: "w3-l2-hw3",
             title: "Bài 3: Cặp số nguyên tố cùng nhau",
             description: "Cho số nguyên dương N. Đếm số lượng số nguyên X trong khoảng [1, N] sao cho UCLN(X, N) = 1.",
             inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^6).",
@@ -2281,7 +2281,7 @@ BCNN(M, N) qua thừa số: tích max(a_i, b_i)
 - [ ] Luôn kiểm tra \`if (n > 1)\` sau vòng lặp phân tích`,
         homeworkProblems: [
           {
-            id: "w3-hw3",
+            id: "w3-l3-hw1",
             title: "Bài 1: Phân tích thừa số nguyên tố",
             description: "Cho số N. Phân tích N ra thừa số nguyên tố, in theo thứ tự tăng dần.",
             inputDesc: "Một số N (2 ≤ N ≤ 10^9).",
@@ -2290,7 +2290,7 @@ BCNN(M, N) qua thừa số: tích max(a_i, b_i)
             sampleOutput: "2 2 3 5"
           },
           {
-            id: "w3-hw3b",
+            id: "w3-l3-hw2",
             title: "Bài 2: Số ước số",
             description: "Cho số nguyên dương N. Đếm số lượng ước số dương của N.",
             inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^12).",
@@ -2299,7 +2299,7 @@ BCNN(M, N) qua thừa số: tích max(a_i, b_i)
             sampleOutput: "6"
           },
           {
-            id: "w3-hw3c",
+            id: "w3-l3-hw3",
             title: "Bài 3: Số đẹp",
             description: "Một số được gọi là số đẹp nếu nó chỉ chia hết cho các thừa số nguyên tố 2, 3 hoặc 5. Kiểm tra N có phải là số đẹp hay không.",
             inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^18).",
@@ -2570,7 +2570,7 @@ reverse(v.begin(), v.end()) // Đảo ngược — O(N)
 - [ ] Ép kiểu \`(int)v.size()\` khi so sánh với \`int\``,
         homeworkProblems: [
           {
-            id: "w4-hw1a",
+            id: "w4-l1-hw1",
             title: "Bài 1: Nhập và in mảng ngược",
             description: "Cho N số nguyên. Nhập vào mảng và in các phần tử theo thứ tự ngược lại.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5). Dòng 2: N số nguyên cách nhau bởi dấu cách.",
@@ -2579,7 +2579,7 @@ reverse(v.begin(), v.end()) // Đảo ngược — O(N)
             sampleOutput: "5 4 3 2 1"
           },
           {
-            id: "w4-hw1b",
+            id: "w4-l1-hw2",
             title: "Bài 2: Tính tổng các phần tử",
             description: "Cho N số nguyên. Tính tổng tất cả các phần tử trong mảng.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5). Dòng 2: N số nguyên.",
@@ -2829,7 +2829,7 @@ int main() {
 - [ ] Nhớ \`break\` khi tìm thấy đáp án đầu tiên`,
         homeworkProblems: [
           {
-            id: "w4-hw2a",
+            id: "w4-l2-hw1",
             title: "Bài 1: Thống kê mảng chẵn lẻ",
             description: "Cho N số nguyên. In ra: số lượng số chẵn, số lượng số lẻ, tổng các số dương.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5). Dòng 2: N số nguyên (-10^6 đến 10^6).",
@@ -2838,7 +2838,7 @@ int main() {
             sampleOutput: "3\n2\n13"
           },
           {
-            id: "w4-hw2b",
+            id: "w4-l2-hw2",
             title: "Bài 2: Kiểm tra mảng tăng dần",
             description: "Cho mảng N phần tử. Kiểm tra xem mảng có được sắp xếp tăng dần hay không.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5). Dòng 2: N số nguyên.",
@@ -2847,7 +2847,7 @@ int main() {
             sampleOutput: "YES"
           },
           {
-            id: "w4-hw2c",
+            id: "w4-l2-hw3",
             title: "Bài 3: Tìm vị trí phần tử chia hết cho K",
             description: "Cho mảng N số nguyên và số K. Tìm vị trí đầu tiên (1-indexed) chia hết cho K. Nếu không có in -1.",
             inputDesc: "Dòng 1: N K (1 ≤ N, K ≤ 10^5). Dòng 2: N số nguyên.",
@@ -3105,7 +3105,7 @@ auto [mi, ma] = minmax_element(a.begin(), a.end());
 - [ ] Xử lý trường hợp mảng rỗng (n = 0)`,
         homeworkProblems: [
           {
-            id: "w4-hw3a",
+            id: "w4-l3-hw1",
             title: "Bài 1: Đảo ngược mảng tối ưu",
             description: "Cho N số nguyên. Hãy đảo ngược dãy bằng cách hoán đổi trực tiếp và in ra.",
             inputDesc: "Dòng 1: N. Dòng 2: N số nguyên.",
@@ -3114,7 +3114,7 @@ auto [mi, ma] = minmax_element(a.begin(), a.end());
             sampleOutput: "5 4 3 2 1"
           },
           {
-            id: "w4-hw3b",
+            id: "w4-l3-hw2",
             title: "Bài 2: Tìm max và vị trí",
             description: "Cho N số nguyên. Tìm giá trị lớn nhất và vị trí đầu tiên xuất hiện (1-indexed).",
             inputDesc: "Dòng 1: N. Dòng 2: N số nguyên.",
@@ -3123,7 +3123,7 @@ auto [mi, ma] = minmax_element(a.begin(), a.end());
             sampleOutput: "7 2"
           },
           {
-            id: "w4-hw3c",
+            id: "w4-l3-hw3",
             title: "Bài 3: Tìm min lớn thứ nhì",
             description: "Cho N số nguyên. Tìm giá trị nhỏ nhất lớn thứ nhì trong mảng (khác giá trị nhỏ nhất tuyệt đối). Nếu không có, in ra -1.",
             inputDesc: "Dòng 1: N. Dòng 2: N số nguyên.",
@@ -3272,7 +3272,7 @@ auto [mi, ma] = minmax_element(a.begin(), a.end());
 - [ ] Luôn sử dụng kiểu dữ liệu chỉ số có dấu (\`int\`) cho biến chạy trong mảng.`,
         homeworkProblems: [
           {
-            id: "w5-hw1a",
+            id: "w5-l1-hw1",
             title: "Bài 1: Đếm số lần tráo đổi",
             description: "Cài đặt Bubble Sort và đếm xem thuật toán thực hiện bao nhiêu lần hoán đổi (swap) để sắp xếp mảng tăng dần.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 1000). Dòng 2: N số nguyên.",
@@ -3281,7 +3281,7 @@ auto [mi, ma] = minmax_element(a.begin(), a.end());
             sampleOutput: "6"
           },
           {
-            id: "w5-hw1b",
+            id: "w5-l1-hw2",
             title: "Bài 2: In mảng qua từng bước chèn",
             description: "Cài đặt Insertion Sort. Với mỗi bước chèn phần tử thứ i (từ 1 đến N-1), in ra trạng thái của mảng sau khi chèn.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 100). Dòng 2: N số nguyên.",
@@ -3455,7 +3455,7 @@ int main() {
 - [ ] Nhớ ép kiểu khi dùng \`a.size()\` so sánh với biến \`int\`.`,
         homeworkProblems: [
           {
-            id: "w5-hw2a",
+            id: "w5-l2-hw1",
             title: "Bài 1: Phần tử lớn thứ K",
             description: "Cho N số và K. Tìm phần tử lớn thứ K trong dãy sau khi đã sắp xếp (chú ý chỉ tính các giá trị phân biệt).",
             inputDesc: "Dòng 1: N K. Dòng 2: N số nguyên.",
@@ -3464,7 +3464,7 @@ int main() {
             sampleOutput: "4"
           },
           {
-            id: "w5-hw2b",
+            id: "w5-l2-hw2",
             title: "Bài 2: Số nhỏ nhất và lớn nhất",
             description: "Cho N số nguyên. Sắp xếp mảng và in ra phần tử nhỏ nhất và lớn nhất của mảng.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5). Dòng 2: N số nguyên.",
@@ -3473,7 +3473,7 @@ int main() {
             sampleOutput: "1 9"
           },
           {
-            id: "w5-hw2c",
+            id: "w5-l2-hw3",
             title: "Bài 3: Tìm số trung vị",
             description: "Cho dãy N số nguyên (N luôn lẻ). Số trung vị là số nằm ở giữa dãy sau khi đã sắp xếp. Tìm số trung vị của dãy.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5, N lẻ). Dòng 2: N số nguyên.",
@@ -3638,7 +3638,7 @@ int main() {
 - [ ] Phân biệt rõ khi nào dùng \`std::sort\` và khi nào bắt buộc dùng \`std::stable_sort\`.`,
         homeworkProblems: [
           {
-            id: "w5-hw2",
+            id: "w5-l3-hw1",
             title: "Bài 2: Sắp xếp học sinh",
             description: "Cho N học sinh (tên, điểm). Sắp xếp: điểm giảm dần; cùng điểm thì tên ABC.",
             inputDesc: "Dòng 1: N. N dòng tiếp: tên điểm.",
@@ -3647,7 +3647,7 @@ int main() {
             sampleOutput: "Binh 10\nAn 9\nCa 9"
           },
           {
-            id: "w5-hw3",
+            id: "w5-l3-hw2",
             title: "Bài 3: Sắp xếp theo tổng chữ số",
             description: "Cho N số nguyên. Sắp xếp theo tổng chữ số tăng dần. Cùng tổng: giữ thứ tự ban đầu (stable).",
             inputDesc: "Dòng 1: N. Dòng 2: N số nguyên dương.",
@@ -3792,7 +3792,7 @@ int findFirstOccurrence(const vector<int>& a, int target) {
 - [ ] Phân biệt được cách tìm một vị trí bất kỳ và vị trí đầu tiên/cuối cùng xuất hiện.`,
         homeworkProblems: [
           {
-            id: "w6-hw1a",
+            id: "w6-l1-hw1",
             title: "Bài 1: Chặt nhị phân cơ bản",
             description: "Cho mảng N số nguyên đã sắp xếp tăng dần và số X. Kiểm tra xem X có xuất hiện trong mảng hay không.",
             inputDesc: "Dòng 1: N X (1 ≤ N ≤ 10^5, -10^9 ≤ X ≤ 10^9). Dòng 2: N số nguyên.",
@@ -3801,7 +3801,7 @@ int findFirstOccurrence(const vector<int>& a, int target) {
             sampleOutput: "YES"
           },
           {
-            id: "w6-hw1b",
+            id: "w6-l1-hw2",
             title: "Bài 2: Tìm vị trí xuất hiện đầu tiên",
             description: "Cho mảng N số nguyên đã sắp xếp tăng dần. Tìm vị trí đầu tiên (1-indexed) của số X. Nếu không tìm thấy in -1.",
             inputDesc: "Dòng 1: N X. Dòng 2: N số nguyên.",
@@ -3941,7 +3941,7 @@ int main() {
 - [ ] Viết hàm \`check()\` cẩn thận, chạy trace nháp thử vài giá trị xem kết quả có đúng tính đơn điệu không.`,
         homeworkProblems: [
           {
-            id: "w6-hw2a",
+            id: "w6-l2-hw1",
             title: "Bài 1: Phân chia sách vào thùng",
             description: "N quyển sách (theo thứ tự), chia vào K thùng. Tìm tải trọng thùng nặng nhất tối thiểu.",
             inputDesc: "Dòng 1: N K. Dòng 2: N trọng lượng.",
@@ -3950,7 +3950,7 @@ int main() {
             sampleOutput: "5"
           },
           {
-            id: "w6-hw2b",
+            id: "w6-l2-hw2",
             title: "Bài 2: Cắt gỗ (EKO)",
             description: "Cho N cây gỗ có chiều cao khác nhau và cần lấy tổng cộng M mét gỗ. Tìm chiều cao cắt tối đa H sao cho tổng số gỗ thu được lớn hơn hoặc bằng M.",
             inputDesc: "Dòng 1: N M (1 ≤ N ≤ 10^5, 1 ≤ M ≤ 10^9). Dòng 2: N số nguyên dương là chiều cao các cây.",
@@ -3959,7 +3959,7 @@ int main() {
             sampleOutput: "15"
           },
           {
-            id: "w6-hw2c",
+            id: "w6-l2-hw3",
             title: "Bài 3: Chia kẹo",
             description: "Có N bao kẹo, bao thứ i có a[i] viên. Muốn chia kẹo cho K em nhỏ sao cho mỗi em nhận được lượng kẹo như nhau và lượng kẹo lớn nhất có thể. Tìm lượng kẹo tối đa một em nhận được.",
             inputDesc: "Dòng 1: N K. Dòng 2: N số nguyên.",
@@ -4108,7 +4108,7 @@ int findClosest(const vector<int>& a, int target) {
 - [ ] Hiểu rõ khi nào dùng hàm thành viên \`s.lower_bound()\` thay vì \`std::lower_bound(s.begin(), s.end())\`.`,
         homeworkProblems: [
           {
-            id: "w6-hw2",
+            id: "w6-l3-hw1",
             title: "Bài 2: Đếm phần tử trong đoạn",
             description: "Cho mảng N số và Q câu hỏi. Mỗi câu hỏi cho L R, đếm số phần tử trong [L, R].",
             inputDesc: "Dòng 1: N. Dòng 2: N số. Dòng 3: Q. Q dòng: L R.",
@@ -4117,7 +4117,7 @@ int findClosest(const vector<int>& a, int target) {
             sampleOutput: "3\n3"
           },
           {
-            id: "w6-hw3",
+            id: "w6-l3-hw2",
             title: "Bài 3: Tìm số trong mảng đã sắp xếp",
             description: "Cho mảng đã sắp xếp và Q câu hỏi. Mỗi câu hỏi cho X, tìm vị trí (1-indexed) hoặc -1.",
             inputDesc: "Dòng 1: N. Dòng 2: N số đã sắp xếp. Dòng 3: Q. Q dòng: X.",
@@ -4303,7 +4303,7 @@ int main() {
 - [ ] Thành thạo các hàm biến đổi ký tự của \`<cctype>\`: \`tolower\`, \`toupper\`, \`isdigit\`, \`isalpha\`.`,
         homeworkProblems: [
           {
-            id: "w7-hw1a",
+            id: "w7-l1-hw1",
             title: "Bài 1: Chuẩn hóa tên riêng",
             description: "Cho một chuỗi gồm họ và tên viết lộn xộn. Hãy chuẩn hóa chuỗi này bằng cách viết hoa chữ cái đầu mỗi từ và viết thường các chữ cái còn lại.",
             inputDesc: "Một dòng chứa chuỗi họ tên (độ dài không quá 100).",
@@ -4312,7 +4312,7 @@ int main() {
             sampleOutput: "Nguyen Van An"
           },
           {
-            id: "w7-hw1b",
+            id: "w7-l1-hw2",
             title: "Bài 2: Đếm ký tự nguyên âm",
             description: "Cho chuỗi S. Hãy đếm số lượng nguyên âm (a, e, i, o, u, cả viết hoa và viết thường) xuất hiện trong chuỗi.",
             inputDesc: "Một dòng chứa chuỗi S.",
@@ -4513,7 +4513,7 @@ int main() {
 - [ ] Hiểu quy luật xác định đường chéo chính \`i == j\` và đường chéo phụ \`i + j == n - 1\`.\`,`,
         homeworkProblems: [
           {
-            id: "w7-hw2a",
+            id: "w7-l2-hw1",
             title: "Bài 1: Tổng hàng, cột, đường chéo",
             description: "Cho ma trận N×N. Tính tổng từng hàng, từng cột và hai đường chéo.",
             inputDesc: "Dòng 1: N. N dòng tiếp: N số mỗi dòng.",
@@ -4522,7 +4522,7 @@ int main() {
             sampleOutput: "3\n7\n4\n6\n5\n5"
           },
           {
-            id: "w7-hw2b",
+            id: "w7-l2-hw2",
             title: "Bài 2: Tìm hàng có tổng lớn nhất",
             description: "Cho ma trận N×M số nguyên. Hãy tìm hàng có tổng các phần tử lớn nhất. Nếu có nhiều hàng thỏa mãn, in ra hàng có chỉ số nhỏ nhất (1-indexed).",
             inputDesc: "Dòng 1: N M (1 ≤ N, M ≤ 100). N dòng tiếp theo chứa ma trận.",
@@ -4531,7 +4531,7 @@ int main() {
             sampleOutput: "2 15"
           },
           {
-            id: "w7-hw2c",
+            id: "w7-l2-hw3",
             title: "Bài 3: Xoay ma trận 90 độ",
             description: "Cho ma trận vuông N×N. Hãy xoay ma trận này 90 độ theo chiều kim đồng hồ.",
             inputDesc: "Dòng 1: N. N dòng tiếp theo chứa ma trận vuông.",
@@ -4721,7 +4721,7 @@ cout << "Dien tich vung lon nhat: " << maxArea << endl;
 - [ ] Hiểu rõ kỹ thuật cộng dồn diện tích bằng cách trả về giá trị đệ quy.`,
         homeworkProblems: [
           {
-            id: "w7-hw2",
+            id: "w7-l3-hw1",
             title: "Bài 2: Đếm số đảo",
             description: "Cho bản đồ N×M gồm '0' (biển) và '1' (đất). Đếm số đảo (vùng '1' liên thông 4 hướng).",
             inputDesc: "Dòng 1: N M. N dòng tiếp: M ký tự '0'/'1'.",
@@ -4730,7 +4730,7 @@ cout << "Dien tich vung lon nhat: " << maxArea << endl;
             sampleOutput: "1"
           },
           {
-            id: "w7-hw3",
+            id: "w7-l3-hw2",
             title: "Bài 3: Vùng rừng lớn nhất",
             description: "Cho lưới N×M gồm '1' (rừng) và '0' (trống). Tìm diện tích vùng rừng lớn nhất.",
             inputDesc: "Dòng 1: N M. N dòng tiếp: lưới.",
@@ -4909,7 +4909,7 @@ int main() {
 - [ ] Nhớ thêm \`ios_base::sync_with_stdio(false); cin.tie(NULL);\` để tối ưu thời gian I/O.`,
         homeworkProblems: [
           {
-            id: "w8-hw1a",
+            id: "w8-l1-hw1",
             title: "Bài 1: Truy vấn tổng đoạn",
             description: "Cho N số và Q câu hỏi. Mỗi câu: tổng từ vị trí L đến R (1-indexed).",
             inputDesc: "Dòng 1: N Q. Dòng 2: N số. Q dòng: L R.",
@@ -4918,7 +4918,7 @@ int main() {
             sampleOutput: "6\n14\n15"
           },
           {
-            id: "w8-hw1b",
+            id: "w8-l1-hw2",
             title: "Bài 2: Mảng cộng dồn 2D",
             description: "Cho ma trận N×M. Thực hiện Q truy vấn tính tổng hình chữ nhật con từ (x1, y1) đến (x2, y2).",
             inputDesc: "Dòng 1: N M Q. N dòng tiếp: M số mỗi dòng. Q dòng tiếp: x1 y1 x2 y2.",
@@ -5090,7 +5090,7 @@ int main() {
 - [ ] Nhớ kỹ thuật duyệt map \`for (auto& [key, val] : my_map)\`.`,
         homeworkProblems: [
           {
-            id: "w8-hw2a",
+            id: "w8-l2-hw1",
             title: "Bài 1: Phần tử xuất hiện nhiều nhất",
             description: "Cho mảng N số. Tìm phần tử xuất hiện nhiều nhất. Nếu nhiều phần tử cùng tần suất, in phần tử nhỏ nhất.",
             inputDesc: "Dòng 1: N. Dòng 2: N số nguyên.",
@@ -5099,7 +5099,7 @@ int main() {
             sampleOutput: "3 3"
           },
           {
-            id: "w8-hw2b",
+            id: "w8-l2-hw2",
             title: "Bài 2: Các phần tử phân biệt",
             description: "Cho mảng N số nguyên. Hãy đếm số lượng phần tử phân biệt xuất hiện trong mảng.",
             inputDesc: "Dòng 1: N. Dòng 2: N số nguyên.",
@@ -5108,7 +5108,7 @@ int main() {
             sampleOutput: "3"
           },
           {
-            id: "w8-hw2c",
+            id: "w8-l2-hw3",
             title: "Bài 3: Tìm cặp số",
             description: "Cho mảng N số nguyên và giá trị X. Hãy kiểm tra xem có tồn tại hai phần tử trong mảng có tổng bằng X hay không.",
             inputDesc: "Dòng 1: N X. Dòng 2: N số nguyên.",
@@ -5287,7 +5287,7 @@ int main() {
 - [ ] Cài đặt trơn tru struct \`FenwickTree\` cho các bài toán cập nhật động.`,
         homeworkProblems: [
           {
-            id: "w8-hw3a",
+            id: "w8-l3-hw1",
             title: "Bài 1: Cập nhật và truy vấn tổng",
             description: "Cho mảng N số và Q thao tác: '1 i v' (cập nhật a[i]=v) hoặc '2 l r' (tổng từ l đến r).",
             inputDesc: "Dòng 1: N Q. Dòng 2: N số. Q dòng: thao tác.",
@@ -5296,7 +5296,7 @@ int main() {
             sampleOutput: "6\n14"
           },
           {
-            id: "w8-hw3b",
+            id: "w8-l3-hw2",
             title: "Bài 2: Đếm số lớn hơn",
             description: "Duy trì một tập hợp số nguyên. Cho Q truy vấn thuộc 2 loại: '1 X' (thêm X vào tập hợp) và '2 X' (đếm số lượng phần tử trong tập hợp lớn hơn X).",
             inputDesc: "Dòng 1: Q (1 ≤ Q ≤ 10^5). Q dòng tiếp theo là các truy vấn.",
@@ -5479,7 +5479,7 @@ int main() {
 - [ ] Dùng mảng ghi nhớ khi hàm đệ quy có các bài toán con trùng lặp.`,
         homeworkProblems: [
           {
-            id: "w9-hw1a",
+            id: "w9-l1-hw1",
             title: "Bài 1: Lũy thừa nhị phân",
             description: "Cho hai số nguyên a và b. Hãy tính a^b bằng phương pháp đệ quy chia để trị (Lũy thừa nhị phân) chia lấy dư cho 10^9+7.",
             inputDesc: "Một dòng chứa hai số nguyên a và b (1 ≤ a, b ≤ 10^18).",
@@ -5488,7 +5488,7 @@ int main() {
             sampleOutput: "1024"
           },
           {
-            id: "w9-hw1b",
+            id: "w9-l1-hw2",
             title: "Bài 2: Ước chung lớn nhất đệ quy",
             description: "Tìm ước chung lớn nhất (UCLN) của hai số nguyên dương A và B bằng hàm đệ quy.",
             inputDesc: "Một dòng chứa hai số nguyên dương A và B (1 ≤ A, B ≤ 10^18).",
@@ -5670,7 +5670,7 @@ int main() {
 - [ ] Luôn truyền tham số \`start\` hoặc \`step\` tăng dần để dịch chuyển đệ quy về điều kiện dừng.`,
         homeworkProblems: [
           {
-            id: "w9-hw2a",
+            id: "w9-l2-hw1",
             title: "Bài 1: Sinh hoán vị",
             description: "Cho N, sinh và in tất cả hoán vị của dãy 1..N theo thứ tự từ điển.",
             inputDesc: "Một số N (1 ≤ N ≤ 8).",
@@ -5679,7 +5679,7 @@ int main() {
             sampleOutput: "1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1"
           },
           {
-            id: "w9-hw2b",
+            id: "w9-l2-hw2",
             title: "Bài 2: Sinh tổ hợp chập K",
             description: "Cho hai số nguyên dương N và K. Sinh tất cả tổ hợp chập K của tập gồm N phần tử {1, 2, ..., N} theo thứ tự từ điển.",
             inputDesc: "Một dòng chứa N và K (1 ≤ K ≤ N ≤ 15).",
@@ -5688,7 +5688,7 @@ int main() {
             sampleOutput: "1 2\n1 3\n1 4\n2 3\n2 4\n3 4"
           },
           {
-            id: "w9-hw2c",
+            id: "w9-l2-hw3",
             title: "Bài 3: Sinh dãy nhị phân",
             description: "Sinh tất cả các dãy nhị phân có độ dài N.",
             inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 15).",
@@ -5857,7 +5857,7 @@ void queensFirst(int row) {
 - [ ] Phân biệt được sự khác biệt giữa bài toán đếm tổng số cách và in ra cấu hình cụ thể.`,
         homeworkProblems: [
           {
-            id: "w9-hw2",
+            id: "w9-l3-hw1",
             title: "Bài 2: Tổng tập con bằng S",
             description: "Cho tập N số nguyên dương và số S. Đếm số tập con có tổng = S.",
             inputDesc: "Dòng 1: N S. Dòng 2: N số.",
@@ -5866,7 +5866,7 @@ void queensFirst(int row) {
             sampleOutput: "2"
           },
           {
-            id: "w9-hw3",
+            id: "w9-l3-hw2",
             title: "Bài 3: N quân hậu",
             description: "Đặt N quân hậu trên bàn cờ N×N sao cho không có hai quân tấn công nhau. Đếm số cách.",
             inputDesc: "Một số N (1 ≤ N ≤ 12).",
@@ -6025,7 +6025,7 @@ int main() {
 - [ ] Nắm được cách trộn hai mảng trong độ phức tạp tối ưu $O(N + M)$ thời gian.`,
         homeworkProblems: [
           {
-            id: "w10-hw1a",
+            id: "w10-l1-hw1",
             title: "Bài 1: Cặp số có tổng bằng K",
             description: "Cho mảng N số nguyên đã sắp xếp tăng dần và số K. Tìm hai vị trí khác nhau có tổng giá trị đúng bằng K.",
             inputDesc: "Dòng 1: N K. Dòng 2: N số nguyên đã sắp xếp.",
@@ -6034,7 +6034,7 @@ int main() {
             sampleOutput: "2 4"
           },
           {
-            id: "w10-hw1b",
+            id: "w10-l1-hw2",
             title: "Bài 2: Trộn hai mảng đã sắp xếp",
             description: "Cho hai mảng A (N phần tử) và B (M phần tử) đã sắp xếp tăng dần. Hãy trộn chúng thành mảng C được sắp xếp tăng dần sử dụng Two Pointers.",
             inputDesc: "Dòng 1: N M (1 ≤ N, M ≤ 10^5). Dòng 2: N số nguyên của mảng A. Dòng 3: M số nguyên của mảng B.",
@@ -6179,7 +6179,7 @@ int main() {
 - [ ] Đảm bảo mỗi phần tử chỉ đi vào cửa sổ tối đa 1 lần và đi ra tối đa 1 lần $\rightarrow$ tổng thời gian chạy luôn là $O(N)$ tuyến tính.`,
         homeworkProblems: [
           {
-            id: "w10-hw2a",
+            id: "w10-l2-hw1",
             title: "Bài 1: Tổng lớn nhất K phần tử liên tiếp",
             description: "Cho mảng N số và K. Tìm tổng lớn nhất của dãy con liên tiếp K phần tử.",
             inputDesc: "Dòng 1: N K. Dòng 2: N số nguyên.",
@@ -6188,7 +6188,7 @@ int main() {
             sampleOutput: "8"
           },
           {
-            id: "w10-hw2b",
+            id: "w10-l2-hw2",
             title: "Bài 2: Dãy con tổng ≤ K dài nhất",
             description: "Cho mảng N số nguyên không âm và K. Tìm dãy con liên tiếp có tổng ≤ K dài nhất.",
             inputDesc: "Dòng 1: N K. Dòng 2: N số.",
@@ -6197,7 +6197,7 @@ int main() {
             sampleOutput: "3"
           },
           {
-            id: "w10-hw2c",
+            id: "w10-l2-hw3",
             title: "Bài 3: Đếm dãy con có tổng bằng S",
             description: "Cho mảng N số nguyên dương và số S. Tìm số lượng dãy con liên tiếp có tổng đúng bằng S.",
             inputDesc: "Dòng 1: N S. Dòng 2: N số nguyên.",
@@ -6316,7 +6316,7 @@ int main() {
 - [ ] Đảm bảo mỗi phần tử trong mảng chỉ di chuyển tuyến tính trong vòng lặp \`while (l < r)\`.`,
         homeworkProblems: [
           {
-            id: "w10-hw3a",
+            id: "w10-l3-hw1",
             title: "Bài 1: Dãy con ký tự phân biệt dài nhất",
             description: "Cho chuỗi S chỉ gồm chữ cái thường. Tìm dãy con liên tục dài nhất không có ký tự nào xuất hiện quá 1 lần.",
             inputDesc: "Một dòng chứa S (1 ≤ |S| ≤ 10^5).",
@@ -6325,7 +6325,7 @@ int main() {
             sampleOutput: "3"
           },
           {
-            id: "w10-hw3b",
+            id: "w10-l3-hw2",
             title: "Bài 2: Ba số có tổng bằng 0",
             description: "Cho mảng N số nguyên. Đếm số bộ ba số (a_i, a_j, a_k) với i < j < k sao cho tổng của chúng đúng bằng 0.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 2000). Dòng 2: N số nguyên.",
@@ -6594,7 +6594,7 @@ int main() {
 - [ ] Thành thạo cách dùng \`lower_bound\` để chèn nhị phân vào mảng \`tails\`.\`,`,
         homeworkProblems: [
           {
-            id: "w11-hw2a",
+            id: "w11-l2-hw1",
             title: "Bài 1: Dãy con tăng dài nhất",
             description: "Cho N số nguyên. Tìm độ dài dãy con tăng nghiêm ngặt dài nhất.",
             inputDesc: "Dòng 1: N. Dòng 2: N số.",
@@ -6603,7 +6603,7 @@ int main() {
             sampleOutput: "3"
           },
           {
-            id: "w11-hw2b",
+            id: "w11-l2-hw2",
             title: "Bài 2: Tổng con lớn nhất (Kadane)",
             description: "Cho mảng N số nguyên (có thể có số âm). Tìm dãy con liên tiếp có tổng lớn nhất.",
             inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5). Dòng 2: N số nguyên.",
@@ -6703,7 +6703,7 @@ int main() {
 - [ ] Thành thạo công thức truy hồi và thiết kế bảng Quy hoạch động cơ bản.`,
         homeworkProblems: [
           {
-            id: "w11-hw2",
+            id: "w11-l3-hw1",
             title: "Bài 2: Bài toán cái túi",
             description: "N vật, túi tối đa W kg. Vật i: trọng lượng w[i], giá trị v[i]. Tìm giá trị lớn nhất.",
             inputDesc: "Dòng 1: N W. N dòng tiếp: w[i] v[i].",
@@ -6712,7 +6712,7 @@ int main() {
             sampleOutput: "7"
           },
           {
-            id: "w11-hw3",
+            id: "w11-l3-hw2",
             title: "Bài 3: Leo thang",
             description: "Có N bậc thang. Mỗi bước leo 1 hoặc 2 bậc. Đếm số cách leo từ 0 lên N.",
             inputDesc: "Một số N (1 ≤ N ≤ 45).",
@@ -6866,7 +6866,7 @@ int main() {
 - [ ] Kiểm tra kỹ tên tệp vào/ra (\`.inp\` và \`.out\`) đúng chính xác theo mô tả đề bài thi.`,
         homeworkProblems: [
           {
-            id: "w12-hw1a",
+            id: "w12-l1-hw1",
             title: "Bài 1: Tổng hai số từ File",
             description: "Viết chương trình đọc hai số nguyên A và B từ file 'input.inp' và ghi tổng của chúng vào file 'output.out'.",
             inputDesc: "File 'input.inp' gồm một dòng chứa hai số nguyên A và B (1 ≤ A, B ≤ 10^9).",
@@ -6875,7 +6875,7 @@ int main() {
             sampleOutput: "579"
           },
           {
-            id: "w12-hw1b",
+            id: "w12-l1-hw2",
             title: "Bài 2: Tối ưu nhập xuất với dãy số lớn",
             description: "Cho một dãy gồm N số nguyên. Hãy đọc dãy số này bằng kỹ thuật tối ưu nhập xuất (Fast I/O) và ghi ra tổng của các số chia hết cho 3.",
             inputDesc: "Dòng đầu chứa N (1 ≤ N ≤ 10^6). Dòng thứ hai chứa N số nguyên.",
@@ -7003,7 +7003,7 @@ void readInputData() {
 4.  **Chiến lược 15 phút cuối:** Không code thêm thuật toán mới. Dành toàn bộ 15 phút cuối để kiểm tra: file input/output đã viết đúng tên chưa, xóa sạch các dòng \`cout\` debug dư thừa trong code.`,
         homeworkProblems: [
           {
-            id: "w12-hw2a",
+            id: "w12-l2-hw1",
             title: "Bài 1: Phân tích số tổng hợp",
             description: "Cho N số. Với mỗi số X, kiểm tra: (1) số nguyên tố? (2) số chính phương? (3) tổng chữ số là số nguyên tố?",
             inputDesc: "Dòng 1: N. N dòng tiếp: X.",
@@ -7012,7 +7012,7 @@ void readInputData() {
             sampleOutput: "YES NO YES\nNO YES NO"
           },
           {
-            id: "w12-hw2b",
+            id: "w12-l2-hw2",
             title: "Bài 2: Ghi nhận lỗi TLE",
             description: "Cho mảng N số nguyên. Viết một thuật toán O(N log N) để tìm số lượng cặp số có hiệu bằng K. Chú ý tối ưu để tránh TLE với N = 10^5.",
             inputDesc: "Dòng 1: N K. Dòng 2: N số nguyên.",
@@ -7157,7 +7157,7 @@ for (int i = 0; i < n; i++) {
 - [ ] Chúc bạn tự tin bước vào phòng thi và đạt kết quả cao nhất!`,
         homeworkProblems: [
           {
-            id: "w12-hw2",
+            id: "w12-l3-hw1",
             title: "Bài 2: Đề mô phỏng tổng hợp",
             description: "Cho mảng N số, thực hiện: (1) Sắp xếp tăng, (2) Loại trùng lặp, (3) Tính prefix sum, (4) Trả lời Q truy vấn tổng đoạn [L,R].",
             inputDesc: "Dòng 1: N. Dòng 2: N số. Dòng 3: Q. Q dòng: L R.",
@@ -7166,7 +7166,7 @@ for (int i = 0; i < n; i++) {
             sampleOutput: "6\n5"
           },
           {
-            id: "w12-hw3",
+            id: "w12-l3-hw2",
             title: "Bài 3: Tổng hợp cuối kỳ – Hình chữ nhật con lớn nhất",
             description: "Cho lưới N×M số nguyên. Tìm hình chữ nhật con có tổng lớn nhất.",
             inputDesc: "Dòng 1: N M (1 ≤ N,M ≤ 50). N dòng: lưới số (-100 đến 100).",
