@@ -744,30 +744,30 @@ Bài kiểm tra giá trị cụ thể của số nguyên (==1, ==2, ==3...)?
         homeworkProblems: [
           {
             id: "w1-l3-hw1",
-            title: "Bài 1: Kiểm tra năm nhuận",
-            description: "Cho năm N. Kiểm tra N có phải năm nhuận không. Năm nhuận: chia hết cho 400, hoặc chia hết cho 4 nhưng không chia hết cho 100.",
-            inputDesc: "Một dòng chứa N (1 ≤ N ≤ 10^5).",
-            outputDesc: "In ra 'YES' hoặc 'NO'.",
-            sampleInput: "2000",
+            title: "Bài 1: Kiểm tra tam giác hợp lệ",
+            description: "Cho ba số nguyên dương a, b, c đại diện cho độ dài ba cạnh. Hãy kiểm tra xem ba cạnh này có thể tạo thành một tam giác hợp lệ hay không.",
+            inputDesc: "Một dòng chứa ba số nguyên dương a, b, c (1 ≤ a, b, c ≤ 10^{9}).",
+            outputDesc: "In ra 'YES' nếu ba cạnh tạo thành một tam giác hợp lệ, ngược lại in ra 'NO'.",
+            sampleInput: "3 4 5",
             sampleOutput: "YES"
           },
           {
             id: "w1-l3-hw2",
-            title: "Bài 2: Tính cước taxi",
-            description: "Cho số km đi taxi d. Tính tiền taxi theo quy tắc: 1 km đầu giá 15000đ. Từ km thứ 2 đến km thứ 30 giá 13000đ/km. Từ km thứ 31 trở đi giá 11000đ/km.",
-            inputDesc: "Một số thực d (0.1 ≤ d ≤ 500.0).",
-            outputDesc: "In ra số tiền taxi (làm tròn số nguyên).",
-            sampleInput: "12.5",
-            sampleOutput: "164500"
+            title: "Bài 2: Tính tiền điện sinh hoạt",
+            description: "Tính tiền điện tiêu thụ bậc thang chưa tính thuế VAT cho một hộ gia đình. Cho lượng điện tiêu thụ x (kWh). Quy tắc tính tiền điện:\n- 50 kWh đầu tiên: giá 1678 đồng/kWh.\n- Từ kWh thứ 51 đến 100: giá 1734 đồng/kWh.\n- Từ kWh thứ 101 trở đi: giá 2014 đồng/kWh.",
+            inputDesc: "Một số nguyên dương x đại diện cho số điện tiêu thụ (1 ≤ x ≤ 10^{6}).",
+            outputDesc: "In ra một số nguyên duy nhất là số tiền điện phải trả (đồng).",
+            sampleInput: "75",
+            sampleOutput: "127250"
           },
           {
             id: "w1-l3-hw3",
-            title: "Bài 3: Xếp loại học lực",
-            description: "Cho điểm trung bình môn toán M của học sinh. Xếp loại học lực: Xuất sắc nếu M ≥ 9.0; Giỏi nếu 8.0 ≤ M < 9.0; Khá nếu 6.5 ≤ M < 8.0; Trung bình nếu M < 6.5.",
-            inputDesc: "Một số thực M (0.0 ≤ M ≤ 10.0).",
-            outputDesc: "In ra xếp loại học lực tương ứng ('Xuat sac', 'Gioi', 'Kha', 'Trung binh').",
-            sampleInput: "8.5",
-            sampleOutput: "Gioi"
+            title: "Bài 3: Tìm số ngày của tháng",
+            description: "Cho tháng M và năm Y. Hãy cho biết tháng M trong năm Y có bao nhiêu ngày. Lưu ý kiểm tra năm nhuận đối với tháng 2.",
+            inputDesc: "Một dòng gồm hai số nguyên dương M và Y (1 ≤ M ≤ 12, 1 ≤ Y ≤ 10^{5}).",
+            outputDesc: "In ra một số nguyên duy nhất đại diện cho số ngày của tháng đó.",
+            sampleInput: "2 2024",
+            sampleOutput: "29"
           }
         ]
       }
