@@ -449,27 +449,47 @@ int main() {
 **Checklist tránh tràn số:**
 - [ ] Đọc giới hạn đầu vào trong đề bài
 - [ ] Ước lượng giá trị lớn nhất có thể xảy ra
-- [ ] So sánh với $2 × 10^9$ (int) và $9 × 10^{18}$ (long long)
+- [ ] So sánh với $2 × 10^{9}$ (int) và $9 × 10^{18}$ (long long)
 - [ ] Khi nhân hai số lớn: ép kiểu \`(long long)\` trước khi nhân
-- [ ] Độ phức tạp $O(1)$: chỉ vài phép toán → siêu nhanh`,
+
+---
+
+## ⏱️ Tốc độ chạy & Khái niệm O(1), TLE
+
+Khi giải bài tập lập trình trên các trang chấm tự động, bạn sẽ thường thấy các ký hiệu như **$O(1)$** hoặc lỗi **TLE**. Hãy cùng tìm hiểu chúng dưới góc nhìn đơn giản nhất nhé!
+
+### 1. TLE là gì? (Time Limit Exceeded)
+* **Định nghĩa**: **TLE** là viết tắt của **Time Limit Exceeded** (Vượt quá giới hạn thời gian).
+* **Vì sao bị lỗi này?**: Mỗi bài tập luôn giới hạn thời gian chạy của chương trình (thường là **1 giây**). Nếu chương trình của bạn chạy chậm và mất quá nhiều thời gian, hệ thống sẽ ngắt chương trình và báo lỗi TLE.
+* **Quy tắc tính toán**: Trong **1 giây**, máy tính thông thường thực hiện được khoảng **$10^{8}$** (100 triệu) phép tính cơ bản. Nếu chương trình của bạn cần nhiều hơn $10^{8}$ bước tính, khả năng cao sẽ bị TLE.
+
+### 2. Độ phức tạp thuật toán & Ký hiệu $O(1)$
+* **Độ phức tạp thuật toán** (thường ký hiệu bằng chữ **O**): Là cách chúng ta đếm xem chương trình cần thực hiện khoảng bao nhiêu bước tính khi dữ liệu đầu vào thay đổi.
+* **Ký hiệu $O(1)$** (đọc là *O một*):
+  * Đây là thuật toán có **tốc độ nhanh nhất** (tốc độ không đổi).
+  * Chữ số \`1\` không có nghĩa là chương trình chỉ chạy 1 phép tính duy nhất, mà mang ý nghĩa là **số bước tính luôn luôn cố định và siêu ít** (ví dụ: chỉ 1, 2 hoặc 5 phép tính), bất kể dữ liệu đầu vào lớn hay nhỏ.
+  * **Ví dụ thực tế**:
+    * Tính chu vi hình chữ nhật: \`(a + b) * 2\`. Dù $a$ và $b$ bằng $5$ hay bằng $10^{9}$, máy tính cũng chỉ làm đúng $1$ phép cộng và $1$ phép nhân. Số bước tính luôn là $2$ phép tính → Độ phức tạp là $O(1)$.
+    * Kiểm tra số chẵn lẻ: \`n % 2 == 0\`. Dù $n$ là số nhỏ hay số khổng lồ, máy tính cũng chỉ thực hiện đúng $1$ phép chia lấy dư → Độ phức tạp là $O(1)$.
+  * Các thuật toán $O(1)$ chạy cực kỳ nhanh (thường chưa tới 0.001 giây) nên **không bao giờ lo bị lỗi TLE**.`,
         homeworkProblems: [
           {
-            id: "w1-hw1",
-            title: "Bài 1: Kiểm tra tính chia hết",
-            description: "Cho hai số nguyên dương A và B. Kiểm tra xem A có chia hết cho B hay không.",
-            inputDesc: "Một dòng chứa hai số nguyên dương A và B (1 ≤ A, B ≤ 10^9).",
-            outputDesc: "In ra 'YES' nếu A chia hết cho B, ngược lại in ra 'NO'.",
-            sampleInput: "10 5",
-            sampleOutput: "YES"
+            id: "w1-l2-hw1",
+            title: "Bài 1: Tính tích hai số lớn",
+            description: "Cho hai số nguyên dương A và B. Hãy tính tích của hai số này.",
+            inputDesc: "Một dòng chứa hai số nguyên dương A và B (1 ≤ A, B ≤ 10^{9}).",
+            outputDesc: "In ra tích của A và B.",
+            sampleInput: "1000000000 1000000000",
+            sampleOutput: "1000000000000000000"
           },
           {
-            id: "w1-hw2",
-            title: "Bài 2: Tìm số lớn nhất trong 3 số",
-            description: "Cho 3 số nguyên A, B, C. Tìm và in ra số lớn nhất.",
-            inputDesc: "Một dòng chứa 3 số nguyên A, B, C (giá trị từ -10^9 đến 10^9).",
-            outputDesc: "In ra số lớn nhất.",
-            sampleInput: "5 3 8",
-            sampleOutput: "8"
+            id: "w1-l2-hw2",
+            title: "Bài 2: Tính điểm trung bình môn",
+            description: "Cho điểm số của ba môn Toán, Văn, và Anh. Hãy tính điểm trung bình cộng của ba môn này, kết quả làm tròn đến đúng 2 chữ số thập phân.",
+            inputDesc: "Một dòng chứa ba số thực đại diện cho điểm ba môn học (giá trị từ 0.0 đến 10.0).",
+            outputDesc: "In ra điểm trung bình cộng, làm tròn 2 chữ số thập phân.",
+            sampleInput: "8.5 7.0 9.0",
+            sampleOutput: "8.17"
           }
         ]
       },
