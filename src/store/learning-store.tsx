@@ -635,15 +635,15 @@ Trong thực tế, điều kiện rẽ nhánh có thể gồm nhiều điều ki
 
 1. **Toán tử VÀ (AND) - Ký hiệu: \`&&\`**
    * Ý nghĩa: Kết quả chỉ **ĐÚNG** khi **tất cả** các điều kiện thành phần đều ĐÚNG.
-   * Ví dụ: \`(tuoi >= 6 && tuoi <= 10)\` $\rightarrow$ Trẻ em trong độ tuổi tiểu học (tuổi vừa lớn hơn hoặc bằng 6, VÀ vừa nhỏ hơn hoặc bằng 10).
+   * Ví dụ: \`(tuoi >= 6 && tuoi <= 10)\` → Trẻ em trong độ tuổi tiểu học (tuổi vừa lớn hơn hoặc bằng 6, VÀ vừa nhỏ hơn hoặc bằng 10).
 
 2. **Toán tử HOẶC (OR) - Ký hiệu: \`||\`**
    * Ý nghĩa: Kết quả **ĐÚNG** chỉ cần **ít nhất một** điều kiện thành phần ĐÚNG.
-   * Ví dụ: \`(diemToan == 10 || diemVan == 10)\` $\rightarrow$ Được khen thưởng nếu Toán đạt 10 HOẶC Văn đạt 10.
+   * Ví dụ: \`(diemToan == 10 || diemVan == 10)\` → Được khen thưởng nếu Toán đạt 10 HOẶC Văn đạt 10.
 
 3. **Toán tử PHỦ ĐỊNH (NOT) - Ký hiệu: \`!\`**
    * Ý nghĩa: Đảo ngược trạng thái của điều kiện (ĐÚNG thành SAI, SAI thành ĐÚNG).
-   * Ví dụ: \`!(x % 2 == 0)\` $\rightarrow$ x KHÔNG phải số chẵn (tức là số lẻ).
+   * Ví dụ: \`!(x % 2 == 0)\` → x KHÔNG phải số chẵn (tức là số lẻ).
 
 ---
 
@@ -943,7 +943,23 @@ int main() {
 }
 \`\`\`
 
-**Lưu ý quan trọng:** Vòng lặp lồng $O(N^2)$ chỉ dùng được với $N ≤ 10^4$. Với $N = 10^5$ thì $N^2 = 10^{10}$ → TLE!
+**Lưu ý quan trọng:** Vòng lặp lồng $O(N^{2})$ chỉ dùng được với $N ≤ 10^{4}$. Với $N = 10^{5}$ thì $N^{2} = 10^{10}$ → TLE!
+
+### ⏱️ Đọc thêm: Độ phức tạp $O(N)$ và $O(N^{2})$ là gì?
+
+Ở bài học trước ta đã biết $O(1)$ là tính toán siêu nhanh trong 1 số lượng bước cố định. Khi chương trình sử dụng vòng lặp, số bước tính toán của máy tính sẽ thay đổi tùy theo độ lớn của dữ liệu đầu vào $N$:
+
+1. **Độ phức tạp $O(N)$ (Số bước tính tỷ lệ thuận với $N$):**
+   * **Cách hoạt động**: Chương trình chạy một vòng lặp đơn từ $1$ đến $N$.
+   * **Số bước tính**: Nếu $N = 100$, máy tính chạy $100$ bước. Nếu $N = 10^{7}$ (10 triệu), máy tính chạy $10$ triệu bước.
+   * **Đánh giá**: Vì trong **1 giây** máy tính chạy được khoảng $10^{8}$ phép tính cơ bản, thuật toán $O(N)$ chạy cực nhanh và an toàn khi dữ liệu đầu vào $N ≤ 10^{7}$.
+
+2. **Độ phức tạp $O(N^{2})$ (Số bước tính tăng theo bình phương của $N$):**
+   * **Cách hoạt động**: Chương trình có **hai vòng lặp lồng nhau** (với mỗi bước của vòng lặp ngoài chạy $N$ lần, vòng lặp trong lại chạy tiếp $N$ lần).
+   * **Số bước tính**: Bằng $N \times N = N^{2}$ bước.
+     * Nếu $N = 100 \rightarrow$ Máy tính chạy $100 \times 100 = 10,000$ bước (siêu nhanh, chưa tới 0.001 giây).
+     * Nếu $N = 10,000$ ($10^{4}$) $\rightarrow$ Máy tính chạy $10^{4} \times 10^{4} = 10^{8}$ bước (chạy vừa vặn trong 1 giây).
+     * Nếu $N = 100,000$ ($10^{5}$) $\rightarrow$ Máy tính chạy $10^{5} \times 10^{5} = 10^{10}$ bước (máy tính cần chạy khoảng **100 giây** → **bị báo lỗi TLE ngay lập tức**!).
 
 ---
 
