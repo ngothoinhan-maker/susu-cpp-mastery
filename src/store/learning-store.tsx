@@ -1323,12 +1323,12 @@ while (N > 0) {
           },
           {
             id: "w2-l2-hw2",
-            title: "Bài 2: Số đối xứng",
-            description: "Số đối xứng là số đọc từ trái sang phải hay phải sang trái đều như nhau (VD: 12321). Kiểm tra X có phải số đối xứng không.",
-            inputDesc: "Một dòng chứa X (1 ≤ X ≤ 10^18).",
-            outputDesc: "In ra 'YES' hoặc 'NO'.",
-            sampleInput: "12321",
-            sampleOutput: "YES"
+            title: "Bài 2: Tìm chữ số lớn nhất",
+            description: "Cho số nguyên dương N. Hãy tìm và in ra chữ số lớn nhất xuất hiện trong N.",
+            inputDesc: "Một dòng chứa số nguyên dương N (1 ≤ N ≤ 10^{18}).",
+            outputDesc: "In ra chữ số lớn nhất.",
+            sampleInput: "13928",
+            sampleOutput: "9"
           }
         ]
       },
