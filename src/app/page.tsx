@@ -238,7 +238,7 @@ export default function Dashboard() {
                 <span className="text-[10px] font-bold text-violet-400 uppercase tracking-widest bg-violet-500/10 px-2.5 py-1 rounded-full border border-violet-500/20">
                   TUẦN HIỆN TẠI
                 </span>
-                <Link href={`/lessons/${activeWeek}`}>
+                <Link href={`/week/${activeWeek}/lesson/1`}>
                   <h2 className="text-xl font-extrabold text-white mt-3 hover:text-violet-400 hover:underline transition-all cursor-pointer">
                     Tuần {activeWeek}: {weeks[activeWeek - 1]?.title}
                   </h2>
@@ -370,7 +370,7 @@ export default function Dashboard() {
                           Tuần {week.weekNumber}: {week.title}
                         </h3>
                       ) : (
-                        <Link href={`/lessons/${week.weekNumber}`}>
+                        <Link href={`/week/${week.weekNumber}/lesson/1`}>
                           <h3 className="text-lg font-bold text-white hover:text-violet-400 hover:underline transition-all cursor-pointer">
                             Tuần {week.weekNumber}: {week.title}
                           </h3>

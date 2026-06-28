@@ -1629,14 +1629,77 @@ bool kiemTra(long long n) {
         exerciseTitle: "Tổng các số nguyên tố từ 1 đến N",
         difficulty: "Trung bình",
         externalJudgeUrl: "https://ucode.vn/problems",
-        visualizerUrl: "https://vnoi.info/wiki/algo/prime/sieve-of-eratosthenes/",
+        visualizerUrl: "https://wiki.vnoi.info/vi/algo/algebra/prime_sieve",
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
-Bài toán: "Cho Q câu hỏi, mỗi câu hỏi cho số N, hãy tính tổng các số nguyên tố từ 1 đến N." Nếu Q = 100 và N = $10^6$, dùng cách kiểm tra từng số ($O(\sqrt{N})$ mỗi lần) sẽ mất $100 × 10^6 × 10^3 = 10^{11}$ bước → **TLE**. **Sàng Eratosthenes** xây dựng bảng nguyên tố **một lần duy nhất** rồi trả lời mọi câu hỏi trong $O(1)$!
+### Ví dụ thực tế về sự lãng phí của phép thử chia hết
+Tưởng tượng bạn được giao nhiệm vụ tìm tất cả các số nguyên tố trong phạm vi từ $2$ đến $100$:
+* **Phương pháp kiểm tra từng số (Trial Division - thử chia từ $2$ đến $\\sqrt{x}$):** 
+  Với mỗi số $x$, bạn phải chạy một vòng lặp để kiểm tra xem nó có chia hết cho số nào không.
+  * Xét $x = 100$: Bạn kiểm tra chia hết cho $2$ (phát hiện chia hết, dừng).
+  * Xét $x = 99$: Bạn kiểm tra chia cho $2$, rồi chia cho $3$ (phát hiện chia hết, dừng).
+  * Xét $x = 98$: Bạn kiểm tra chia cho $2$ (dừng)...
+  * Xét $x = 97$: Bạn kiểm tra chia cho $2, 3, 4, 5, 6, 7, 8, 9$ (không chia hết → nguyên tố).
+
+**Sự lãng phí nằm ở đâu?** Bạn đang lặp đi lặp lại việc kiểm tra tính chia hết cho $2$ đối với mọi số chẵn ($4, 6, 8, ..., 100$), và chia cho $3$ đối với mọi bội số của $3$. Mỗi số được kiểm tra một cách hoàn toàn độc lập, khiến máy tính phải tính đi tính lại những phép chia mà đáng lẽ ra chúng ta có thể biết trước kết quả.
+
+### Sức mạnh của việc "Gạch ô" đồng thời (Sàng Eratosthenes)
+Thay vì đi hỏi từng số *"Bạn có phải là số nguyên tố không?"*, **Sàng Eratosthenes** lật ngược tư duy bằng cách **tận dụng kết quả đã có để gạch bỏ hàng loạt**:
+1. Ta viết các số từ $2$ đến $100$ ra bảng.
+2. Tìm số chưa bị gạch nhỏ nhất là $2$ (đây chắc chắn là số nguyên tố). Ngay lập tức, ta **gạch bỏ toàn bộ bội số của 2** ($4, 6, 8, 10, ...$). Từ giờ trở đi, ta không bao giờ cần phí công thực hiện phép chia cho $2$ để kiểm tra các số chẵn này nữa!
+3. Số chưa bị gạch tiếp theo là $3$ (là số nguyên tố). Ta lập tức **gạch bỏ toàn bộ bội số của 3** ($9, 15, 21, ...$ - lưu ý $6, 12, ...$ đã bị gạch bởi $2$ rồi).
+
+Nhờ cách này, thay vì mất công kiểm tra từng số một, thuật toán thực hiện đánh dấu theo lô (batch-marking) cực nhanh, giúp tận dụng triệt để những gì đã biết để loại trừ những gì chưa biết.
+
+---
+
+### Khi nào Sàng Eratosthenes là bắt buộc?
+Xét bài toán: *"Cho $Q$ câu hỏi, mỗi câu hỏi cho số $N$, hãy tính tổng các số nguyên tố từ $1$ đến $N$."* 
+Nếu $Q = 100$ và $N = 10^{6}$:
+* Nếu dùng cách kiểm tra từng số lẻ loi bằng $O(\\sqrt{N})$ mỗi lần, tổng số bước tính có thể lên tới $100 \\times 10^{6} \\times 10^{3} = 10^{11}$ bước → Chắc chắn bị quá giới hạn thời gian (**TLE**).
+* Sử dụng **Sàng Eratosthenes**, ta chỉ cần dựng bảng nguyên tố **đúng 1 lần duy nhất** lên tới $10^{6}$ phần tử với độ phức tạp cực nhỏ $O(N \\log \\log N)$, sau đó trả lời mỗi câu hỏi trong $O(1)$!
+
+> 📖 **Tài liệu tham khảo chuyên sâu:**
+> - [VNOI Wiki (Tiếng Việt) - Sàng số nguyên tố](https://wiki.vnoi.info/vi/algo/algebra/prime_sieve)
+> - [CP-Algorithms (Tiếng Anh) - Sieve of Eratosthenes](https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html)
 
 ---
 
 ## 📚 Khái niệm cốt lõi
+
+### Giới thiệu nhanh về Mảng một chiều (Array)
+Vì thuật toán Sàng cần lưu trạng thái (nguyên tố hay hợp số) cho hàng triệu con số, chúng ta cần sử dụng một cấu trúc dữ liệu gọi là **Mảng (Array)**. 
+* **Ý tưởng:** Mảng giống như một dãy nhà tập thể được đánh số thứ tự từ $0, 1, 2, ..., N$. Mỗi ô nhà (phần tử) lưu trữ một giá trị duy nhất.
+* **Cách dùng trong Sàng:** Ta dùng mảng \`bool is_prime[100]\` để lưu trạng thái đúng/sai cho các số từ $0$ đến $99$.
+  * \`is_prime[7] = true\` nghĩa là số $7$ là số nguyên tố.
+  * \`is_prime[8] = false\` nghĩa là số $8$ không phải là số nguyên tố.
+
+**Ví dụ code mảng thực tế chạy được:**
+\`\`\`cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Khai báo mảng điểm gồm 5 phần tử kiểu số nguyên
+    int diem[5] = {9, 8, 10, 7, 9};
+    
+    // In ra màn hình phần tử ở vị trí đầu tiên (vị trí số 0)
+    cout << "Diem hoc sinh dau tien: " << diem[0] << endl; // Kết quả: 9
+    
+    // Thay đổi điểm của học sinh ở vị trí thứ tư (vị trí số 3)
+    diem[3] = 9;
+    cout << "Diem học sinh thu tu sau khi sua: " << diem[3] << endl; // Kết quả: 9
+    
+    return 0;
+}
+\`\`\`
+
+**Giải thích từng câu lệnh:**
+* \`int diem[5] = {9, 8, 10, 7, 9};\` → Tạo ra $5$ ô nhớ liền kề nhau trong RAM, đặt tên chung là \`diem\`, mỗi ô chứa một số nguyên (\`int\`).
+* \`diem[0]\` → Vị trí của phần tử trong mảng luôn bắt đầu từ chỉ số **$0$** (chứ không phải $1$). Do đó \`diem[0]\` là phần tử thứ nhất.
+* \`diem[3] = 9;\` → Gán giá trị mới bằng $9$ vào ô nhớ có chỉ số $3$ (phần tử thứ tư của mảng).
+
+---
 
 ### Nguyên lý hoạt động của Sàng
 
@@ -1719,6 +1782,12 @@ int main() {
     return 0;
 }
 \`\`\`
+
+**Giải thích các câu lệnh quan trọng:**
+* \`#include <algorithm>\`: Đây là thư viện chứa thuật toán chuẩn của C++, cụ thể ở đây là hàm \`fill\`.
+* \`fill(is_prime, is_prime + n + 1, true);\`: Hàm này giúp chúng ta gán nhanh giá trị \`true\` cho toàn bộ mảng từ chỉ số $0$ đến $n$. Thay vì phải dùng vòng lặp \`for\` duyệt từng phần tử để gán, hàm \`fill\` thực hiện việc này trong một câu lệnh rất ngắn gọn. Cú pháp cơ bản là: \`fill(bắt_đầu, kết_thúc, giá_trị);\`.
+* \`is_prime[0] = is_prime[1] = false;\`: Số $0$ và số $1$ được gán trước là \`false\` vì chúng không phải số nguyên tố.
+* \`for (int i = 2; i * i <= n; i++)\`: Ta chỉ cần duyệt các số nguyên tố $i$ từ $2$ đến $\\sqrt{n}$. Điều kiện dừng $i \\le \\sqrt{n}$ được viết tối ưu dưới dạng $i \\times i \\le n$ để tránh sử dụng hàm căn bậc hai số thực \`sqrt()\` chậm hơn và dễ bị sai số.
 
 ### Bước 2 – Prefix Sum nguyên tố: Trả lời Q câu hỏi trong O(1)
 
@@ -1887,7 +1956,7 @@ void build_sieve(int n) {
         exerciseTitle: "Rút gọn phân số",
         difficulty: "Trung bình",
         externalJudgeUrl: "https://ucode.vn/problems",
-        visualizerUrl: "https://vnoi.info/wiki/algo/prime/sieve-of-eratosthenes/",
+        visualizerUrl: "https://wiki.vnoi.info/vi/algo/algebra/prime_sieve",
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
 Bài toán: "Có 48 viên kẹo và 18 cái bánh, muốn chia thành các phần bằng nhau (mỗi phần gồm cả kẹo lẫn bánh, không còn dư). Tối đa được chia bao nhiêu phần?" Đây chính là bài toán tìm **UCLN(48, 18)**. Thuật toán Euclid 2300 năm tuổi giải quyết trong chưa đến 10 bước!
@@ -1905,15 +1974,19 @@ Bài toán: "Có 48 viên kẹo và 18 cái bánh, muốn chia thành các phầ
 
 ### Công thức Euclid
 
-$$\text{UCLN}(A, B) = \text{UCLN}(B, A \bmod B)$$
+$$\\text{UCLN}(A, B) = \\text{UCLN}(B, A \\bmod B)$$
 
 **Khi $B = 0$ thì dừng, kết quả là $A$.**
 
-**Lý do hoạt động:** Mọi ước chung của A và B cũng là ước chung của B và (A mod B). Chứng minh ngắn:
-- Gọi d là ước chung của A và B
-- Vì A = q×B + r, ta có r = A - q×B
-- d chia hết A và B → d chia hết r = A - q×B
-- → d là ước chung của B và r = A mod B ✓
+**Lý do hoạt động:** Mọi ước chung của $A$ và $B$ cũng là ước chung của $B$ và $(A \\bmod B)$. Chứng minh ngắn:
+- Gọi $d$ là ước chung của $A$ và $B$.
+- Vì $A = q \\times B + r$, ta có số dư $r = A - q \\times B$.
+- Vì cả $A$ và $B$ đều chia hết cho $d$ $\\rightarrow$ hiệu $r = A - q \\times B$ cũng phải chia hết cho $d$.
+- $\\rightarrow$ $d$ cũng là ước chung của $B$ và số dư $r = A \\bmod B$ ✓.
+
+> 📖 **Tài liệu tham khảo chuyên sâu:**
+> - [VNOI Wiki (Tiếng Việt) - Thuật toán Euclid](https://wiki.vnoi.info/vi/algo/algebra/euclid)
+> - [CP-Algorithms (Tiếng Anh) - Euclidean algorithm](https://cp-algorithms.com/algebra/euclid-algorithm.html)
 
 ---
 
@@ -1932,13 +2005,140 @@ UCLN(48, 18) = 6 ✓
 Kiểm tra: 48 = 6×8, 18 = 6×3 ✓
 \`\`\`
 
-### Bước 2 – Cài đặt UCLN (hai cách: vòng lặp và đệ quy)
+### Bước 2 – Cài đặt UCLN
+
+#### Cách 1: Sử dụng Vòng lặp (Khuyên dùng khi thi)
+Phương pháp này lặp liên tục để thực hiện phép chia lấy dư cho đến khi số dư bằng $0$:
 
 \`\`\`cpp
 #include <iostream>
 using namespace std;
 
-// Cách 1: Vòng lặp (khuyến nghị trong thi)
+// Hàm tìm UCLN sử dụng vòng lặp
+long long gcd_iterative(long long a, long long b) {
+    while (b != 0) {
+        long long r = a % b; // Lấy số dư
+        a = b;               // Thay a bằng b
+        b = r;               // Thay b bằng số dư r
+    }
+    return a;                // Trả về kết quả cuối cùng khi b = 0
+}
+
+int main() {
+    long long a, b;
+    if (cin >> a >> b) {
+        cout << "UCLN(" << a << ", " << b << ") = " << gcd_iterative(a, b) << endl;
+    }
+    return 0;
+}
+\`\`\`
+
+**Giải thích câu lệnh:** 
+Vòng lặp \`while (b != 0)\` liên tục cập nhật cặp số $(a, b)$ thành $(b, a \\bmod b)$ bằng biến trung gian \`r\`. Khi \`b\` giảm về $0$, vòng lặp dừng và giá trị \`a\` lúc này chính là UCLN.
+
+---
+
+#### Tìm hiểu về Đệ quy (Recursion) trước khi cài đặt cách 2
+Để code ngắn gọn hơn nữa, chúng ta có thể viết thuật toán Euclid dưới dạng **Đệ quy**.
+* **Đệ quy là gì?** Đệ quy là việc một hàm **tự gọi lại chính nó** để giải quyết một bài toán nhỏ hơn của cùng một dạng.
+* **Hình ảnh ẩn dụ dễ hiểu:** Hãy tưởng tượng bạn đứng trong hàng đợi mua vé dài và muốn biết mình đứng thứ mấy. Bạn hỏi người phía trước: *"Bạn đứng thứ mấy?"*. Người đó không biết, lại tiếp tục hỏi người phía trước nữa... Câu hỏi cứ truyền đi cho đến khi tới **người thứ 1 (đầu hàng)**. Người đầu hàng trả lời: *"Tôi đứng thứ 1"*. Người thứ 2 nghe vậy liền biết mình đứng thứ $2$ và trả lời cho người thứ $3$... Cuối cùng câu trả lời được truyền ngược lại đến bạn.
+
+Một hàm đệ quy luôn có 2 phần bắt buộc:
+1. **Điểm dừng (Base Case):** Điều kiện để hàm dừng lại, không gọi tiếp nữa (ví dụ: khi gặp người thứ 1). Nếu thiếu điểm dừng, chương trình sẽ chạy vô hạn và bị lỗi tràn bộ nhớ (Stack Overflow).
+2. **Bước đệ quy (Recursive Case):** Hàm tự gọi lại chính nó nhưng với tham số nhỏ hơn (ví dụ: hỏi người đứng trước).
+
+**Ví dụ tính tổng từ 1 đến N bằng Đệ quy:**
+\`\`\`cpp
+#include <iostream>
+using namespace std;
+
+// Hàm đệ quy tính tổng từ 1 đến N
+int tinh_tong(int n) {
+    if (n == 1) {
+        return 1; // Điểm dừng: Nếu n = 1, kết quả chắc chắn là 1
+    }
+    return n + tinh_tong(n - 1); // Bước đệ quy: lấy N cộng với tổng của (N-1)
+}
+
+int main() {
+    cout << "Tong tu 1 den 5 la: " << tinh_tong(5) << endl; // Kết quả: 15
+    return 0;
+}
+\`\`\`
+
+---
+
+#### Cách 2: Sử dụng Đệ quy (Ngắn gọn và tối giản)
+Khi đã hiểu nguyên lý đệ quy, ta thấy thuật toán Euclid chính là một hàm đệ quy cực kỳ đẹp mắt:
+
+\`\`\`cpp
+#include <iostream>
+using namespace std;
+
+// Hàm tìm UCLN sử dụng đệ quy
+long long gcd_recursive(long long a, long long b) {
+    if (b == 0) {
+        return a; // Điểm dừng: Khi số thứ hai bằng 0, UCLN chính là số thứ nhất
+    }
+    return gcd_recursive(b, a % b); // Bước đệ quy: gọi lại chính nó với cặp số mới
+}
+
+int main() {
+    long long a, b;
+    if (cin >> a >> b) {
+        cout << "UCLN(" << a << ", " << b << ") = " << gcd_recursive(a, b) << endl;
+    }
+    return 0;
+}
+\`\`\`
+
+**Giải thích câu lệnh:**
+* \`if (b == 0) return a;\` → Điểm dừng của đệ quy theo đúng nguyên lý Euclid.
+* \`return gcd_recursive(b, a % b);\` → Hàm tự gọi lại chính mình để tính UCLN của số thứ hai \`b\` và số dư \`a % b\`.
+
+---
+
+#### Cách 3: Sử dụng hàm UCLN có sẵn của C++
+Trong thực tế khi đi thi học sinh giỏi hoặc thi lập trình thi đấu, để tiết kiệm thời gian, C++ cung cấp sẵn hàm tìm UCLN cực nhanh trong thư viện \`<algorithm>\` (với C++14 trở về trước) hoặc thư viện \`<numeric>\` (với C++17 trở lên):
+
+\`\`\`cpp
+#include <iostream>
+#include <algorithm> // Thư viện chứa hàm __gcd cho C++14 trở xuống
+using namespace std;
+
+int main() {
+    long long a = 48, b = 18;
+    long long g = __gcd(a, b); // Hàm có sẵn của C++
+    cout << "UCLN la: " << g << endl; // Kết quả: 6
+    return 0;
+}
+\`\`\`
+
+**Độ phức tạp chung:** $O(\\log(\\min(A, B)))$ — Cả 3 cách đều chạy cực nhanh. Với $A, B = 10^{18}$ (số cực lớn), thuật toán chỉ cần tối đa ~87 bước chia để ra kết quả!
+
+### Bước 3 – BCNN và kỹ thuật chống tràn số
+
+#### Công thức tính BCNN qua UCLN
+Khi đã tìm được Ước chung lớn nhất (UCLN) của hai số $A$ và $B$, ta dễ dàng tính được Bội chung nhỏ nhất (BCNN) dựa vào mối liên hệ toán học sau:
+
+$$\\text{BCNN}(A, B) = \\frac{A \\times B}{\\text{UCLN}(A, B)}$$
+
+#### Nguy cơ tràn số (Integer Overflow)
+* Trong lập trình C++, kiểu dữ liệu \`long long\` lớn nhất chỉ chứa được giá trị tối đa khoảng $9 \\times 10^{18}$.
+* Nếu ta tính trực tiếp \`A * B\` trước, ví dụ với $A, B \\approx 10^{9}$, phép nhân \`A * B\` sẽ ra $10^{18}$ (rất gần giới hạn). Nếu $A, B > 3 \\times 10^{9}$, phép nhân sẽ lập tức bị **tràn số** và cho kết quả sai lệch âm/dương kỳ quặc trước khi kịp chia cho UCLN.
+
+#### Giải pháp chống tràn (Chia trước, nhân sau)
+Bằng cách thay đổi thứ tự thực hiện phép tính (chia $A$ cho UCLN trước, sau đó nhân với $B$), ta giữ cho các giá trị trung gian luôn nhỏ và an toàn:
+
+$$\\text{BCNN}(A, B) = \\left( \\frac{A}{\\text{UCLN}(A, B)} \\right) \\times B$$
+
+**Ví dụ code cài đặt chống tràn:**
+
+\`\`\`cpp
+#include <iostream>
+using namespace std;
+
+// Hàm tìm UCLN (sử dụng vòng lặp)
 long long gcd_iterative(long long a, long long b) {
     while (b != 0) {
         long long r = a % b;
@@ -1948,46 +2148,22 @@ long long gcd_iterative(long long a, long long b) {
     return a;
 }
 
-// Cách 2: Đệ quy (ngắn gọn hơn)
-long long gcd_recursive(long long a, long long b) {
-    return (b == 0) ? a : gcd_recursive(b, a % b);
-}
-
-// Cách 3: Dùng hàm có sẵn của C++17
-// #include <numeric>
-// long long g = __gcd(a, b);
-
-int main() {
-    long long a, b;
-    cin >> a >> b;
-    cout << "UCLN(" << a << ", " << b << ") = " << gcd_iterative(a, b) << endl;
-    return 0;
-}
-\`\`\`
-
-**Độ phức tạp:** $O(\log(\min(A, B)))$ — Với $A, B = 10^{18}$, chỉ cần tối đa ~87 bước!
-
-### Bước 3 – BCNN và kỹ thuật chống tràn số
-
-\`\`\`cpp
-// BCNN(A, B) = A × B / UCLN(A, B)
-// NHƯNG A × B có thể tràn long long nếu A, B ~ 10^9!
-
-// SAI (có thể tràn):
+// SAI (có thể tràn do nhân trước):
 long long lcm_wrong(long long a, long long b) {
-    return a * b / gcd_iterative(a, b);  // a*b có thể tràn!
+    return a * b / gcd_iterative(a, b);
 }
 
-// ĐÚNG (chia TRƯỚC, nhân SAU):
+// ĐÚNG (chia TRƯỚC, nhân SAU để chống tràn):
 long long lcm(long long a, long long b) {
-    return (a / gcd_iterative(a, b)) * b;  // Chia cho gcd trước để giảm số
+    return (a / gcd_iterative(a, b)) * b;
 }
 
 int main() {
     long long a, b;
-    cin >> a >> b;
-    cout << "UCLN = " << gcd_iterative(a, b) << endl;
-    cout << "BCNN = " << lcm(a, b) << endl;
+    if (cin >> a >> b) {
+        cout << "UCLN = " << gcd_iterative(a, b) << endl;
+        cout << "BCNN = " << lcm(a, b) << endl;
+    }
     return 0;
 }
 \`\`\`
@@ -2039,25 +2215,49 @@ b != 1 → in "2/3" ✓
 
 ### Bước 5 – BCNN của nhiều số
 
+Để tìm Bội chung nhỏ nhất (BCNN) của một danh sách gồm $N$ số $a_1, a_2, ..., a_N$, ta có thể áp dụng tính chất kết hợp bằng cách tính lũy tiến (gom nhóm) từ trái qua phải:
+* **Ý tưởng:** Đặt biến kết quả ban đầu \`result = a_1\`. Lần lượt duyệt qua các số tiếp theo $a_i$ và cập nhật: \`result = BCNN(result, a_i)\`.
+* **Ví dụ:** Tìm BCNN của $3$ số: $3, 6, 8$:
+  1. Ban đầu: \`result = 3\`.
+  2. Xét số thứ hai ($6$): \`result = BCNN(3, 6) = 6\`.
+  3. Xét số thứ ba ($8$): \`result = BCNN(6, 8) = 24\`.
+  4. Kết quả cuối cùng là $24$.
+
+**Ví dụ code cài đặt chạy được:**
 \`\`\`cpp
+#include <iostream>
+using namespace std;
+
+// Hàm tìm UCLN
 long long gcd(long long a, long long b) {
-    while (b) { long long r = a%b; a=b; b=r; }
+    while (b) { 
+        long long r = a % b; 
+        a = b; 
+        b = r; 
+    }
     return a;
 }
+
+// Hàm tìm BCNN chống tràn
 long long lcm(long long a, long long b) {
     return (a / gcd(a, b)) * b;
 }
 
 int main() {
     int n;
-    cin >> n;
-    long long result = 1;
-    for (int i = 0; i < n; i++) {
-        long long x;
-        cin >> x;
-        result = lcm(result, x);  // BCNN(result, x) rồi gán lại
+    if (cin >> n) {
+        long long result = 1;
+        for (int i = 0; i < n; i++) {
+            long long x;
+            cin >> x;
+            if (i == 0) {
+                result = x; // Số đầu tiên
+            } else {
+                result = lcm(result, x); // Cập nhật lũy tiến
+            }
+        }
+        cout << "BCNN cua day so la: " << result << endl;
     }
-    cout << result << endl;
     return 0;
 }
 \`\`\`
@@ -2107,20 +2307,20 @@ int main() {
         homeworkProblems: [
           {
             id: "w3-l2-hw1",
-            title: "Bài 1: Rút gọn phân số",
-            description: "Cho phân số A/B. Rút gọn về dạng tối giản. Nếu mẫu = 1 sau rút gọn, chỉ in tử.",
-            inputDesc: "Một dòng chứa A và B (1 ≤ A, B ≤ 10^12).",
-            outputDesc: "Phân số tối giản dạng A/B hoặc chỉ A nếu B = 1.",
-            sampleInput: "24 36",
-            sampleOutput: "2/3"
+            title: "Bài 1: Cộng hai phân số",
+            description: "Cho hai phân số A/B và C/D. Hãy tính tổng của hai phân số này và đưa ra kết quả dưới dạng phân số tối giản X/Y. Nếu mẫu số Y = 1 sau khi tối giản, chỉ in ra tử số X.",
+            inputDesc: "Một dòng chứa bốn số nguyên dương A, B, C, D (1 ≤ A, B, C, D ≤ 10^5).",
+            outputDesc: "In ra phân số tối giản dưới dạng X/Y hoặc chỉ in X nếu Y = 1.",
+            sampleInput: "1 2 1 3",
+            sampleOutput: "5/6"
           },
           {
             id: "w3-l2-hw2",
-            title: "Bài 2: Bội chung nhỏ nhất nhiều số",
-            description: "Cho N số nguyên dương. Tìm Bội chung nhỏ nhất (BCNN) của tất cả N số này.",
-            inputDesc: "Dòng 1: N (1 ≤ N ≤ 100). Dòng 2: N số nguyên dương (1 ≤ A_i ≤ 10^4).",
-            outputDesc: "BCNN của N số.",
-            sampleInput: "3\n2 3 4",
+            title: "Bài 2: Ước chung lớn nhất của nhiều số",
+            description: "Cho dãy gồm N số nguyên dương. Hãy tìm Ước chung lớn nhất (UCLN) của tất cả N số này.",
+            inputDesc: "Dòng 1: N (1 ≤ N ≤ 100). Dòng 2: N số nguyên dương a_i (1 ≤ a_i ≤ 10^9).",
+            outputDesc: "In ra UCLN của N số.",
+            sampleInput: "3\n24 36 60",
             sampleOutput: "12"
           },
           {
@@ -2140,7 +2340,7 @@ int main() {
         exerciseTitle: "Phân tích N ra thừa số nguyên tố",
         difficulty: "Trung bình",
         externalJudgeUrl: "https://ucode.vn/problems",
-        visualizerUrl: "https://vnoi.info/wiki/algo/prime/sieve-of-eratosthenes/",
+        visualizerUrl: "https://wiki.vnoi.info/vi/algo/algebra/prime_sieve",
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
 **Định lý cơ bản của số học:** Mọi số nguyên lớn hơn 1 đều có thể viết duy nhất dưới dạng tích các số nguyên tố (không kể thứ tự). Ví dụ: $360 = 2^3 × 3^2 × 5$. Phân tích thừa số nguyên tố là chìa khóa để giải nhiều bài: đếm ước số, tìm UCLN/BCNN, phân tích cấu trúc số...
@@ -2169,12 +2369,16 @@ int main() {
 
 ### Công thức đếm số ước
 
-Nếu $N = p_1^{a_1} × p_2^{a_2} × \ldots × p_k^{a_k}$, thì:
+Nếu $N = p_1^{a_1} × p_2^{a_2} × \\ldots × p_k^{a_k}$, thì:
 
-$$\text{Số ước} = (a_1 + 1)(a_2 + 1) \cdots (a_k + 1)$$
+$$\\text{Số ước} = (a_1 + 1)(a_2 + 1) \\cdots (a_k + 1)$$
 
 **Ví dụ:** $360 = 2^3 × 3^2 × 5^1$
 - Số ước = $(3+1)(2+1)(1+1) = 4 × 3 × 2 = 24$
+
+> 📖 **Tài liệu tham khảo chuyên sâu:**
+> - [VNOI Wiki (Tiếng Việt) - Các ước của số nguyên](https://wiki.vnoi.info/vi/algo/math/divisors)
+> - [CP-Algorithms (Tiếng Anh) - Number of divisors](https://cp-algorithms.com/algebra/divisors.html)
 
 ---
 
@@ -2182,6 +2386,50 @@ $$\text{Số ước} = (a_1 + 1)(a_2 + 1) \cdots (a_k + 1)$$
 
 ### Bước 1 – Phân tích và in thừa số nguyên tố
 
+#### Giới thiệu nhanh về Thư viện Vector (Mảng co giãn)
+Trong đoạn code dưới đây, thay vì in trực tiếp kết quả ra màn hình ngay lập tức, ta sẽ lưu chúng vào một cấu trúc dữ liệu gọi là **vector** để trả về và xử lý sau.
+* **Vector là gì?** Vector là một chiếc "mảng co giãn" (mảng động) trong C++. Khác với mảng tĩnh cố định phần tử, vector cho phép bạn thêm phần tử vào cuối mảng bất kỳ lúc nào mà không cần khai báo kích thước ban đầu.
+* **Khai báo:**
+  * Ta cần khai báo thư viện: \`#include <vector>\`.
+  * Cú pháp khai báo: \`vector<kiểu_dữ_liệu> tên_vector;\`. Ví dụ: \`vector<long long> factors;\` tạo ra một vector lưu số nguyên lớn ban đầu rỗng.
+* **Các hàm quan trọng sẽ dùng:**
+  * \`factors.push_back(val)\`: Đẩy (thêm) giá trị \`val\` vào cuối vector, kích thước vector tự động tăng thêm 1.
+  * \`factors.size()\`: Trả về số lượng phần tử hiện có trong vector.
+  * Duyệt vector: Dùng vòng lặp \`for (long long x : factors)\` để duyệt qua từng giá trị có trong vector.
+
+**Ví dụ code sử dụng vector chạy được:**
+\`\`\`cpp
+#include <iostream>
+#include <vector> // Khai báo thư viện vector
+using namespace std;
+
+int main() {
+    vector<int> numbers; // Tạo một vector chứa các số nguyên rỗng
+    
+    // Thêm phần tử vào cuối vector
+    numbers.push_back(10);
+    numbers.push_back(20);
+    numbers.push_back(30);
+    
+    cout << "So phan tu trong vector: " << numbers.size() << endl; // Kết quả: 3
+    
+    // Duyệt qua và in từng phần tử trong vector
+    for (int x : numbers) {
+        cout << x << " "; // Kết quả: 10 20 30
+    }
+    cout << endl;
+    return 0;
+}
+\`\`\`
+
+**Giải thích từng câu lệnh:**
+* \`vector<int> numbers;\` → Khai báo một mảng động chứa số nguyên.
+* \`numbers.push_back(10);\` → Đẩy giá trị $10$ vào cuối mảng động. Kích thước mảng tăng từ $0$ lên $1$.
+* \`for (int x : numbers)\` → Vòng lặp duyệt nhanh: biến \`x\` sẽ lần lượt nhận các giá trị $10, 20, 30$ chứa trong mảng để in ra.
+
+---
+
+**Mã nguồn thuật toán Phân tích:**
 \`\`\`cpp
 #include <iostream>
 #include <vector>
@@ -2213,6 +2461,11 @@ int main() {
     return 0;
 }
 \`\`\`
+
+**Giải thích các câu lệnh quan trọng:**
+* \`auto f = phanTich(n);\`: Từ khóa \`auto\` trong C++ cho phép trình biên dịch **tự động suy luận kiểu dữ liệu** của biến dựa trên giá trị gán cho nó. 
+  Vì hàm \`phanTich(n)\` trả về một \`vector<long long>\` nên trình biên dịch sẽ tự động hiểu biến \`f\` có kiểu dữ liệu là \`vector<long long>\`. Sử dụng \`auto\` giúp viết code ngắn gọn hơn thay vì phải viết dài dòng: \`vector<long long> f = phanTich(n);\`.
+* \`for (long long x : f)\`: Đây là vòng lặp duyệt nhanh (Range-based for loop) để duyệt qua tất cả phần tử trong mảng động \`f\`. Trong mỗi vòng lặp, biến \`x\` sẽ lần lượt nhận giá trị của từng phần tử trong \`f\` từ trái qua phải để in ra màn hình.
 
 **Trace với n = 60:**
 \`\`\`
@@ -2375,29 +2628,29 @@ BCNN(M, N) qua thừa số: tích max(a_i, b_i)
         homeworkProblems: [
           {
             id: "w3-l3-hw1",
-            title: "Bài 1: Phân tích thừa số nguyên tố",
-            description: "Cho số N. Phân tích N ra thừa số nguyên tố, in theo thứ tự tăng dần.",
-            inputDesc: "Một số N (2 ≤ N ≤ 10^9).",
-            outputDesc: "Các thừa số nguyên tố cách nhau dấu cách.",
+            title: "Bài 1: Thừa số nguyên tố lớn nhất",
+            description: "Cho số nguyên dương N. Hãy tìm thừa số nguyên tố lớn nhất của số N đó.",
+            inputDesc: "Một dòng chứa số nguyên dương N (2 ≤ N ≤ 10^12).",
+            outputDesc: "In ra thừa số nguyên tố lớn nhất của N.",
             sampleInput: "60",
-            sampleOutput: "2 2 3 5"
+            sampleOutput: "5"
           },
           {
             id: "w3-l3-hw2",
-            title: "Bài 2: Số ước số",
-            description: "Cho số nguyên dương N. Đếm số lượng ước số dương của N.",
-            inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^12).",
-            outputDesc: "Đếm số lượng ước số của N.",
-            sampleInput: "12",
-            sampleOutput: "6"
+            title: "Bài 2: Số có đúng 3 ước số",
+            description: "Cho số nguyên dương N. Kiểm tra xem N có phải là số có đúng 3 ước số dương hay không. (Gợi ý: Một số có đúng 3 ước số khi và chỉ khi nó là bình phương của một số nguyên tố).",
+            inputDesc: "Một dòng chứa số nguyên dương N (1 ≤ N ≤ 10^12).",
+            outputDesc: "In ra 'YES' nếu N có đúng 3 ước số, ngược lại in 'NO'.",
+            sampleInput: "9",
+            sampleOutput: "YES"
           },
           {
             id: "w3-l3-hw3",
-            title: "Bài 3: Số đẹp",
-            description: "Một số được gọi là số đẹp nếu nó chỉ chia hết cho các thừa số nguyên tố 2, 3 hoặc 5. Kiểm tra N có phải là số đẹp hay không.",
-            inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^18).",
-            outputDesc: "In ra 'YES' nếu N là số đẹp, ngược lại in 'NO'.",
-            sampleInput: "30",
+            title: "Bài 3: Số gần nguyên tố",
+            description: "Một số nguyên dương được gọi là số gần nguyên tố (semiprime) nếu nó có thể phân tích thành tích của đúng hai số nguyên tố (hai số này có thể giống hoặc khác nhau). Ví dụ: 6 = 2 × 3, 9 = 3 × 3 là các số gần nguyên tố. Nhưng 8 = 2 × 2 × 2 (3 thừa số) thì không phải. Hãy kiểm tra xem N có phải số gần nguyên tố hay không.",
+            inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^9).",
+            outputDesc: "In ra 'YES' nếu N là số gần nguyên tố, ngược lại in 'NO'.",
+            sampleInput: "6",
             sampleOutput: "YES"
           }
         ]
