@@ -1408,11 +1408,13 @@ bool         laNguyenTo ( long long n )
 
 ### Bước 1 – Hàm cơ bản: Tổng chữ số
 
+Để bắt đầu học cách viết hàm, chúng ta hãy viết một hàm đơn giản nhận vào số nguyên dương $N$ và trả về tổng các chữ số của nó. Hàm này giúp gom nhóm logic xử lý vòng lặp tách chữ số để tái sử dụng nhiều lần.
+
 \`\`\`cpp
 #include <iostream>
 using namespace std;
 
-// Hàm trả về tổng chữ số của N
+// Hàm nhận vào N và trả về tổng các chữ số của N
 long long tongChuSo(long long N) {
     long long tong = 0;
     while (N > 0) {
@@ -1426,41 +1428,47 @@ int main() {
     long long X;
     cin >> X;
     
-    // Gọi hàm - code rõ ràng, tái sử dụng được!
-    cout << "Tong chu so: " << tongChuSo(X) << endl;
-    cout << "Tong chu so cua X+1: " << tongChuSo(X + 1) << endl;
+    // Gọi hàm - code rõ ràng, dễ đọc và tái sử dụng được!
+    cout << "Tong chu so cua X: " << tongChuSo(X) << endl;
+    cout << "Tong chu so cua X + 1: " << tongChuSo(X + 1) << endl;
     
     return 0;
 }
 \`\`\`
 
+**Giải thích mã nguồn:**
+* Hàm \`tongChuSo\` nhận tham số là một số \`long long N\` và trả về kết quả là kiểu \`long long\`.
+* Trong thân hàm, ta thực hiện vòng lặp tách các chữ số, cộng dồn vào biến \`tong\` rồi dùng câu lệnh \`return tong\` để gửi kết quả về nơi gọi.
+* Trong hàm \`main()\`, ta gọi hàm hai lần: \`tongChuSo(X)\` và \`tongChuSo(X + 1)\`. Đoạn code lặp được rút gọn rất nhiều.
+
 ### Bước 2 – Hàm kiểm tra số nguyên tố tối ưu $O(\sqrt{N})$
 
-**Tại sao chỉ cần duyệt đến $\sqrt{N}$?**
+Tiếp theo là hàm kiểm tra số nguyên tố. Để thuật toán chạy nhanh, chúng ta chỉ cần duyệt kiểm tra các ước từ 3 tới $\\sqrt{N}$ (thay vì kiểm tra tới $N - 1$), vì một số hợp số $N$ luôn có ít nhất một ước số lẻ không vượt quá $\\sqrt{N}$.
+
 \`\`\`
-Nếu N = a × b và a <= b, thì a <= sqrt(N)
+Nếu N = a × b và a ≤ b, thì a ≤ sqrt(N)
 Ví dụ: 36 = 1×36 = 2×18 = 3×12 = 4×9 = 6×6
         ↑                             ↑
      Ước nhỏ                    Ước = sqrt(36)
 
-Nếu không tìm được ước nào <= sqrt(N), thì N là nguyên tố!
+Nếu không tìm được ước nào lẻ ≤ sqrt(N), thì N là nguyên tố!
 \`\`\`
 
 \`\`\`cpp
 #include <iostream>
-#include <cmath>
 using namespace std;
 
+// Hàm kiểm tra xem n có phải là số nguyên tố hay không
 bool laSoNguyenTo(long long n) {
-    if (n < 2) return false;           // 0, 1 không phải nguyên tố
-    if (n == 2) return true;           // 2 là nguyên tố đặc biệt
-    if (n % 2 == 0) return false;      // Số chẵn > 2: không nguyên tố
+    if (n < 2) return false;           // 0 và 1 không phải là số nguyên tố
+    if (n == 2) return true;           // 2 là số nguyên tố chẵn duy nhất
+    if (n % 2 == 0) return false;      // Các số chẵn lớn hơn 2 đều không phải nguyên tố
     
-    // Chỉ kiểm tra các số lẻ từ 3 đến sqrt(n)
+    // Chỉ kiểm tra các số lẻ từ 3 đến khi i * i vượt quá n
     for (long long i = 3; i * i <= n; i += 2) {
-        if (n % i == 0) return false;
+        if (n % i == 0) return false;  // Tìm thấy một ước lẻ lẻ khác n -> không phải số nguyên tố
     }
-    return true;
+    return true;                       // Không tìm thấy ước nào -> là số nguyên tố
 }
 
 int main() {
@@ -1476,24 +1484,27 @@ int main() {
 }
 \`\`\`
 
-**So sánh hiệu suất với $N = 10^{12}$:**
-\`\`\`
-Cách O(N): Duyệt 1,000,000,000,000 bước → ~10,000 giây → TLE!!!
-Cách O(√N): Duyệt 1,000,000 bước → ~0.01 giây → AC ✓
-\`\`\`
+**Giải thích mã nguồn:**
+* Hàm \`laSoNguyenTo\` trả về kiểu \`bool\` (chỉ có hai trạng thái \`true\` hoặc \`false\`).
+* Để tối ưu hóa tốc độ, ta loại bỏ nhanh trường hợp \`n % 2 == 0\` rồi cho bước nhảy của vòng lặp \`for\` là \`i += 2\` để chỉ kiểm tra số lẻ, giảm một nửa số lượng phép tính.
+* Điều kiện dừng vòng lặp \`i * i <= n\` tương đương với $i \\le \\sqrt{n}$ nhưng tránh được sai số dấu phẩy động.
 
 ### Bước 3 – Kết hợp: Đếm số nguyên tố trong đoạn [L, R]
+
+Bây giờ ta sẽ áp dụng hàm \`laSoNguyenTo\` vừa viết ở Bước 2 để đếm số lượng số nguyên tố nằm trong một đoạn liên tiếp từ $L$ đến $R$.
 
 \`\`\`cpp
 #include <iostream>
 using namespace std;
 
+// Hàm kiểm tra số nguyên tố O(sqrt(N))
 bool laSoNguyenTo(long long n) {
     if (n < 2) return false;
     if (n == 2) return true;
     if (n % 2 == 0) return false;
-    for (long long i = 3; i * i <= n; i += 2)
+    for (long long i = 3; i * i <= n; i += 2) {
         if (n % i == 0) return false;
+    }
     return true;
 }
 
@@ -1503,16 +1514,20 @@ int main() {
     
     int dem = 0;
     for (long long x = L; x <= R; x++) {
-        if (laSoNguyenTo(x)) dem++;  // Gọi hàm trong vòng lặp
+        if (laSoNguyenTo(x)) {
+            dem++;  // Tăng biến đếm nếu x là số nguyên tố
+        }
     }
     
     cout << "So nguyen to trong [" << L << ", " << R << "]: " << dem << endl;
-    // Độ phức tạp: O((R-L) × sqrt(R))
     return 0;
 }
 \`\`\`
 
-**Khi nào cách này TLE?** Nếu R - L lớn (> $10^6$) hoặc R lớn (> $10^{10}$) → cần Sàng Eratosthenes (tuần 3).
+**Giải thích mã nguồn:**
+* Trong hàm \`main()\`, ta duyệt biến \`x\` chạy từ giá trị \`L\` đến \`R\`.
+* Với mỗi giá trị \`x\`, ta gọi hàm \`laSoNguyenTo(x)\`. Nếu hàm trả về \`true\`, ta cộng thêm \`1\` vào biến đếm \`dem\`.
+* Thuật toán này rất hiệu quả khi khoảng cách $R - L$ không quá lớn (khoảng dưới $10^6$ phần tử) và các giá trị trong đoạn không vượt quá $10^{12}$.
 
 ---
 
@@ -1582,30 +1597,48 @@ bool kiemTra(long long n) {
         homeworkProblems: [
           {
             id: "w2-l3-hw1",
-            title: "Bài 1: Số hoàn hảo",
-            description: "Số hoàn hảo là số bằng tổng các ước dương thực sự (không kể chính nó). VD: 6 = 1+2+3. Cho N, kiểm tra N có phải số hoàn hảo không.",
-            inputDesc: "Một dòng chứa N (1 ≤ N ≤ 10^7).",
-            outputDesc: "In ra 'YES' hoặc 'NO'.",
-            sampleInput: "6",
+            title: "Bài 1: Kiểm tra số chính phương bằng hàm",
+            description: "Số chính phương là số có căn bậc hai là một số nguyên (ví dụ: 4, 9, 16, 25...). Hãy viết một hàm kiểm tra xem một số nguyên dương N có phải số chính phương hay không.",
+            inputDesc: "Một dòng chứa số nguyên dương N (1 ≤ N ≤ 10^{12}).",
+            outputDesc: "In ra \"YES\" nếu N là số chính phương, ngược lại in \"NO\".",
+            sampleInput: "25",
             sampleOutput: "YES"
           },
           {
             id: "w2-l3-hw2",
-            title: "Bài 2: Số chính phương",
-            description: "Số chính phương là số có căn bậc hai là một số nguyên. Cho N, kiểm tra N có phải số chính phương hay không.",
-            inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^12).",
-            outputDesc: "In ra 'YES' nếu N là số chính phương, ngược lại in 'NO'.",
-            sampleInput: "16",
-            sampleOutput: "YES"
+            title: "Bài 2: Tính tổng các ước số thực sự",
+            description: "Viết hàm nhận vào số nguyên dương N và trả về tổng của tất cả các ước số dương thực sự của N (không tính chính nó). Ví dụ: các ước thực sự của 6 là 1, 2, 3 và tổng là 1+2+3 = 6.",
+            inputDesc: "Một dòng chứa số nguyên dương N (1 ≤ N ≤ 10^{9}).",
+            outputDesc: "In ra tổng ước số thực sự của N.",
+            sampleInput: "12",
+            sampleOutput: "16"
           },
           {
             id: "w2-l3-hw3",
-            title: "Bài 3: Tìm số nguyên tố nhỏ nhất lớn hơn N",
-            description: "Viết hàm tìm số nguyên tố nhỏ nhất nhưng lớn hơn hoặc bằng N.",
-            inputDesc: "Một số nguyên dương N (1 ≤ N ≤ 10^5).",
-            outputDesc: "In ra số nguyên tố tìm được.",
+            title: "Bài 3: Đếm số nguyên tố lẻ trong đoạn [L, R]",
+            description: "Hãy viết hàm kiểm tra số nguyên tố và sử dụng hàm này để đếm số lượng các số nguyên tố có giá trị lẻ nằm trong đoạn [L, R] (tức là không đếm số 2).",
+            inputDesc: "Một dòng chứa hai số nguyên dương L, R (1 ≤ L ≤ R ≤ 10^{6}).",
+            outputDesc: "In ra số lượng số nguyên tố lẻ tìm được.",
+            sampleInput: "1 10",
+            sampleOutput: "3"
+          },
+          {
+            id: "w2-l3-hw4",
+            title: "Bài 4: Tìm số nguyên tố kế tiếp",
+            description: "Cho số nguyên dương N. Viết hàm tìm và trả về số nguyên tố nhỏ nhất nhưng lớn hơn hoặc bằng N. (Ví dụ với N = 14, số nguyên tố tiếp theo lớn hơn hoặc bằng 14 là 17).",
+            inputDesc: "Một dòng chứa số nguyên dương N (1 ≤ N ≤ 10^{5}).",
+            outputDesc: "In ra số nguyên tố lớn hơn hoặc bằng N.",
             sampleInput: "14",
             sampleOutput: "17"
+          },
+          {
+            id: "w2-l3-hw5",
+            title: "Bài 5: Số hoàn hảo lớn nhất",
+            description: "Số hoàn hảo là số bằng tổng các ước thực sự của nó (ví dụ: 6 = 1+2+3). Viết hàm kiểm tra số hoàn hảo. Cho đoạn [L, R], hãy tìm và in ra số hoàn hảo lớn nhất nằm trong đoạn này. Nếu không có số hoàn hảo nào trong đoạn, in ra -1.",
+            inputDesc: "Một dòng chứa hai số nguyên dương L, R (1 ≤ L ≤ R ≤ 10^{5}).",
+            outputDesc: "In ra số hoàn hảo lớn nhất trong đoạn [L, R], hoặc in ra -1 nếu không tìm thấy.",
+            sampleInput: "1 30",
+            sampleOutput: "28"
           }
         ]
       }
