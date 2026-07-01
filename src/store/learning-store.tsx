@@ -463,6 +463,11 @@ Khi giải bài tập lập trình trên các trang chấm tự động, bạn s
 * **Vì sao bị lỗi này?**: Mỗi bài tập luôn giới hạn thời gian chạy của chương trình (thường là **1 giây**). Nếu chương trình của bạn chạy chậm và mất quá nhiều thời gian, hệ thống sẽ ngắt chương trình và báo lỗi TLE.
 * **Quy tắc tính toán**: Trong **1 giây**, máy tính thông thường thực hiện được khoảng **$10^{8}$** (100 triệu) phép tính cơ bản. Nếu chương trình của bạn cần nhiều hơn $10^{8}$ bước tính, khả năng cao sẽ bị TLE.
 
+### 2. AC là gì? (Accepted)
+* **Định nghĩa**: **AC** là viết tắt của **Accepted** (Chấp nhận bài làm).
+* **Ý nghĩa**: Điều này có nghĩa là chương trình của bạn đã trả ra kết quả chính xác trên mọi bộ dữ liệu thử nghiệm (testcases) và chạy trong giới hạn thời gian cho phép. Khi hệ thống báo AC, bài làm của bạn đã chính thức vượt qua bài toán và được tính điểm trọn vẹn!
+
+
 ### 2. Độ phức tạp thuật toán & Ký hiệu $O(1)$
 * **Độ phức tạp thuật toán** (thường ký hiệu bằng chữ **O**): Là cách chúng ta đếm xem chương trình cần thực hiện khoảng bao nhiêu bước tính khi dữ liệu đầu vào thay đổi.
 * **Ký hiệu $O(1)$** (đọc là *O một*):
@@ -4146,7 +4151,7 @@ void insertionSort(vector<int>& a) {
         visualizerUrl: "https://visualgo.net/en/sorting",
         theoryContent: `## 🔍 Giới thiệu & Động lực
 
-Hãy so sánh hai chiếc máy tính: một chiếc chạy Bubble Sort mất 2 tiếng để sắp xếp danh sách 1 triệu sinh viên, còn chiếc kia dùng **std::sort** chỉ mất 0.1 giây. Sự khác biệt khủng khiếp này là nhờ sự thay đổi vượt bậc về độ phức tạp thời gian từ $O(N^2)$ xuống $O(N \log N)$. 
+Hãy so sánh hai chiếc máy tính: một chiếc chạy Bubble Sort mất 2 tiếng để sắp xếp danh sách 1 triệu sinh viên, còn chiếc kia dùng **std::sort** chỉ mất 0.1 giây. Sự khác biệt khủng khiếp này là nhờ sự thay đổi vượt bậc về độ phức tạp thời gian từ $O(N^{2})$ xuống $O(N \\log N)$. 
 
 Trong thực tế thi đấu và làm dự án, **std::sort** (được tối ưu hóa cực mạnh bằng thuật toán lai Introsort) chính là công cụ mặc định và hiệu quả nhất mà bạn phải dùng hàng ngày.
 
@@ -4154,10 +4159,10 @@ Trong thực tế thi đấu và làm dự án, **std::sort** (được tối ư
 
 ## 📚 Khái niệm cốt lõi
 
-### Sự kỳ diệu của $O(N \log N)$
-Với $N = 10^5$:
-*   $N^2 = 10^{10}$ phép tính (Mất khoảng vài chục giây → **TLE** chắc chắn).
-*   $N \log_2 N \approx 10^5 × 17 \approx 1.7 × 10^6$ phép tính (Mất chưa đầy **0.01 giây** → **AC** siêu nhanh).
+### Sự kỳ diệu của $O(N \\log N)$
+Với $N = 10^{5}$:
+*   $N^{2} = 10^{10}$ phép tính (Mất khoảng vài chục giây → **TLE** chắc chắn).
+*   $N \\log_2 N \\approx 10^{5} \\times 17 \\approx 1.7 \\times 10^{6}$ phép tính (Mất chưa đầy **0.01 giây** → **AC** siêu nhanh. Trong đó, **AC** viết tắt của **Accepted**, nghĩa là bài làm hoàn toàn chính xác và được chấp nhận!).
 
 ### Cú pháp cơ bản của std::sort
 Mặc định, \`std::sort\` sắp xếp mảng tăng dần:
@@ -4172,6 +4177,9 @@ Sắp xếp giảm dần:
 ## 💻 Code từ đơn giản → phức tạp
 
 ### Bước 1 – Sắp xếp tăng dần và giảm dần cơ bản
+
+**Giới thiệu mã nguồn:**
+Dưới đây là chương trình C++ minh họa cách sử dụng hàm \`std::sort\` của thư viện \`<algorithm>\` để sắp xếp các số nguyên trong \`std::vector\` theo thứ tự tăng dần và giảm dần.
 
 \`\`\`cpp
 #include <iostream>
@@ -4199,13 +4207,17 @@ int main() {
 }
 \`\`\`
 
+**Giải thích chi tiết từng câu lệnh:**
+*   \`#include <algorithm>\`: Khai báo thư viện thuật toán của C++, chứa hàm \`std::sort\`. Nếu thiếu dòng này, chương trình sẽ báo lỗi biên dịch khi dùng hàm \`sort\`.
+*   \`sort(a.begin(), a.end())\`: Nhận vào vị trí bắt đầu và kết thúc của vector \`a\`, sắp xếp toàn bộ phần tử theo thứ tự tăng dần (mặc định).
+*   \`greater<int>()\`: Tham số thứ ba truyền vào hàm \`sort\`, đóng vai trò làm bộ so sánh (comparator) báo cho compiler sắp xếp theo thứ tự từ lớn đến bé (giảm dần).
+
 ---
 
 ### Bước 2 – Tìm phần tử lớn thứ K (Các phần tử phân biệt)
 
-Để tìm phần tử lớn thứ K phân biệt, ta cần:
-1.  Sắp xếp giảm dần.
-2.  Loại bỏ các phần tử trùng lặp bằng cách duyệt mảng hoặc dùng \`unique\`.
+**Giới thiệu mã nguồn:**
+Yêu cầu của bài toán là tìm phần tử lớn thứ $K$ trong mảng nhưng chỉ tính các giá trị phân biệt. Chúng ta sẽ sắp xếp giảm dần, sau đó lọc bỏ các phần tử trùng lặp và truy xuất đến phần tử ở vị trí thích hợp.
 
 \`\`\`cpp
 #include <iostream>
@@ -4239,11 +4251,18 @@ int main() {
 }
 \`\`\`
 
+**Giải thích chi tiết từng câu lệnh:**
+*   \`sort(a.begin(), a.end(), greater<int>())\`: Sắp xếp vector \`a\` giảm dần để các số lớn nhất tập trung về đầu mảng.
+*   \`vector<int> distinct_a\`: Khởi tạo vector phụ để lưu trữ mảng sau khi đã lọc sạch các phần tử trùng nhau.
+*   \`if (i == 0 || a[i] != a[i - 1])\`: Với phần tử đầu tiên (\`i == 0\`) hoặc các phần tử sau nếu khác phần tử liền trước nó, ta mới đẩy vào vector \`distinct_a\`. Vì mảng đã sắp xếp giảm dần, các phần tử trùng nhau chắc chắn sẽ đứng kề nhau, việc kiểm tra này đảm bảo lọc sạch hoàn toàn trùng lặp.
+*   \`distinct_a[k - 1]\`: Vì chỉ số mảng trong C++ chạy từ 0, phần tử lớn thứ $K$ sẽ nằm ở chỉ số \`k - 1\`.
+
 ---
 
 ### Bước 3 – Tìm số trung vị (Median) của dãy số
 
-Số trung vị là số nằm ở giữa dãy số lẻ đã được sắp xếp.
+**Giới thiệu mã nguồn:**
+Số trung vị là số nằm ở chính giữa mảng sau khi đã sắp xếp. Chương trình dưới đây nhập vào một dãy số gồm $N$ phần tử (giả định $N$ lẻ) và in ra số trung vị của dãy số đó.
 
 \`\`\`cpp
 #include <iostream>
@@ -4266,6 +4285,11 @@ int main() {
     return 0;
 }
 \`\`\`
+
+**Giải thích chi tiết từng câu lệnh:**
+*   \`sort(a.begin(), a.end())\`: Sắp xếp dãy số tăng dần. Số trung vị chỉ có ý nghĩa khi dãy số đã được sắp xếp.
+*   \`int median_index = n / 2\`: Với $N$ lẻ, do cơ chế chia số nguyên tự động làm tròn xuống trong C++, chỉ số \`n / 2\` chính là vị trí chính giữa của vector \`a\`. Ví dụ: nếu $N = 5$, chỉ số ở giữa là \`5 / 2 = 2\` (bao gồm các chỉ số 0, 1, **2**, 3, 4).
+*   \`a[median_index]\`: Lấy giá trị tại chỉ số ở giữa vừa tìm được để in ra màn hình.
 
 ---
 
@@ -4302,30 +4326,48 @@ int main() {
         homeworkProblems: [
           {
             id: "w5-l2-hw1",
-            title: "Bài 1: Phần tử lớn thứ K",
-            description: "Cho N số và K. Tìm phần tử lớn thứ K trong dãy sau khi đã sắp xếp (chú ý chỉ tính các giá trị phân biệt).",
-            inputDesc: "Dòng 1: N K. Dòng 2: N số nguyên.",
-            outputDesc: "Phần tử lớn thứ K.",
-            sampleInput: "5 2\n3 1 4 1 5",
-            sampleOutput: "4"
+            title: "Bài 1: Tạo số lớn nhất",
+            description: "Cho một số nguyên dương N. Hãy sắp xếp các chữ số của N theo thứ tự giảm dần để tạo thành số lớn nhất có thể.",
+            inputDesc: "Một dòng duy nhất chứa số nguyên dương N (1 ≤ N ≤ 10^{18}).",
+            outputDesc: "In ra số lớn nhất tạo được sau khi sắp xếp các chữ số.",
+            sampleInput: "3124",
+            sampleOutput: "4321"
           },
           {
             id: "w5-l2-hw2",
-            title: "Bài 2: Số nhỏ nhất và lớn nhất",
-            description: "Cho N số nguyên. Sắp xếp mảng và in ra phần tử nhỏ nhất và lớn nhất của mảng.",
-            inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5). Dòng 2: N số nguyên.",
-            outputDesc: "In ra hai số nguyên nhỏ nhất và lớn nhất.",
-            sampleInput: "5\n3 9 1 7 5",
-            sampleOutput: "1 9"
+            title: "Bài 2: Đếm số lượng phần tử phân biệt",
+            description: "Cho dãy gồm N số nguyên. Hãy đếm xem trong dãy có bao nhiêu giá trị khác nhau.",
+            inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^{5}). Dòng 2: N số nguyên có giá trị tuyệt đối không vượt quá 10^{9}.",
+            outputDesc: "In ra số lượng phần tử phân biệt.",
+            sampleInput: "5\n2 1 2 5 1",
+            sampleOutput: "3"
           },
           {
             id: "w5-l2-hw3",
-            title: "Bài 3: Tìm số trung vị",
-            description: "Cho dãy N số nguyên (N luôn lẻ). Số trung vị là số nằm ở giữa dãy sau khi đã sắp xếp. Tìm số trung vị của dãy.",
-            inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^5, N lẻ). Dòng 2: N số nguyên.",
-            outputDesc: "In ra số trung vị.",
-            sampleInput: "5\n3 2 5 1 4",
-            sampleOutput: "3"
+            title: "Bài 3: Khoảng cách lớn nhất",
+            description: "Cho dãy gồm N số nguyên. Hãy sắp xếp dãy số theo thứ tự tăng dần, sau đó tìm khoảng cách (hiệu số) lớn nhất giữa hai phần tử đứng cạnh nhau trong dãy đã sắp xếp.",
+            inputDesc: "Dòng 1: N (2 ≤ N ≤ 10^{5}). Dòng 2: N số nguyên có giá trị tuyệt đối không vượt quá 10^{9}.",
+            outputDesc: "Một số nguyên duy nhất là khoảng cách lớn nhất.",
+            sampleInput: "5\n1 7 3 10 2",
+            sampleOutput: "4"
+          },
+          {
+            id: "w5-l2-hw4",
+            title: "Bài 4: Phần tử đa số",
+            description: "Cho dãy gồm N số nguyên. Hãy tìm phần tử xuất hiện nhiều hơn N / 2 lần trong dãy. Nếu không có phần tử nào thỏa mãn, in ra -1.",
+            inputDesc: "Dòng 1: N (1 ≤ N ≤ 10^{5}). Dòng 2: N số nguyên có giá trị tuyệt đối không vượt quá 10^{9}.",
+            outputDesc: "In ra phần tử đa số tìm được hoặc -1.",
+            sampleInput: "5\n2 2 3 2 1",
+            sampleOutput: "2"
+          },
+          {
+            id: "w5-l2-hw5",
+            title: "Bài 5: Hợp nhất hai danh sách",
+            description: "Cho dãy A gồm N số nguyên và dãy B gồm M số nguyên. Hãy gộp cả hai dãy lại, lọc bỏ các phần tử trùng lặp (chỉ giữ lại các giá trị phân biệt) và sắp xếp chúng theo thứ tự tăng dần.",
+            inputDesc: "Dòng 1: N M (1 ≤ N, M ≤ 10^{5}). Dòng 2: N số nguyên của dãy A. Dòng 3: M số nguyên của dãy B.",
+            outputDesc: "In ra dãy số đã được gộp, lọc trùng và sắp xếp tăng dần, các số cách nhau bởi một khoảng trắng.",
+            sampleInput: "3 4\n1 5 3\n3 2 5 7",
+            sampleOutput: "1 2 3 5 7"
           }
         ]
       },
