@@ -3933,93 +3933,134 @@ int min_index = it_min - a.begin();
         externalJudgeUrl: "https://ucode.vn/problems",
         visualizerUrl: "https://visualgo.net/en/sorting",
         theoryContent: `## 🔍 Giới thiệu & Động lực
-3138: 
-3139: Hãy tưởng tượng bạn đang cầm một xấp bài tây chưa được xếp. Để dễ nhìn, bạn thường tìm lá nhỏ nhất đưa lên đầu, hoặc cầm từng lá chèn vào đúng vị trí của nó trong phần bài đã xếp trên tay. Đây chính là cách máy tính sắp xếp dữ liệu!
-3140: 
-3141: Sắp xếp là bước chuẩn bị cực kỳ quan trọng cho nhiều thuật toán khác (như Tìm kiếm nhị phân). Hai thuật toán sơ khai và dễ hiểu nhất là **Sắp xếp nổi bọt (Bubble Sort)** và **Sắp xếp chèn (Insertion Sort)**.
-3142: 
-3143: ---
-3144: 
-3145: ## 📚 Khái niệm cốt lõi
-3146: 
-3147: ### 1. Bubble Sort (Sắp xếp nổi bọt)
-3148: *   **Nguyên lý:** So sánh các cặp phần tử kề nhau. Nếu phần tử đứng trước lớn hơn phần tử đứng sau, ta tráo đổi vị trí của chúng. Sau lượt duyệt đầu tiên, phần tử lớn nhất sẽ "nổi" về cuối mảng như bong bóng khí.
-3149: *   **Đặc điểm:** Dễ cài đặt nhất nhưng hiệu năng kém.
-3150: 
-3151: ### 2. Insertion Sort (Sắp xếp chèn)
-3152: *   **Nguyên lý:** Chia mảng thành hai phần: phần đã sắp xếp (bên trái) và phần chưa sắp xếp (bên phải). Lần lượt lấy từng phần tử bên phải và chèn vào đúng vị trí thích hợp ở phần bên trái.
-3153: *   **Đặc điểm:** Rất hiệu quả khi mảng ban đầu đã gần sắp xếp xong.
-3154: 
-3155: ---
-3156: 
-3157: ## 💻 Code từ đơn giản → phức tạp
-3158: 
-3159: ### Bước 1 – Cài đặt Bubble Sort và Trace từng bước
-3160: 
-3161: \`\`\`cpp
-3162: #include <iostream>
-3163: #include <vector>
-3164: using namespace std;
-3165: 
-3166: void bubbleSort(vector<int>& a) {
-3167:     int n = a.size();
-3168:     for (int i = 0; i < n - 1; i++) {
-3169:         // Tối ưu: Dùng biến flag để kiểm tra xem lượt này có swap nào không
-3170:         bool swapped = false;
-3171:         for (int j = 0; j < n - 1 - i; j++) {
-3172:             if (a[j] > a[j + 1]) {
-3173:                 swap(a[j], a[j + 1]);
-3174:                 swapped = true;
-3175:             }
-3176:         }
-3177:         // Nếu không có swap nào ở lượt này nghĩa là mảng đã xếp xong!
-3178:         if (!swapped) break;
-3179:     }
-3180: }
-3181: \`\`\`
-3182: 
-3183: **Trace với mảng \`[4, 3, 2, 1]\`:**
-3184: *   **i = 0:**
-3185:     *   So sánh 4 và 3 (4 > 3) → swap → \`[3, 4, 2, 1]\`
-3186:     *   So sánh 4 và 2 (4 > 2) → swap → \`[3, 2, 4, 1]\`
-3187:     *   So sánh 4 và 1 (4 > 1) → swap → \`[3, 2, 1, 4]\` (Số 4 đã về cuối mảng)
-3188: *   **i = 1:**
-3189:     *   So sánh 3 và 2 (3 > 2) → swap → \`[2, 3, 1, 4]\`
-3190:     *   So sánh 3 và 1 (3 > 1) → swap → \`[2, 1, 3, 4]\`
-3191: *   **i = 2:**
-3192:     *   So sánh 2 và 1 (2 > 1) → swap → \`[1, 2, 3, 4]\`
-3193: *   Mảng đã được sắp xếp tăng dần!
-3194: 
-3195: ---
-3196: 
-3197: ### Bước 2 – Cài đặt Insertion Sort và Trace từng bước
-3198: 
-3199: \`\`\`cpp
-3200: void insertionSort(vector<int>& a) {
-3201:     int n = a.size();
-3202:     for (int i = 1; i < n; i++) {
-3203:         int key = a[i]; // Phần tử cần chèn
-3204:         int j = i - 1;
-3205:         
-3206:         // Dịch chuyển các phần tử lớn hơn key về bên phải
-3207:         while (j >= 0 && a[j] > key) {
-3208:             a[j + 1] = a[j];
-3209:             j--;
-3210:         }
-3211:         a[j + 1] = key; // Chèn key vào vị trí trống
-3212:     }
-3213: }
-3214: \`\`\`
-3215: 
-3216: **Trace với mảng \`[3, 1, 2]\`:**
-3217: *   **i = 1 (key = 1):**
-3218:     *   So sánh \`a[0] = 3 > 1\` → dịch chuyển 3 sang phải → \`[3, 3, 2]\`
-3219:     *   Đặt \`key = 1\` vào đầu → \`[1, 3, 2]\`
+
+Hãy tưởng tượng bạn đang cầm một xấp bài tây chưa được xếp. Để dễ nhìn, bạn thường tìm lá nhỏ nhất đưa lên đầu, hoặc cầm từng lá chèn vào đúng vị trí của nó trong phần bài đã xếp trên tay. Đây chính là cách máy tính sắp xếp dữ liệu!
+
+Sắp xếp là bước chuẩn bị cực kỳ quan trọng cho nhiều thuật toán khác (như Tìm kiếm nhị phân). Hai thuật toán sơ khai và dễ hiểu nhất là **Sắp xếp nổi bọt (Bubble Sort)** và **Sắp xếp chèn (Insertion Sort)**.
+
+---
+
+## 📚 Khái niệm cốt lõi
+
+### 1. Bubble Sort (Sắp xếp nổi bọt)
+*   **Nguyên lý:** So sánh các cặp phần tử kề nhau. Nếu phần tử đứng trước lớn hơn phần tử đứng sau, ta tráo đổi vị trí của chúng. Sau lượt duyệt đầu tiên, phần tử lớn nhất sẽ "nổi" về cuối mảng như bong bóng khí.
+*   **Đặc điểm:** Dễ cài đặt nhất nhưng hiệu năng kém.
+
+### 2. Insertion Sort (Sắp xếp chèn)
+*   **Nguyên lý:** Chia mảng thành hai phần: phần đã sắp xếp (bên trái) và phần chưa sắp xếp (bên phải). Lần lượt lấy từng phần tử bên phải và chèn vào đúng vị trí thích hợp ở phần bên trái.
+*   **Đặc điểm:** Rất hiệu quả khi mảng ban đầu đã gần sắp xếp xong.
+
+> [!TIP]
+> **Tài liệu tham khảo & Đọc thêm:**
+> *   🇻🇳 [Thuật toán sắp xếp cơ bản - VNOI Wiki](https://wiki.vnoi.info/vi/algo/basic/sorting-new)
+> *   🇬🇧 [Bubble Sort Algorithm - GeeksforGeeks](https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/)
+> *   🇬🇧 [Insertion Sort Algorithm - GeeksforGeeks](https://www.geeksforgeeks.org/insertion-sort-algorithm/)
+
+---
+
+## 💻 Code từ đơn giản → phức tạp
+
+### Bước 1 – Cài đặt Bubble Sort và Trace từng bước
+
+**Giới thiệu mã nguồn:**
+Dưới đây là hàm C++ thực hiện thuật toán **Bubble Sort**. Hàm nhận vào một \`vector<int>\` dưới dạng tham chiếu (\`&a\`) để thay đổi trực tiếp các phần tử của mảng truyền vào mà không cần sao chép dữ liệu, giúp tối ưu hóa hiệu năng.
+
+\`\`\`cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void bubbleSort(vector<int>& a) {
+    int n = a.size();
+    for (int i = 0; i < n - 1; i++) {
+        // Tối ưu: Dùng biến flag để kiểm tra xem lượt này có swap nào không
+        bool swapped = false;
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (a[j] > a[j + 1]) {
+                swap(a[j], a[j + 1]);
+                swapped = true;
+            }
+        }
+        // Nếu không có swap nào ở lượt này nghĩa là mảng đã xếp xong!
+        if (!swapped) break;
+    }
+}
+\`\`\`
+
+**Giải thích chi tiết từng câu lệnh:**
+*   \`void bubbleSort(vector<int>& a)\`: Định nghĩa hàm sắp xếp nổi bọt nhận tham chiếu đến vector \`a\`.
+*   \`int n = a.size();\`: Lấy số lượng phần tử hiện có trong vector.
+*   \`for (int i = 0; i < n - 1; i++)\`: Vòng lặp ngoài đại diện cho số lượt duyệt qua mảng. Với mảng gồm $N$ phần tử, ta cần tối đa $N - 1$ lượt duyệt. Sau mỗi lượt $i$, phần tử lớn nhất của phần chưa sắp xếp sẽ được "đẩy" về cuối mảng.
+*   \`bool swapped = false;\`: Khởi tạo cờ hiệu phát hiện hoán đổi. Nếu cả lượt duyệt không đổi chỗ lần nào, nghĩa là mảng đã có thứ tự tăng dần.
+*   \`for (int j = 0; j < n - 1 - i; j++)\`: Vòng lặp trong chạy từ đầu mảng đến phần tử liền kề trước vùng đã sắp xếp (\`n - 1 - i\`). Điều này giúp tránh duyệt lại các phần tử lớn nhất đã nằm đúng chỗ ở cuối mảng.
+*   \`if (a[j] > a[j + 1])\`: So sánh hai phần tử kề nhau. Nếu phần tử đứng trước lớn hơn phần tử đứng sau, ta tiến hành đổi chỗ.
+*   \`swap(a[j], a[j + 1]);\`: Hàm tiện ích có sẵn của C++ giúp hoán đổi giá trị của hai biến cho nhau.
+*   \`swapped = true;\`: Đánh dấu là đã phát sinh sự đổi chỗ trong lượt duyệt này.
+*   \`if (!swapped) break;\`: Nếu kết thúc vòng lặp trong mà cờ \`swapped\` vẫn giữ nguyên là \`false\`, ta kết luận mảng đã sắp xếp và dừng toàn bộ chương trình sớm (Early Exit) để tiết kiệm thời gian.
+
+**Trace với mảng \`[4, 3, 2, 1]\`:**
+*   **i = 0:**
+    *   So sánh 4 và 3 (4 > 3) → swap → \`[3, 4, 2, 1]\`
+    *   So sánh 4 và 2 (4 > 2) → swap → \`[3, 2, 4, 1]\`
+    *   So sánh 4 và 1 (4 > 1) → swap → \`[3, 2, 1, 4]\` (Số 4 đã về cuối mảng)
+*   **i = 1:**
+    *   So sánh 3 và 2 (3 > 2) → swap → \`[2, 3, 1, 4]\`
+    *   So sánh 3 và 1 (3 > 1) → swap → \`[2, 1, 3, 4]\`
+*   **i = 2:**
+    *   So sánh 2 và 1 (2 > 1) → swap → \`[1, 2, 3, 4]\`
+*   Mảng đã được sắp xếp tăng dần!
+
+---
+
+### Bước 2 – Cài đặt Insertion Sort và Trace từng bước
+
+**Giới thiệu mã nguồn:**
+Thuật toán **Insertion Sort** hoạt động bằng cách xây dựng dần mảng đã sắp xếp từ trái qua phải. Với mỗi phần tử mới (được gọi là \`key\`), ta sẽ tìm vị trí thích hợp của nó trong danh sách đã được sắp xếp trước đó bằng cách dịch chuyển các phần tử lớn hơn nó sang bên phải.
+
+\`\`\`cpp
+void insertionSort(vector<int>& a) {
+    int n = a.size();
+    for (int i = 1; i < n; i++) {
+        int key = a[i]; // Phần tử cần chèn
+        int j = i - 1;
+        
+        // Dịch chuyển các phần tử lớn hơn key về bên phải
+        while (j >= 0 && a[j] > key) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = key; // Chèn key vào vị trí trống
+    }
+}
+\`\`\`
+
+**Giải thích chi tiết từng câu lệnh:**
+*   \`for (int i = 1; i < n; i++)\`: Ta bắt đầu từ phần tử thứ hai (chỉ số \`1\`), vì phần tử đầu tiên đứng một mình đã mặc định coi là một mảng đã sắp xếp.
+*   \`int key = a[i];\`: Lưu trữ tạm thời giá trị của phần tử đang cần chèn để tránh bị ghi đè khi dịch chuyển dữ liệu.
+*   \`int j = i - 1;\`: Đặt chỉ số \`j\` bắt đầu từ cuối phần mảng đã sắp xếp (nằm ngay phía trước phần tử \`key\`).
+*   \`while (j >= 0 && a[j] > key)\`: Điều kiện lùi chỉ số \`j\` về đầu mảng: chừng nào \`j\` chưa vượt quá biên trái (tức \`j ≥ 0\`) và giá trị \`a[j]\` vẫn lớn hơn giá trị \`key\` đang cần chèn.
+*   \`a[j + 1] = a[j];\`: Sao chép giá trị của \`a[j]\` sang vị trí \`a[j + 1]\` bên phải nó để tạo khoảng trống cho \`key\`.
+*   \`j--;\`: Tiếp tục lùi chỉ số về bên trái để kiểm tra phần tử tiếp theo.
+*   \`a[j + 1] = key;\`: Khi vòng lặp dừng (vì tìm được phần tử nhỏ hơn hoặc bằng \`key\`, hoặc đã chạm mốc đầu mảng \`j = -1\`), ta chèn giá trị \`key\` vào vị trí trống ngay sau \`j\`, tức là vị trí \`j + 1\`.
+
+**Trace với mảng \`[4, 3, 2, 1]\`:**
+
+*(Lưu ý về cơ chế dịch chuyển: Khi ta thực hiện \`a[j + 1] = a[j]\`, giá trị của phần tử phía trước được sao chép đè lên phần tử phía sau. Điều này khiến cho mảng tạm thời xuất hiện hai số giống nhau ở sát nhau, cho đến khi ta hoàn tất vòng lặp và đặt \`key\` vào đúng vị trí trống duy nhất).*
+
+*   **Trạng thái ban đầu:** \`[4, 3, 2, 1]\`
+*   **i = 1 (key = 3):**
+    *   So sánh \`a[0] = 4 > 3\` → dịch chuyển \`4\` sang phải một ô → mảng tạm thời: \`[4, 4, 2, 1]\` (hai số 4).
+    *   Đặt \`key = 3\` vào đầu (\`a[0]\`) → mảng trở thành: \`[3, 4, 2, 1]\`.
 *   **i = 2 (key = 2):**
-    *   So sánh \`a[1] = 3 > 2\` → dịch chuyển 3 sang phải → \`[1, 3, 3]\`
-    *   So sánh \`a[0] = 1 > 2\` → dừng vòng lặp while.
-    *   Đặt \`key = 2\` vào vị trí của số 3 cũ → \`[1, 2, 3]\`
-*   Mảng đã được sắp xếp!
+    *   So sánh \`a[1] = 4 > 2\` → dịch chuyển \`4\` sang phải → mảng tạm thời: \`[3, 4, 4, 1]\`.
+    *   So sánh \`a[0] = 3 > 2\` → dịch chuyển \`3\` sang phải → mảng tạm thời: \`[3, 3, 4, 1]\` (hai số 3).
+    *   Đặt \`key = 2\` vào đầu (\`a[0]\`) → mảng trở thành: \`[2, 3, 4, 1]\`.
+*   **i = 3 (key = 1):**
+    *   So sánh \`a[2] = 4 > 1\` → dịch chuyển \`4\` sang phải → mảng tạm thời: \`[2, 3, 4, 4]\`.
+    *   So sánh \`a[1] = 3 > 1\` → dịch chuyển \`3\` sang phải → mảng tạm thời: \`[2, 3, 3, 4]\`.
+    *   So sánh \`a[0] = 2 > 1\` → dịch chuyển \`2\` sang phải → mảng tạm thời: \`[2, 2, 3, 4]\` (hai số 2).
+    *   Đặt \`key = 1\` vào đầu (\`a[0]\`) → mảng trở thành: \`[1, 2, 3, 4]\`.
+*   Mảng đã được sắp xếp tăng dần!
 
 ---
 
@@ -4066,6 +4107,33 @@ int min_index = it_min - a.begin();
             outputDesc: "In ra N-1 dòng, mỗi dòng là trạng thái mảng sau bước tương ứng.",
             sampleInput: "3\n3 1 2",
             sampleOutput: "1 3 2\n1 2 3"
+          },
+          {
+            id: "w5-l1-hw3",
+            title: "Bài 3: Sắp xếp chẵn lẻ",
+            description: "Cho mảng gồm N số nguyên. Hãy sắp xếp mảng sao cho tất cả các số chẵn đứng trước và được sắp xếp tăng dần, các số lẻ đứng sau và được sắp xếp giảm dần. Yêu cầu tự cài đặt thuật toán sắp xếp (không dùng thư viện std::sort).",
+            inputDesc: "Dòng 1: N (1 ≤ N ≤ 1000). Dòng 2: N số nguyên có giá trị tuyệt đối không vượt quá $10^{9}$.",
+            outputDesc: "Dãy số sau khi đã sắp xếp theo yêu cầu, các số cách nhau bởi một khoảng trắng.",
+            sampleInput: "6\n1 4 3 2 5 6",
+            sampleOutput: "2 4 6 5 3 1"
+          },
+          {
+            id: "w5-l1-hw4",
+            title: "Bài 4: Sắp xếp chuỗi theo độ dài",
+            description: "Cho danh sách gồm N chuỗi ký tự. Hãy sắp xếp các chuỗi này theo thứ tự độ dài tăng dần. Nếu có hai chuỗi có cùng độ dài, hãy giữ nguyên thứ tự ban đầu của chúng trong mảng (đây là tính chất sắp xếp ổn định - Stable).",
+            inputDesc: "Dòng 1: N (1 ≤ N ≤ 100). N dòng tiếp theo, mỗi dòng chứa một chuỗi ký tự chỉ gồm các chữ cái viết thường (độ dài chuỗi không quá 100).",
+            outputDesc: "In ra các chuỗi sau khi đã sắp xếp, mỗi chuỗi trên một dòng.",
+            sampleInput: "4\ncat\nbanana\ndog\napple",
+            sampleOutput: "cat\ndog\napple\nbanana"
+          },
+          {
+            id: "w5-l1-hw5",
+            title: "Bài 5: Sắp xếp theo tần suất xuất hiện",
+            description: "Cho mảng gồm N số nguyên dương có giá trị từ 1 đến 1000. Hãy sắp xếp các số này theo tần suất (số lần) xuất hiện giảm dần. Nếu có hai số có cùng tần suất xuất hiện, số nào có giá trị nhỏ hơn sẽ đứng trước.",
+            inputDesc: "Dòng 1: N (1 ≤ N ≤ 1000). Dòng 2: N số nguyên dương.",
+            outputDesc: "Dãy số sau khi đã sắp xếp, các số cách nhau bởi một khoảng trắng.",
+            sampleInput: "8\n3 1 2 2 3 3 1 4",
+            sampleOutput: "3 3 3 1 1 2 2 4"
           }
         ]
       },
