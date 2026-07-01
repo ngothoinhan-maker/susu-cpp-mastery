@@ -4475,7 +4475,34 @@ int main() {
 ### Bước 2 – Viết bộ so sánh inline bằng Lambda (C++11)
 
 **Giới thiệu mã nguồn:**
-Kể từ phiên bản C++11, chúng ta có thể sử dụng **biểu thức Lambda (Lambda Expression)** để viết trực tiếp logic so sánh ngay bên trong lệnh gọi hàm \`sort\`. Cách này giúp mã nguồn ngắn gọn, tập trung và dễ bảo trì hơn vì không cần tạo các hàm phụ ở bên ngoài.
+Kể từ phiên bản C++11, chúng ta được trang bị một công cụ cực kỳ mạnh mẽ gọi là **Biểu thức Lambda (Lambda Expression)**.
+
+**1. Biểu thức Lambda là gì?**
+Lambda thực chất là một **hàm ẩn danh** (hàm không có tên) được định nghĩa ngay tại nơi nó được sử dụng. Hãy xem một ví dụ đơn giản và độc lập dưới đây để hiểu cách khai báo và gọi một Lambda cơ bản:
+
+\`\`\`cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Định nghĩa một Lambda nhân đôi một số và gán vào biến 'doubleNum'
+    auto doubleNum = [](int x) {
+        return x * 2;
+    };
+    
+    // Gọi Lambda như một hàm bình thường thông qua tên biến
+    cout << doubleNum(5) << endl; // In ra: 10
+    return 0;
+}
+\`\`\`
+Trong đó:
+*   \`auto\`: Dùng để trình biên dịch tự nhận diện kiểu dữ liệu đặc biệt của Lambda.
+*   \`[]\`: Ngoặc vuông gọi là *Capture Clause* (mặc định để trống nếu không sử dụng biến bên ngoài hàm).
+*   \`(int x)\`: Danh sách tham số đầu vào tương tự như hàm bình thường.
+*   \`{ return x * 2; }\`: Thân hàm chứa các câu lệnh xử lý của Lambda.
+
+**2. Áp dụng Lambda vào hàm sắp xếp \`sort\`**
+Thay vì viết một hàm so sánh \`compareStudents\` riêng biệt bên ngoài như ở Bước 1, ta có thể định nghĩa logic so sánh ẩn danh này trực tiếp bên trong đối số thứ 3 của hàm \`sort\`. Hãy xem chương trình đầy đủ dưới đây:
 
 \`\`\`cpp
 #include <iostream>
@@ -4497,12 +4524,12 @@ int main() {
         {"Ca", 9, 2}
     };
     
-    // Sử dụng biểu thức Lambda làm bộ so sánh trực tiếp
+    // Sử dụng biểu thức Lambda làm bộ so sánh trực tiếp ngay trong hàm sort
     sort(list.begin(), list.end(), [](const Student& a, const Student& b) {
         if (a.score != b.score) {
-            return a.score > b.score;
+            return a.score > b.score; // Sắp xếp theo điểm giảm dần
         }
-        return a.id < b.id;
+        return a.id < b.id; // Sắp xếp theo ID tăng dần
     });
     
     for (const auto& s : list) {
@@ -4513,11 +4540,8 @@ int main() {
 \`\`\`
 
 **Giải thích chi tiết từng câu lệnh:**
-*   \`[](const Student& a, const Student& b) { ... }\`: Đây là cú pháp khai báo biểu thức Lambda.
-    *   Cặp ngoặc vuông \`[]\` biểu thị sự bắt đầu của biểu thức Lambda (dùng để bắt các biến từ phạm vi bên ngoài nếu cần).
-    *   Cặp ngoặc tròn \`(const Student& a, const Student& b)\` định nghĩa danh sách tham số truyền vào tương tự như hàm thông thường.
-    *   Cặp ngoặc nhọn \`{ ... }\` chứa phần thân của hàm so sánh với logic giống hệt bước 1.
-*   Trình biên dịch sẽ chuyển đổi biểu thức Lambda này thành một hàm ẩn danh nội dòng (inline), giúp giảm chi phí gọi hàm qua con trỏ hàm, tối ưu thời gian thực thi của chương trình.
+*   \`[](const Student& a, const Student& b) { ... }\`: Đây là một Lambda đóng vai trò bộ so sánh. Ta không cần đặt tên hàm, không cần khai báo bên ngoài hàm \`main()\`.
+*   Trình biên dịch sẽ tự động truyền các đối tượng học sinh vào hai tham số \`a\` và \`b\` của Lambda để thực hiện so sánh theo logic bên trong ngoặc nhọn \`{}\`. Cách viết này giúp mã nguồn gọn gàng, tập trung và dễ đọc hơn rất nhiều.
 
 ---
 
