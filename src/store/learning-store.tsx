@@ -4372,7 +4372,6 @@ int main() {
         ]
       },
       {
-      {
         id: "w5-l3",
         title: "Custom Comparator & Sắp xếp cấu trúc",
         exerciseTitle: "Sắp xếp học sinh theo nhiều tiêu chí",
