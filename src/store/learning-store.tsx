@@ -4170,7 +4170,7 @@ Mặc định, \`std::sort\` sắp xếp mảng tăng dần:
 *   std::vector: \`sort(a.begin(), a.end());\`
 
 Sắp xếp giảm dần:
-*   std::vector: \`sort(a.begin(), a.end(), greater<int>());\`
+*   std::vector: \`sort(a.begin(), a.end(), greater<int>());\` (Ở đây, \`greater<int>()\` là một bộ so sánh mặc định được cung cấp sẵn trong thư viện C++, yêu cầu hàm sắp xếp so sánh phần tử đứng trước lớn hơn phần tử đứng sau, từ đó đảo ngược trật tự sắp xếp mặc định sang giảm dần).
 
 ---
 
@@ -4210,7 +4210,7 @@ int main() {
 **Giải thích chi tiết từng câu lệnh:**
 *   \`#include <algorithm>\`: Khai báo thư viện thuật toán của C++, chứa hàm \`std::sort\`. Nếu thiếu dòng này, chương trình sẽ báo lỗi biên dịch khi dùng hàm \`sort\`.
 *   \`sort(a.begin(), a.end())\`: Nhận vào vị trí bắt đầu và kết thúc của vector \`a\`, sắp xếp toàn bộ phần tử theo thứ tự tăng dần (mặc định).
-*   \`greater<int>()\`: Tham số thứ ba truyền vào hàm \`sort\`, đóng vai trò làm bộ so sánh (comparator) báo cho compiler sắp xếp theo thứ tự từ lớn đến bé (giảm dần).
+*   \`greater<int>()\`: Tham số thứ ba truyền vào hàm \`sort\`, đóng vai trò là một **phễu so sánh có sẵn (built-in comparator)** của C++. Nó định nghĩa phép toán so sánh "lớn hơn", chỉ dẫn cho hàm \`std::sort\` sắp xếp các phần tử của vector theo thứ tự giảm dần thay vì mặc định là tăng dần.
 
 ---
 
