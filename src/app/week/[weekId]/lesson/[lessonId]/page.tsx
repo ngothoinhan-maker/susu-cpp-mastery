@@ -634,6 +634,25 @@ export default function LessonDetailPage() {
               </section>
             )}
 
+            {/* Exam CTA for Week 2, Lesson 3 */}
+            {weekId === 2 && lessonNumber === 3 && (
+              <section className="glass-panel p-6 sm:p-8 rounded-3xl border-violet-500/30 bg-violet-950/5 flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
+                <div className="space-y-1 text-center sm:text-left">
+                  <span className="text-[10px] font-bold text-violet-400 uppercase tracking-widest bg-violet-500/10 px-2.5 py-1 rounded-full border border-violet-500/20">
+                    🏆 Thử thách cuối tuần
+                  </span>
+                  <h3 className="text-lg font-bold text-white mt-2">Bài Kiểm Tra Tổng Hợp Tuần 2 (60 Phút)</h3>
+                  <p className="text-xs text-slate-400">Đã đến lúc kiểm tra lại toàn bộ kiến thức cú pháp C++, biến, tràn số, rẽ nhánh, vòng lặp và viết hàm!</p>
+                </div>
+                <Link 
+                  href={`/week/${weekId}/exam`}
+                  className="px-6 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs transition-all shadow-[0_4px_15px_rgba(139,92,246,0.3)] active:scale-95 text-center whitespace-nowrap"
+                >
+                  Bắt Đầu Kiểm Tra Ngay
+                </Link>
+              </section>
+            )}
+
           </div>
 
         </div>

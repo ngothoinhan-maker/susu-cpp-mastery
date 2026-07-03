@@ -269,13 +269,24 @@ export default function Dashboard() {
                   <span className="text-[10px] text-emerald-500 font-normal">Sẵn sàng tự tin bước vào kỳ thi PTNK</span>
                 </div>
               ) : (
-                <button 
-                  onClick={() => completeWeek(activeWeek)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_20px_0_rgba(139,92,246,0.3)] active:scale-95 cursor-pointer"
-                >
-                  <span>Mở Nội Dung Tuần Tiếp Theo</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
+                <div className="space-y-2 w-full">
+                  <button 
+                    onClick={() => completeWeek(activeWeek)}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_20px_0_rgba(139,92,246,0.3)] active:scale-95 cursor-pointer"
+                  >
+                    <span>Mở Nội Dung Tuần Tiếp Theo</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                  
+                  {activeWeek === 2 && (
+                    <Link 
+                      href="/week/2/exam"
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_15px_rgba(245,158,11,0.3)] active:scale-95 text-center text-xs"
+                    >
+                      <span>📝 Làm Bài Kiểm Tra Tuần 2 (60 Phút)</span>
+                    </Link>
+                  )}
+                </div>
               )}
               
               <div className="flex justify-between items-center gap-2">

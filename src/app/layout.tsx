@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/cpp-icon.svg",
   },
+  other: {
+    google: "notranslate",
+  }
 };
 
 export default function RootLayout({
@@ -30,9 +33,9 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased notranslate`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col notranslate">
         <LearningProvider>
           {children}
         </LearningProvider>
