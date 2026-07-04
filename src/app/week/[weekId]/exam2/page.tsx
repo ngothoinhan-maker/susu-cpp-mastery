@@ -107,7 +107,7 @@ const WEEK2_EXAM2_QUESTIONS: Question[] = [
   {
     id: 10,
     question: "Thuật toán kiểm tra số nguyên tố tối ưu chạy với điều kiện vòng lặp `i * i <= N`. Khi `N = 10^9`, số bước lặp tối đa của vòng lặp này là bao nhiêu?",
-    options: ["Khoảng $10^9$ lần", "Khoảng $10^4.5$ lần (xấp xỉ 31,622 lần)", "Khoảng $10^8$ lần", "1 lần"],
+    options: ["Khoảng $10^9$ lần", "Khoảng $10^{4.5}$ lần (xấp xỉ 31,622 lần)", "Khoảng $10^8$ lần", "1 lần"],
     correctAnswer: 1,
     explanation: "Vòng lặp chạy từ 2 đến $\\sqrt{N}$. Với $N = 10^9$, $\\sqrt{10^9} \\approx 31622.77$. Do đó số bước lặp tối đa của thuật toán chỉ là khoảng 31,622 lần, chạy mất chưa đầy 0.001 giây."
   },
