@@ -89,7 +89,7 @@ const WEEK2_EXAM2_QUESTIONS: Question[] = [
     id: 8,
     question: "Phép toán chia lấy dư `%` trong C++ chỉ có thể áp dụng được cho kiểu dữ liệu nào?",
     options: [
-      "Số nguyên (int, long long, char...)",
+      "Số nguyên (int, long long)",
       "Số thực (float, double)",
       "Mọi kiểu dữ liệu trong C++",
       "Chỉ kiểu bool"
