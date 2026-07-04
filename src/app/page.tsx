@@ -279,12 +279,20 @@ export default function Dashboard() {
                   </button>
                   
                   {activeWeek === 2 && (
-                    <Link 
-                      href="/week/2/exam"
-                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_15px_rgba(245,158,11,0.3)] active:scale-95 text-center text-xs"
-                    >
-                      <span>📝 Làm Bài Kiểm Tra Tuần 2 (60 Phút)</span>
-                    </Link>
+                    <div className="flex flex-col gap-2 w-full">
+                      <Link 
+                        href="/week/2/exam"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_15px_rgba(245,158,11,0.3)] active:scale-95 text-center text-xs"
+                      >
+                        <span>📝 Làm Bài Kiểm Tra Tuần 2 (60 Phút)</span>
+                      </Link>
+                      <Link 
+                        href="/week/2/exam2"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_15px_rgba(239,68,68,0.3)] active:scale-95 text-center text-xs"
+                      >
+                        <span>📝 Làm Bài Kiểm Tra Số 2 Tuần 2 (60 Phút)</span>
+                      </Link>
+                    </div>
                   )}
                 </div>
               )}
