@@ -121,9 +121,9 @@ const WEEK2_EXAM2_QUESTIONS: Question[] = [
   {
     id: 12,
     question: "Độ phức tạp thời gian Big-O của vòng lặp sau là bao nhiêu?\n```cpp\nfor (int i = 1; i <= N; i *= 2) {\n    // Phép toán cơ bản O(1)\n}\n```",
-    options: ["$O(N)$", "$O(\\log N)$", "$O(1)$", "$O(N \\log N)$"],
+    options: ["$O(N)$", "$O(\\log_2 N)$", "$O(1)$", "$O(N \\log_2 N)$"],
     correctAnswer: 1,
-    explanation: "Biến đếm `i` được nhân đôi sau mỗi bước lặp ($1, 2, 4, 8, 16...$). Số lần lặp để `i` vượt quá `N` tỉ lệ thuận với số mũ cơ số 2 của N, do đó độ phức tạp là $O(\\log N)$."
+    explanation: "Biến đếm `i` được nhân đôi sau mỗi bước lặp ($1, 2, 4, 8, 16...$). Số lần lặp để `i` vượt quá `N` là $\\log_2 N$. Trong phân tích thuật toán, độ phức tạp này được biểu diễn là $O(\\log_2 N)$ (trong tài liệu học thuật thường viết gọn là $O(\\log N)$ vì sự thay đổi cơ số logarit chỉ chênh lệch nhau một hằng số nhân và không làm thay đổi cấp độ phức tạp Big-O)."
   },
   {
     id: 13,
