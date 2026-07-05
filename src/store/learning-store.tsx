@@ -12,6 +12,14 @@ export interface HomeworkProblem {
   sampleOutput: string;
 }
 
+export interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
 export interface Lesson {
   id: string;
   title: string;
@@ -21,6 +29,7 @@ export interface Lesson {
   visualizerUrl?: string;
   theoryContent: string;
   homeworkProblems?: HomeworkProblem[];
+  quizQuestions?: QuizQuestion[];
 }
 
 export interface Week {
@@ -1986,6 +1995,188 @@ void build_sieve(int n) {
             sampleInput: "14",
             sampleOutput: "17"
           }
+        ],
+        quizQuestions: [
+          {
+            id: "w3-l1-q1",
+            question: "Độ phức tạp thời gian dựng Sàng Eratosthenes để tìm các số nguyên tố từ $2$ đến $N$ là bao nhiêu?",
+            options: [
+              "$O(N)$",
+              "$O(N \\log \\log N)$",
+              "$O(N \\log N)$",
+              "$O(\\sqrt{N})$"
+            ],
+            correctIndex: 1,
+            explanation: "Thuật toán Sàng Eratosthenes có độ phức tạp thời gian tối ưu là $O(N \\log \\log N)$, gần như tuyến tính và nhanh hơn nhiều so với việc kiểm tra lẻ loi từng số."
+          },
+          {
+            id: "w3-l1-q2",
+            question: "Tại sao mảng trong C++ lại bắt đầu từ chỉ số 0?",
+            options: [
+              "Do cách quản lý địa chỉ ô nhớ trong RAM (chỉ số chính là khoảng cách offset từ đầu mảng)",
+              "Do quy ước ngẫu nhiên không có lý do kỹ thuật",
+              "Để tiết kiệm bộ nhớ RAM hơn 1 byte",
+              "Để code viết dài hơn"
+            ],
+            correctIndex: 0,
+            explanation: "Trong RAM, địa chỉ của phần tử thứ $i$ trong mảng được tính bằng: `Địa chỉ bắt đầu + i × Kích thước kiểu dữ liệu`. Phần tử đầu tiên nằm ngay tại địa chỉ bắt đầu (khoảng cách offset = 0), nên chỉ số của nó là 0."
+          },
+          {
+            id: "w3-l1-q3",
+            question: "Khi khai báo mảng `bool is_prime[100];` trong C++, chỉ số lớn nhất mà con có thể truy cập an toàn là bao nhiêu?",
+            options: [
+              "100",
+              "99",
+              "101",
+              "0"
+            ],
+            correctIndex: 1,
+            explanation: "Mảng có 100 phần tử sẽ được đánh số chỉ số từ 0 đến 99. Việc truy cập `is_prime[100]` sẽ gây ra lỗi truy cập ngoài vùng nhớ (Out of bounds) rất nguy hiểm."
+          },
+          {
+            id: "w3-l1-q4",
+            question: "Trong thuật toán Sàng Eratosthenes, bước tối ưu hóa phổ biến là bắt đầu gạch các bội số của $i$ từ $i × i$ (tức `i * i`) thay vì $2 × i$. Tại sao điều này đúng?",
+            options: [
+              "Vì các bội số nhỏ hơn $i × i$ dạng $k × i$ (với $k < i$) đã được gạch bởi các số nguyên tố nhỏ hơn $i$ từ trước rồi",
+              "Vì thuật toán quy định như vậy",
+              "Để tránh số âm",
+              "Để tiết kiệm RAM"
+            ],
+            correctIndex: 0,
+            explanation: "Đúng vậy. Ví dụ với $i = 5$, các bội số nhỏ hơn $5 × 5 = 25$ như $2 × 5 = 10$, $3 × 5 = 15$, $4 × 5 = 20$ đều đã được gạch bỏ khi ta xét các số nguyên tố trước đó là $2$ và $3$. Do đó, ta có thể bắt đầu gạch từ $i × i$ để giảm thiểu số bước lặp dư thừa."
+          },
+          {
+            id: "w3-l1-q5",
+            question: "Cho mảng `int A[5] = {2, 3, 5, 7, 11};`. Giá trị của biểu thức `A[1] + A[3]` là bao nhiêu?",
+            options: [
+              "5",
+              "10",
+              "8",
+              "12"
+            ],
+            correctIndex: 1,
+            explanation: "Chỉ số của mảng bắt đầu từ 0. Do đó: `A[0] = 2`, `A[1] = 3`, `A[2] = 5`, `A[3] = 7`, `A[4] = 11`. Vậy `A[1] + A[3] = 3 + 7 = 10`."
+          },
+          {
+            id: "w3-l1-q6",
+            question: "Giới hạn bộ nhớ thông thường của các kỳ thi lập trình cho phép khai báo mảng tĩnh có kích thước tối đa khoảng bao nhiêu phần tử kiểu `int` hoặc `bool` mà vẫn an toàn không sợ bị tràn bộ nhớ (Memory Limit Exceeded)?",
+            options: [
+              "$10^{5}$ phần tử",
+              "$10^{7}$ phần tử",
+              "$10^{9}$ phần tử",
+              "$10^{12}$ phần tử"
+            ],
+            correctIndex: 1,
+            explanation: "Giới hạn bộ nhớ thường là 256MB. Một biến `int` tốn 4 byte, mảng $10^{7}$ phần tử kiểu `int` tốn khoảng 40MB (vẫn rất an toàn). Tuy nhiên, mảng $10^{8}$ phần tử kiểu `int` tốn 400MB sẽ vượt quá giới hạn bộ nhớ. Vì thế giới hạn $10^{7}$ phần tử là ngưỡng an toàn."
+          },
+          {
+            id: "w3-l1-q7",
+            question: "Khi chạy vòng lặp ngoài của thuật toán Sàng Eratosthenes để tìm các số nguyên tố từ $2$ đến $N$, ta chỉ cần duyệt $i$ chạy đến đâu?",
+            options: [
+              "Đến $N$",
+              "Đến $\\sqrt{N}$ (tức `i * i <= N`)",
+              "Đến $N/2$",
+              "Đến $\\log N$"
+            ],
+            correctIndex: 1,
+            explanation: "Nếu một số hợp số $x ≤ N$ có ước, thì chắc chắn nó phải có ít nhất một ước nguyên tố không vượt quá $\\sqrt{N}$. Vì thế mọi hợp số nhỏ hơn hoặc bằng $N$ đều sẽ bị gạch bởi một số nguyên tố $≤ \\sqrt{N}$. Ta chỉ cần duyệt vòng lặp ngoài tới $\\sqrt{N}$ (điều kiện `i * i <= N`) là đủ."
+          },
+          {
+            id: "w3-l1-q8",
+            question: "Đoạn code sau dùng để làm gì?\n```cpp\nmemset(is_prime, true, sizeof(is_prime));\n```",
+            options: [
+              "Khởi tạo toàn bộ các phần tử của mảng `is_prime` về giá trị `true` (1)",
+              "Xóa mảng `is_prime` khỏi bộ nhớ RAM",
+              "Đo chiều dài của mảng",
+              "In các phần tử của mảng ra màn hình"
+            ],
+            correctIndex: 0,
+            explanation: "Hàm `memset` trong thư viện `<cstring>` giúp gán nhanh giá trị (ở đây là `true`/1 đối với kiểu bool) cho tất cả các byte trong mảng."
+          },
+          {
+            id: "w3-l1-q9",
+            question: "Nếu con cần lưu trữ trạng thái nguyên tố cho các số tới $N = 10^{8}$ bằng mảng `bool is_prime[100000001]`, bộ nhớ tiêu thụ là bao nhiêu và cách tối ưu hóa là gì?",
+            options: [
+              "Tiêu thụ 100MB; tối ưu bằng cách dùng `std::vector<bool>` hoặc `std::bitset` để mỗi phần tử chỉ chiếm 1 bit thay vì 1 byte (tiết kiệm gấp 8 lần)",
+              "Tiêu thụ 800MB; tối ưu bằng cách đổi sang kiểu double",
+              "Tiêu thụ 1GB; không có cách tối ưu",
+              "Tiêu thụ 0 byte vì C++ tự nén"
+            ],
+            correctIndex: 0,
+            explanation: "Mảng `bool` thông thường tốn 1 byte cho mỗi phần tử, nên $10^{8}$ phần tử tốn 100MB. Trong C++, `std::bitset` hoặc `std::vector<bool>` được tối ưu hóa đặc biệt để mỗi phần tử chỉ chiếm đúng 1 bit bộ nhớ, giúp giảm bộ nhớ tiêu thụ từ 100MB xuống còn khoảng 12.5MB!"
+          },
+          {
+            id: "w3-l1-q10",
+            question: "Tại sau ta không nên dùng mảng tĩnh quá lớn (ví dụ `int a[10000000]`) khai báo cục bộ bên trong hàm `main()`?",
+            options: [
+              "Vì khai báo cục bộ mảng lớn trong hàm sẽ bị tràn bộ nhớ ngăn xếp (Stack Overflow) do bộ nhớ stack của hàm rất nhỏ (thường chỉ 1MB - 8MB). Ta nên khai báo mảng lớn làm biến toàn cục (Global variable) ngoài hàm main để lưu ở bộ nhớ Heap/Data segment",
+              "Vì mảng trong hàm main chạy chậm hơn ngoài hàm main",
+              "Vì C++ cấm khai báo mảng trong hàm main",
+              "Vì khai báo cục bộ không gán được giá trị"
+            ],
+            correctIndex: 0,
+            explanation: "Bộ nhớ ngăn xếp (Stack) dành cho các biến cục bộ rất nhỏ. Khai báo mảng lớn cục bộ sẽ gây crash chương trình lập tức do tràn stack. Hãy khai báo các mảng kích thước lớn hơn $10^{5}$ ở bên ngoài tất cả các hàm (biến toàn cục) để lưu trữ ở vùng nhớ toàn cục lớn hơn nhiều."
+          },
+          {
+            id: "w3-l1-q11",
+            question: "Trong thuật toán Sàng Eratosthenes, nếu phát hiện `is_prime[i] == true`, ta tiến hành gạch bỏ các bội số của $i$ bằng vòng lặp `for (int j = i * i; j <= N; j += i)`. Tại sao bước nhảy của biến `j` là `j += i`?",
+            options: [
+              "Vì bội số tiếp theo của $j$ (đang là bội của $i$) sẽ cách $j$ đúng $i$ đơn vị",
+              "Vì đó là cú pháp mặc định của vòng lặp",
+              "Để vòng lặp chạy nhanh gấp đôi",
+              "Để bỏ qua các số nguyên tố"
+            ],
+            correctIndex: 0,
+            explanation: "Các bội số của $i$ là $i × i, i × i + i, i × i + 2i, ...$ do đó khoảng cách giữa hai bội số liên tiếp chính là $i$ đơn vị. Ta dùng bước nhảy `j += i` để duyệt qua tất cả các bội số này và gạch chúng."
+          },
+          {
+            id: "w3-l1-q12",
+            question: "Sau khi đã dựng Sàng nguyên tố tới $N = 10^{6}$, thời gian trả lời một câu hỏi \"Số $X$ ($X ≤ 10^{6}$) có là số nguyên tố không?\" là bao nhiêu?",
+            options: [
+              "$O(1)$",
+              "$O(\\sqrt{X})$",
+              "$O(\\log X)$",
+              "$O(X)$"
+            ],
+            correctIndex: 0,
+            explanation: "Ta chỉ cần kiểm tra trực tiếp giá trị trong mảng: `is_prime[X]`. Phép truy cập phần tử mảng bằng chỉ số tốn độ phức tạp $O(1)$ (tức thời), cực kỳ tối ưu khi cần trả lời nhiều truy vấn."
+          },
+          {
+            id: "w3-l1-q13",
+            question: "Cho $N = 10$. Sau khi kết thúc thuật toán Sàng Eratosthenes, những số nào trong đoạn từ $2$ đến $10$ vẫn còn được đánh dấu là `true` (nguyên tố)?",
+            options: [
+              "2, 3, 5, 7",
+              "2, 4, 6, 8, 10",
+              "3, 5, 7, 9",
+              "2, 3, 5, 7, 9"
+            ],
+            correctIndex: 0,
+            explanation: "Các số nguyên tố nhỏ hơn hoặc bằng 10 là 2, 3, 5 và 7. Các số hợp số như 4, 6, 8, 9, 10 đã bị gạch bỏ (gán thành `false`)."
+          },
+          {
+            id: "w3-l1-q14",
+            question: "Phép toán `i * i` trong vòng lặp điều kiện `i * i <= N` của thuật toán Sàng có thể gặp vấn đề gì nếu $N$ rất lớn (ví dụ $N = 10^{9}$ hoặc $10^{12}$)?",
+            options: [
+              "Bị tràn số kiểu `int` do phép nhân `i * i` vượt quá $2 × 10^{9}$, gây vòng lặp vô hạn. Cách khắc phục là ép kiểu sang `long long` hoặc viết điều kiện thành `i <= N / i`",
+              "Không bị vấn đề gì cả",
+              "Báo lỗi cú pháp khi biên dịch",
+              "Làm máy tính chạy chậm đi 100 lần"
+            ],
+            correctIndex: 0,
+            explanation: "Khi $i$ đạt tới khoảng $46341$, tích `i * i` vượt quá giới hạn $2^{31}-1$ của kiểu `int`, dẫn đến tràn số thành một số âm, làm cho điều kiện `i * i <= N` luôn đúng và gây lặp vô hạn. Khắc phục bằng cách khai báo `i` là `long long` hoặc đổi điều kiện thành `i <= N / i` để tránh phép nhân."
+          },
+          {
+            id: "w3-l1-q15",
+            question: "Đoạn code sau in ra màn hình kết quả gì?\n```cpp\nint a[5] = {0};\ncout << a[4];\n```",
+            options: [
+              "0",
+              "Giá trị rác ngẫu nhiên trong bộ nhớ",
+              "Báo lỗi biên dịch",
+              "4"
+            ],
+            correctIndex: 0,
+            explanation: "Trong C++, khi ta khởi tạo mảng bằng cú pháp `= {0}`, phần tử đầu tiên được gán bằng 0 và tất cả các phần tử còn lại của mảng cũng tự động được khởi tạo bằng 0. Do đó `a[4]` bằng 0."
+          }
         ]
       },
       {
@@ -2370,6 +2561,188 @@ int main() {
             sampleInput: "6",
             sampleOutput: "2"
           }
+        ],
+        quizQuestions: [
+          {
+            id: "w3-l2-q1",
+            question: "Độ phức tạp thời gian của Thuật toán Euclid tìm UCLN(A, B) là bao nhiêu?",
+            options: [
+              "$O(\\log(\\min(A, B)))$",
+              "$O(\\min(A, B))$",
+              "$O(1)$",
+              "$O(A + B)$"
+            ],
+            correctIndex: 0,
+            explanation: "Thuật toán Euclid chạy cực kỳ nhanh, số bước thực hiện tỷ lệ thuận với số chữ số của hai số nhập vào, tức là có độ phức tạp logarit $O(\\log(\\min(A, B)))$."
+          },
+          {
+            id: "w3-l2-q2",
+            question: "Trường hợp cơ sở (điều kiện dừng) của thuật toán Euclid đệ quy hay vòng lặp là gì?",
+            options: [
+              "Khi một trong hai số bằng 0, kết quả là số còn lại",
+              "Khi hai số bằng nhau",
+              "Khi số dư bằng 1",
+              "Khi cả hai số cùng chia hết cho 2"
+            ],
+            correctIndex: 0,
+            explanation: "Khi số chia $B$ giảm về bằng 0 thông qua các phép chia dư liên tiếp `A % B`, ta dừng thuật toán và số $A$ chính là Ước chung lớn nhất."
+          },
+          {
+            id: "w3-l2-q3",
+            question: "Cho hai số nguyên dương $A$ và $B$. Công thức nào biểu diễn mối quan hệ giữa UCLN và BCNN của chúng?",
+            options: [
+              "$\\text{BCNN}(A, B) = (A × B) / \\text{UCLN}(A, B)$",
+              "$\\text{BCNN}(A, B) = A + B - \\text{UCLN}(A, B)$",
+              "$\\text{BCNN}(A, B) = \\text{UCLN}(A, B) / (A × B)$",
+              "$\\text{BCNN}(A, B) = A × B × \\text{UCLN}(A, B)$"
+            ],
+            correctIndex: 0,
+            explanation: "Tích của UCLN và BCNN của hai số bằng tích của chính hai số đó: $\\text{UCLN}(A, B) × \\text{BCNN}(A, B) = A × B$. Do đó ta suy ra công thức tính BCNN."
+          },
+          {
+            id: "w3-l2-q4",
+            question: "Khi tính BCNN của hai số $A$ và $B$ kiểu `long long`, để tránh bị tràn số trung gian trong phép nhân $A × B$, ta nên viết code như thế nào?",
+            options: [
+              "`(A / gcd(A, B)) * B` (chia trước nhân sau)",
+              "`A * B / gcd(A, B)` (nhân trước chia sau)",
+              "`(double)A * B / gcd(A, B)` (ép kiểu sang double)",
+              "`A * (B / gcd(A, B))` (chia B trước rồi nhân)"
+            ],
+            correctIndex: 0,
+            explanation: "Phép tính `A * B` có thể vượt quá giới hạn cực đại của kiểu dữ liệu (gây tràn số) trước khi thực hiện phép chia. Bằng cách thực hiện phép chia trước: `(A / gcd(A, B)) * B`, ta làm giảm giá trị của $A$ xuống trước rồi mới nhân với $B$, giúp ngăn ngừa hoàn toàn lỗi tràn số trung gian."
+          },
+          {
+            id: "w3-l2-q5",
+            question: "Kết quả của thuật toán Euclid tìm `UCLN(48, 18)` qua các bước dư lần lượt là gì?",
+            options: [
+              "UCLN(48, 18) → UCLN(18, 12) → UCLN(12, 6) → UCLN(6, 0) → kết quả 6",
+              "UCLN(48, 18) → UCLN(18, 0) → kết quả 18",
+              "UCLN(48, 18) → UCLN(30, 18) → UCLN(12, 18) → kết quả 6",
+              "UCLN(48, 18) → UCLN(48, 12) → UCLN(12, 0) → kết quả 12"
+            ],
+            correctIndex: 0,
+            explanation: "Ta có: $48 \\bmod 18 = 12$ → xét cặp $(18, 12)$. Tiếp tục $18 \\bmod 12 = 6$ → xét cặp $(12, 6)$. Tiếp tục $12 \\bmod 6 = 0$ → xét cặp $(6, 0)$. Vì số thứ hai bằng 0 nên dừng, kết quả bằng 6."
+          },
+          {
+            id: "w3-l2-q6",
+            question: "Thư viện chuẩn C++ (`<numeric>`) hỗ trợ sẵn hàm tìm UCLN từ phiên bản C++17 là gì?",
+            options: [
+              "`std::gcd(a, b)`",
+              "`std::ucln(a, b)`",
+              "`std::lcm(a, b)`",
+              "`std::common_divisor(a, b)`"
+            ],
+            correctIndex: 0,
+            explanation: "Kể từ phiên bản C++17, thư viện `<numeric>` cung cấp sẵn hàm `std::gcd(a, b)` để tìm UCLN và `std::lcm(a, b)` để tìm BCNN."
+          },
+          {
+            id: "w3-l2-q7",
+            question: "Đoạn code đệ quy sau đây thực hiện chức năng gì?\n```cpp\nlong long tinh(long long a, long long b) {\n    if (b == 0) return a;\n    return tinh(b, a % b);\n}\n```",
+            options: [
+              "Tìm Ước chung lớn nhất (UCLN) của a và b",
+              "Tìm Bội chung nhỏ nhất (BCNN) của a và b",
+              "Tính lũy thừa $a^{b}$",
+              "Tính phần dư của phép chia $a / b$"
+            ],
+            correctIndex: 0,
+            explanation: "Đây là cài đặt đệ quy cực kỳ ngắn gọn của thuật toán Euclid tìm UCLN. Hàm tự gọi lại chính nó với cặp đối số mới là `(b, a % b)` cho đến khi `b == 0` thì dừng và trả về `a`."
+          },
+          {
+            id: "w3-l2-q8",
+            question: "Tại sao việc chia phân số `tu / mau` cho UCLN của cả tử và mẫu lại giúp rút gọn phân số tối giản?",
+            options: [
+              "Vì UCLN là ước chung lớn nhất, nên sau khi chia cho UCLN thì tử và mẫu sẽ không còn ước chung nào khác ngoài 1 (tức là nguyên tố cùng nhau)",
+              "Vì UCLN giúp chuyển tử số và mẫu số về số thực double",
+              "Vì đó là quy tắc toán học không giải thích được",
+              "Để phân số có mẫu số bằng 1"
+            ],
+            correctIndex: 0,
+            explanation: "Chia cả tử và mẫu cho Ước chung lớn nhất của chúng loại bỏ toàn bộ các thừa số chung lớn nhất, đưa phân số về dạng tối giản $\\frac{a}{b}$ trong đó $\\text{UCLN}(a, b) = 1$."
+          },
+          {
+            id: "w3-l2-q9",
+            question: "Nếu ta gọi `gcd(0, X)` với $X > 0$, thuật toán Euclid sẽ trả về giá trị nào?",
+            options: [
+              "X",
+              "0",
+              "Lỗi chia cho 0 (Crash chương trình)",
+              "1"
+            ],
+            correctIndex: 0,
+            explanation: "UCLN của 0 và $X$ luôn là $X$, vì $X$ chia hết cho $X$ và $0$ cũng chia hết cho mọi số nguyên dương $X$. Thuật toán dừng ngay ở bước đầu tiên và trả về $X$."
+          },
+          {
+            id: "w3-l2-q10",
+            question: "Tại sao trong cài đặt đệ quy của hàm `gcd(a, b)`, ta không cần lo lắng về việc $a < b$ khi truyền đối số ban đầu?",
+            options: [
+              "Vì ở bước đệ quy đầu tiên, phép chia lấy dư `a % b` với `a < b` sẽ trả về `a`, tự động hoán đổi vị trí của hai số thành `gcd(b, a)` ở lần gọi tiếp theo",
+              "Vì hàm đệ quy sẽ tự động báo lỗi biên dịch",
+              "Vì C++ tự động sắp xếp lại các đối số tăng dần",
+              "Vì thuật toán chỉ hoạt động khi $a ≥ b$"
+            ],
+            correctIndex: 0,
+            explanation: "Nếu truyền vào `gcd(5, 15)`, vì $5 < 15$ nên $5 \\bmod 15 = 5$. Lần đệ quy tiếp theo sẽ gọi `gcd(15, 5)`. Thuật toán đã tự động đảo vị trí hai số một cách thông minh mà không cần ta viết thêm code hoán đổi."
+          },
+          {
+            id: "w3-l2-q11",
+            question: "Cặp số nguyên liên tiếp nào tạo ra số bước lặp Euclid nhiều nhất (chậm nhất) đối với thuật toán Euclid?",
+            options: [
+              "Hai số Fibonacci liên tiếp ($F_{n}$ và $F_{n-1}$)",
+              "Hai số nguyên tố liên tiếp",
+              "Hai số lũy thừa của 2 liên tiếp",
+              "Hai số chẵn liên tiếp"
+            ],
+            correctIndex: 0,
+            explanation: "Hai số Fibonacci liên tiếp $F_{n}$ và $F_{n-1}$ chính là cặp số khiến thuật toán Euclid cần thực hiện nhiều bước chia dư nhất để đạt tới kết quả. Đây là trường hợp tệ nhất của thuật toán."
+          },
+          {
+            id: "w3-l2-q12",
+            question: "Cho 3 số $A, B, C$. Để tìm UCLN của cả 3 số này trong C++, ta làm thế nào?",
+            options: [
+              "`gcd(gcd(A, B), C)` hoặc `gcd(A, gcd(B, C))`",
+              "`gcd(A, B, C)` trực tiếp",
+              "`gcd(A + B, C)`",
+              "`gcd(A * B, C)`"
+            ],
+            correctIndex: 0,
+            explanation: "Phép toán tìm UCLN có tính chất kết hợp: $\\text{UCLN}(A, B, C) = \\text{UCLN}(\\text{UCLN}(A, B), C) = \\text{UCLN}(A, \\text{UCLN}(B, C))$. Do đó ta thực hiện lồng các hàm gcd lại với nhau."
+          },
+          {
+            id: "w3-l2-q13",
+            question: "Cho $A = 12$ và $B = 18$. BCNN(12, 18) bằng bao nhiêu?",
+            options: [
+              "36",
+              "6",
+              "72",
+              "216"
+            ],
+            correctIndex: 0,
+            explanation: "Ta có $\\text{UCLN}(12, 18) = 6$. Theo công thức, $\\text{BCNN}(12, 18) = (12 × 18) / 6 = 36$. Hoặc tính theo cách tối ưu: `(12 / 6) * 18 = 2 * 18 = 36`."
+          },
+          {
+            id: "w3-l2-q14",
+            question: "Trong C++, kết quả của biểu thức `-15 % 4` là bao nhiêu?",
+            options: [
+              "-3",
+              "3",
+              "-1",
+              "1"
+            ],
+            correctIndex: 0,
+            explanation: "Trong C++, phép chia lấy dư `%` giữ nguyên dấu của số bị chia (số đứng trước). Vì $-15$ là số âm nên kết quả phép chia lấy dư cho $4$ sẽ là $-3$. Khi viết thuật toán GCD với số có thể âm, tốt nhất ta nên chuyển chúng về trị tuyệt đối bằng hàm `abs()`."
+          },
+          {
+            id: "w3-l2-q15",
+            question: "Đoạn code tìm UCLN bằng vòng lặp while dưới đây bị lỗi gì?\n```cpp\nlong long gcd(long long a, long long b) {\n    while (b > 0) {\n        long long r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n```",
+            options: [
+              "Bị sai kết quả hoặc lặp vô hạn nếu một trong các số truyền vào là số âm (vì điều kiện dừng `b > 0` không bao quát số âm, cần sửa thành `b != 0`)",
+              "Không có lỗi gì, đoạn code chạy hoàn toàn chính xác trong mọi trường hợp số âm",
+              "Thiếu trường hợp a = 0",
+              "Báo lỗi cú pháp"
+            ],
+            correctIndex: 0,
+            explanation: "Đúng vậy! Nếu truyền số âm, ví dụ `b = -5`, điều kiện `b > 0` sẽ sai ngay lập tức và trả về `a` mà chưa thực hiện chia dư. Để bao quát cả số âm, điều kiện vòng lặp đúng phải là `while (b != 0)`."
+          }
         ]
       },
       {
@@ -2690,6 +3063,188 @@ BCNN(M, N) qua thừa số: tích max(a_i, b_i)
             outputDesc: "In ra 'YES' nếu N là số gần nguyên tố, ngược lại in 'NO'.",
             sampleInput: "6",
             sampleOutput: "YES"
+          }
+        ],
+        quizQuestions: [
+          {
+            id: "w3-l3-q1",
+            question: "Định lý cơ bản của Số học phát biểu điều gì?",
+            options: [
+              "Mọi số nguyên lớn hơn 1 đều có thể viết duy nhất dưới dạng tích các số nguyên tố (không kể thứ tự các thừa số)",
+              "Mọi số nguyên đều là số nguyên tố",
+              "Không có số nguyên tố nào lớn hơn 100",
+              "Tích của hai số bất kỳ luôn là số nguyên tố"
+            ],
+            correctIndex: 0,
+            explanation: "Đây là định lý nền tảng của số học. Mỗi số nguyên dương $> 1$ đều phân tích được thành một tích các thừa số nguyên tố duy nhất, ví dụ $12 = 2^{2} × 3$."
+          },
+          {
+            id: "w3-l3-q2",
+            question: "Phân tích thừa số nguyên tố của số 360 là gì?",
+            options: [
+              "$2^{3} × 3^{2} × 5^{1}$",
+              "$2^{2} × 3^{3} × 5$",
+              "$2 × 3 × 5$",
+              "$8 × 9 × 5$"
+            ],
+            correctIndex: 0,
+            explanation: "Ta có: $360 = 8 × 9 × 5 = 2 × 2 × 2 × 3 × 3 × 5 = 2^{3} × 3^{2} × 5^{1}$. Các cơ số 2, 3, 5 đều là số nguyên tố."
+          },
+          {
+            id: "w3-l3-q3",
+            question: "Nếu một số nguyên $N$ có dạng phân tích thừa số nguyên tố là $N = p_1^{a_1} × p_2^{a_2} × \\ldots × p_k^{a_k}$, công thức tính tổng số ước số nguyên dương của $N$ là gì?",
+            options: [
+              "$\\text{Số ước} = (a_1 + 1)(a_2 + 1) \\ldots (a_k + 1)$",
+              "$\\text{Số ước} = a_1 + a_2 + \\ldots + a_k$",
+              "$\\text{Số ước} = a_1 × a_2 × \\ldots × a_k$",
+              "$\\text{Số ước} = 2 × (a_1 + a_2 + \\ldots + a_k)$"
+            ],
+            correctIndex: 0,
+            explanation: "Mỗi ước số của $N$ sẽ có dạng $p_1^{x_1} × \\ldots × p_k^{x_k}$ với $0 ≤ x_i ≤ a_i$. Vì mỗi số mũ $x_i$ có $a_i + 1$ cách chọn từ 0 đến $a_i$, tổng số ước số là tích các lựa chọn đó: $(a_1 + 1)(a_2 + 1) \\ldots (a_k + 1)$."
+          },
+          {
+            id: "w3-l3-q4",
+            question: "Số 360 có bao nhiêu ước số nguyên dương?",
+            options: [
+              "24 ước",
+              "12 ước",
+              "6 ước",
+              "36 ước"
+            ],
+            correctIndex: 0,
+            explanation: "Phân tích thừa số nguyên tố: $360 = 2^{3} × 3^{2} × 5^{1}$. Áp dụng công thức số ước: $(3 + 1) × (2 + 1) × (1 + 1) = 4 × 3 × 2 = 24$ ước."
+          },
+          {
+            id: "w3-l3-q5",
+            question: "Thuật toán phân tích thừa số nguyên tố cơ bản bằng phương pháp chia thử (Trial Division) chạy trong độ phức tạp thời gian tối ưu là bao nhiêu?",
+            options: [
+              "$O(\\sqrt{N})$",
+              "$O(N)$",
+              "$O(\\log N)$",
+              "$O(1)$"
+            ],
+            correctIndex: 0,
+            explanation: "Tương tự như kiểm tra số nguyên tố, ta chỉ cần thử chia $N$ cho các số từ 2 đến $\\sqrt{N}$. Do đó độ phức tạp thời gian của thuật toán là $O(\\sqrt{N})$."
+          },
+          {
+            id: "w3-l3-q6",
+            question: "Trong C++, `std::vector` là gì?",
+            options: [
+              "Là một mảng động (mảng co giãn) có khả năng tự động thay đổi kích thước khi thêm hoặc xóa phần tử",
+              "Là một hàm toán học dùng để vẽ hình học",
+              "Là một mảng tĩnh cố định kích thước 10 phần tử",
+              "Kiểu dữ liệu chỉ chứa chữ cái"
+            ],
+            correctIndex: 0,
+            explanation: "Vector trong thư viện `<vector>` của C++ là một cấu trúc dữ liệu cực kỳ mạnh mẽ, đóng vai trò như một mảng động. Nó tự quản lý bộ nhớ và có thể co giãn kích thước linh hoạt khi ta thêm phần tử."
+          },
+          {
+            id: "w3-l3-q7",
+            question: "Lệnh nào được dùng để thêm một phần tử vào cuối của `std::vector`?",
+            options: [
+              "`push_back()`",
+              "`add()`",
+              "`insert()`",
+              "`append()`"
+            ],
+            correctIndex: 0,
+            explanation: "Hàm thành viên `push_back(x)` thêm giá trị `x` vào vị trí cuối cùng của vector và tự động tăng kích thước của vector lên 1."
+          },
+          {
+            id: "w3-l3-q8",
+            question: "Cho vector `std::vector<int> v = {10, 20, 30};`. Lệnh `v.size()` trả về giá trị bao nhiêu?",
+            options: [
+              "3",
+              "20",
+              "0",
+              "30"
+            ],
+            correctIndex: 0,
+            explanation: "Hàm `size()` trả về số lượng phần tử hiện tại có trong vector. Vector `v` có 3 phần tử nên `v.size()` bằng 3."
+          },
+          {
+            id: "w3-l3-q9",
+            question: "Trong thuật toán phân tích thừa số nguyên tố, sau khi thực hiện chia hết $N$ cho các ước từ 2 đến $\\sqrt{N}$ mà giá trị của $N$ lúc này vẫn lớn hơn 1 ($N > 1$), ta kết luận điều gì về số $N$ còn lại?",
+            options: [
+              "Số $N$ còn lại chính là một số nguyên tố và cũng là thừa số nguyên tố cuối cùng của số $N$ ban đầu",
+              "Số $N$ là số dư vô nghĩa và ta bỏ qua",
+              "Phép toán bị lỗi",
+              "Số $N$ là hợp số chưa chia hết"
+            ],
+            correctIndex: 0,
+            explanation: "Khi ta đã chia triệt để $N$ cho mọi ước nhỏ hơn hoặc bằng $\\sqrt{N}$, nếu phần còn lại của $N$ vẫn lớn hơn 1, nó không thể chứa thêm ước nào khác nhỏ hơn chính nó. Do đó, phần còn lại này bắt buộc phải là một số nguyên tố. Ta ghi nhận nó là thừa số nguyên tố cuối cùng."
+          },
+          {
+            id: "w3-l3-q10",
+            question: "Cho đoạn code sau:\n```cpp\nvector<int> v;\nv.push_back(5);\nv.push_back(8);\ncout << v[0] << \" \" << v[1];\n```\nChương trình sẽ in ra kết quả gì?",
+            options: [
+              "5 8",
+              "8 5",
+              "0 1",
+              "Báo lỗi biên dịch"
+            ],
+            correctIndex: 0,
+            explanation: "Chỉ số của vector tương tự mảng, bắt đầu từ 0. `push_back(5)` đưa 5 vào vị trí `v[0]`. `push_back(8)` đưa 8 vào vị trí `v[1]`. Do đó in ra `5 8`."
+          },
+          {
+            id: "w3-l3-q11",
+            question: "Tại sao vòng lặp phân tích thừa số nguyên tố của $N$ bằng phép chia thử `for (int i = 2; i * i <= N; i++)` lại có thể tự động bỏ qua các hợp số và chỉ chia cho các số nguyên tố?",
+            options: [
+              "Vì bất kỳ hợp số nào là ước của $N$ cũng đều là bội số của một số nguyên tố nhỏ hơn đã được dùng để chia triệt để $N$ trước đó, nên đến lượt hợp số đó thì $N$ không còn chia hết nữa",
+              "Vì C++ tự nhận diện số nguyên tố để lặp",
+              "Vì ta có lệnh `if (laNguyenTo(i))` ngầm định",
+              "Vì thuật toán chạy ngược từ lớn đến bé"
+            ],
+            correctIndex: 0,
+            explanation: "Đây là một đặc điểm cực kỳ thú vị. Ví dụ, trước khi vòng lặp đạt tới $i = 4$, ta đã thực hiện chia triệt để $N$ cho 2 bằng vòng lặp `while (N % 2 == 0)` rồi. Nên khi tới $i = 4$, $N$ chắc chắn không thể chia hết cho 4 nữa. Tương tự với 6, 8, 9, ... Việc chia triệt để trước đó đảm bảo chỉ có các số nguyên tố mới thực sự chia hết được $N$."
+          },
+          {
+            id: "w3-l3-q12",
+            question: "Để giải phóng toàn bộ bộ nhớ của một `std::vector` và đưa số lượng phần tử về 0, ta sử dụng hàm nào?",
+            options: [
+              "`v.clear()`",
+              "`v.delete()`",
+              "`v.free()`",
+              "`v.empty()`"
+            ],
+            correctIndex: 0,
+            explanation: "Hàm `clear()` loại bỏ toàn bộ phần tử của vector, đặt kích thước (`size()`) của vector về 0."
+          },
+          {
+            id: "w3-l3-q13",
+            question: "Nếu con khai báo `vector<int> a(5, 10);`, vector này chứa những giá trị nào?",
+            options: [
+              "Chứa 5 phần tử, mỗi phần tử đều có giá trị bằng 10",
+              "Chứa 10 phần tử, mỗi phần tử đều có giá trị bằng 5",
+              "Chứa 2 phần tử là 5 và 10",
+              "Vector rỗng"
+            ],
+            correctIndex: 0,
+            explanation: "Cú pháp khai báo `vector<Kiểu> tên(số_phần_tử, giá_trị_khởi_tạo)` tạo ra mảng động có số lượng phần tử chỉ định và gán sẵn giá trị ban đầu cho tất cả các phần tử đó."
+          },
+          {
+            id: "w3-l3-q14",
+            question: "Khi duyệt qua các phần tử của một vector từ đầu đến cuối, cách viết vòng lặp nào sau đây là chuẩn trong C++?",
+            options: [
+              "`for (int i = 0; i < v.size(); i++)`",
+              "`for (int x : v)` (range-based for)",
+              "Cả hai cách trên đều đúng",
+              "Cả hai cách trên đều sai"
+            ],
+            correctIndex: 2,
+            explanation: "Cách 1 là duyệt bằng chỉ số truyền thống (lưu ý `i < v.size()`). Cách 2 là vòng lặp range-based for (phổ biến từ C++11), duyệt trực tiếp qua các bản sao/tham chiếu của các phần tử trong vector, giúp code ngắn gọn và dễ đọc hơn nhiều."
+          },
+          {
+            id: "w3-l3-q15",
+            question: "Đoạn code phân tích thừa số nguyên tố sau đây bị lỗi gì?\n```cpp\nvoid phanTich(int n) {\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) {\n            cout << i << \" \";\n            n /= i;\n        }\n    }\n}\n```",
+            options: [
+              "Không chia triệt để cho một thừa số nguyên tố có số mũ lớn hơn 1 (ví dụ $12$ sẽ in ra `2 3` thay vì `2 2 3`) và thiếu in thừa số nguyên tố cuối cùng nếu $n > 1$ sau vòng lặp",
+              "Bị lặp vô hạn",
+              "Báo lỗi cú pháp do thiếu thư viện",
+              "Không chạy được với số lẻ"
+            ],
+            correctIndex: 0,
+            explanation: "Đoạn code này chỉ sử dụng `if` thay vì vòng lặp `while` để chia triệt để cho `i`, dẫn đến việc không tách hết các lũy thừa của một ước số nguyên tố (ví dụ 12 chia cho 2 còn 6, vòng lặp tăng lên `i = 3` và chia tiếp, in ra 2 và 3, mất đi một thừa số 2). Ngoài ra, sau khi kết thúc vòng lặp, nếu số dư còn lại của `n` lớn hơn 1 thì không được in ra màn hình."
           }
         ]
       }

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { useLearning, Lesson, Week } from "@/store/learning-store";
+import { useLearning, Lesson, Week, QuizQuestion } from "@/store/learning-store";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
@@ -20,12 +20,17 @@ import {
   AlertTriangle,
   Play,
   ChevronRight,
+  ChevronLeft,
   Maximize2,
   Minimize2,
   Copy,
   Check,
   Terminal,
-  Loader2
+  Loader2,
+  XCircle,
+  RotateCcw,
+  Trophy,
+  Lock
 } from "lucide-react";
 
 // Component con CodeBlock nâng cấp hỗ trợ biên dịch Wandbox API tại chỗ và Sao chép nhanh
@@ -226,6 +231,452 @@ int main() {
   );
 }
 
+// Hàm trộn ngẫu nhiên một mảng sử dụng thuật toán Fisher-Yates
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+interface ShuffledQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
+// Component trắc nghiệm tương tác giúp học sinh tự củng cố lại lý thuyết ngay sau bài học
+function LessonQuiz({ 
+  questions, 
+  onComplete 
+}: { 
+  questions: QuizQuestion[]; 
+  onComplete: (percentage: number) => void; 
+}) {
+  const [shuffledQuestions, setShuffledQuestions] = useState<ShuffledQuestion[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
+  const [showResults, setShowResults] = useState(false);
+
+  // Hàm trộn ngẫu nhiên cả câu hỏi và các phương án lựa chọn trong mỗi câu
+  const prepareQuestions = (rawQuestions: QuizQuestion[]) => {
+    const shuffledRaw = shuffleArray(rawQuestions);
+    const prepared = shuffledRaw.map((q) => {
+      const originalCorrectText = q.options[q.correctIndex];
+      const shuffledOpts = shuffleArray(q.options);
+      const newCorrectIndex = shuffledOpts.indexOf(originalCorrectText);
+      return {
+        id: q.id,
+        question: q.question,
+        options: shuffledOpts,
+        correctIndex: newCorrectIndex,
+        explanation: q.explanation
+      };
+    });
+    setShuffledQuestions(prepared);
+  };
+
+  // Trộn lại khi bài học thay đổi
+  useEffect(() => {
+    if (questions && questions.length > 0) {
+      prepareQuestions(questions);
+      setSelectedAnswers({});
+      setCurrentIndex(0);
+      setShowResults(false);
+    }
+  }, [questions]);
+
+  // Tự động cuộn nhẹ đến vùng câu hỏi khi chuyển câu hoặc xem kết quả
+  useEffect(() => {
+    const quizEl = document.getElementById("quiz-section-anchor");
+    if (quizEl) {
+      quizEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [currentIndex, showResults]);
+
+  const getCorrectCount = () => {
+    let count = 0;
+    shuffledQuestions.forEach((q) => {
+      if (selectedAnswers[q.id] === q.correctIndex) {
+        count++;
+      }
+    });
+    return count;
+  };
+
+  const totalQuestions = shuffledQuestions.length;
+  const correctCountValue = getCorrectCount();
+  const percentage = totalQuestions > 0 ? Math.round((correctCountValue / totalQuestions) * 100) : 0;
+
+  // Gọi callback khi bài làm đạt màn hình kết quả
+  useEffect(() => {
+    if (showResults) {
+      onComplete(percentage);
+    }
+  }, [showResults, percentage, onComplete]);
+
+  if (shuffledQuestions.length === 0) {
+    return null;
+  }
+
+  const activeQuestion = shuffledQuestions[currentIndex];
+  const answeredCount = Object.keys(selectedAnswers).length;
+  
+  const handleSelectOption = (optIdx: number) => {
+    if (selectedAnswers[activeQuestion.id] !== undefined) return; // Khóa sau khi trả lời
+    setSelectedAnswers((prev) => ({ ...prev, [activeQuestion.id]: optIdx }));
+  };
+
+  const handleReset = () => {
+    setSelectedAnswers({});
+    setCurrentIndex(0);
+    setShowResults(false);
+    prepareQuestions(questions); // Trộn lại ngẫu nhiên từ đầu
+  };
+
+  // Lấy danh sách các câu làm sai để hiển thị nút xem lại
+  const wrongQuestions = shuffledQuestions.filter(
+    (q) => selectedAnswers[q.id] !== undefined && selectedAnswers[q.id] !== q.correctIndex
+  );
+
+  return (
+    <section id="quiz-section-anchor" className="glass-panel p-6 sm:p-8 rounded-3xl space-y-6 scroll-mt-6 border-violet-500/10">
+      
+      {/* 1. MÀN HÌNH TỔNG KẾT KẾT QUẢ */}
+      {showResults ? (
+        <div className="text-center py-8 px-4 space-y-6 animate-fade-in">
+          <div className="inline-flex p-5 bg-amber-500/10 border border-amber-500/20 rounded-full animate-bounce">
+            <Trophy className="w-14 h-14 text-amber-400" />
+          </div>
+          
+          <div className="space-y-2">
+            <h3 className="text-2xl font-black tracking-tight text-white">Kết Quả Luyện Tập Của Susu</h3>
+            <p className="text-slate-400 text-sm">Cố gắng tuyệt vời! Hãy xem lại kết quả dưới đây:</p>
+          </div>
+
+          {/* Vòng tròn điểm số */}
+          <div className="inline-block relative">
+            <div className="w-32 h-32 rounded-full border-4 border-violet-500/20 flex flex-col items-center justify-center bg-slate-900/50">
+              <span className="text-3xl font-extrabold text-white">{correctCount}/{totalQuestions}</span>
+              <span className="text-[10px] font-bold text-violet-400 uppercase tracking-widest mt-1">Câu Đúng</span>
+            </div>
+            <div className="absolute -bottom-2 -right-2 bg-violet-600 text-white font-bold text-xs px-2 py-1 rounded-md shadow-lg border border-violet-400">
+              {percentage}%
+            </div>
+          </div>
+
+          {/* Lời nhắn khích lệ */}
+          <div className="max-w-md mx-auto p-4 rounded-2xl bg-white/5 border border-white/10 text-sm leading-relaxed text-slate-300">
+            {percentage === 100 ? (
+              <span className="text-emerald-400 font-semibold">🌟 Quá xuất sắc! Susu đã hiểu bài trọn vẹn 100% rồi! Ba mẹ rất tự hào về con. Hãy tiếp tục phát huy ở phần bài tập về nhà nhé!</span>
+            ) : percentage >= 80 ? (
+              <span className="text-emerald-400 font-semibold">🚀 Rất tốt! Susu nắm kiến thức cực kỳ vững chắc. Hãy xem lại kỹ những câu làm sai để đạt điểm tuyệt đối nhé!</span>
+            ) : percentage >= 50 ? (
+              <span className="text-amber-400 font-semibold">👍 Khá tốt! Susu đã hiểu được phần lớn bài học. Hãy bấm xem lại các câu trả lời sai bên dưới để ôn tập kỹ hơn nhé.</span>
+            ) : (
+              <span className="text-rose-400 font-semibold">💪 Cố gắng lên Susu ơi! Con hãy xem lại kỹ lý thuyết bài học và làm lại trắc nghiệm để nắm chắc kiến thức hơn nhé. Ba mẹ tin con làm được!</span>
+            )}
+          </div>
+
+          {/* Ôn tập câu sai */}
+          {wrongQuestions.length > 0 && (
+            <div className="max-w-md mx-auto space-y-2.5 text-left">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Xem lại các câu đã trả lời chưa đúng:</h4>
+              <div className="flex flex-wrap gap-2">
+                {shuffledQuestions.map((q, idx) => {
+                  const isAnswered = selectedAnswers[q.id] !== undefined;
+                  const isCorrect = selectedAnswers[q.id] === q.correctIndex;
+                  if (isAnswered && !isCorrect) {
+                    return (
+                      <button
+                        key={q.id}
+                        onClick={() => {
+                          setCurrentIndex(idx);
+                          setShowResults(false);
+                        }}
+                        className="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-400 font-bold rounded-xl text-xs transition-all cursor-pointer"
+                      >
+                        Câu {idx + 1}
+                      </button>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Các nút bấm hành động */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+            <button
+              onClick={handleReset}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-bold rounded-xl text-xs transition-all active:scale-95 cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Làm lại từ đầu</span>
+            </button>
+            <button
+              onClick={() => {
+                setShowResults(false);
+                setCurrentIndex(0);
+              }}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs transition-all shadow-[0_4px_15px_rgba(139,92,246,0.2)] active:scale-95 cursor-pointer"
+            >
+              <span>Xem Lại Giải Thích Chi Tiết</span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        // 2. GIAO DIỆN BÀI TẬP TRẮC NGHIỆM CHI TIẾT
+        <div className="space-y-6">
+          <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/5">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-violet-400 font-semibold text-xs uppercase">
+                <HelpCircle className="w-4 h-4" />
+                <span>Câu hỏi trắc nghiệm củng cố lý thuyết</span>
+              </div>
+              <h3 className="text-xl font-bold text-white">Kiểm Tra Kiến Thức</h3>
+            </div>
+            
+            {/* Tiến trình nhanh */}
+            <div className="text-right">
+              <span className="text-xs text-slate-400">
+                Tiến độ: <strong className="text-white">{answeredCount}</strong> / {totalQuestions} câu
+              </span>
+              <div className="w-32 h-1.5 bg-slate-900 border border-white/5 rounded-full mt-1.5 overflow-hidden">
+                <div 
+                  className="h-full bg-violet-500 transition-all duration-300"
+                  style={{ width: `${(answeredCount / totalQuestions) * 100}%` }}
+                />
+              </div>
+            </div>
+          </header>
+
+          {/* Lưới các ô số nhảy nhanh câu hỏi */}
+          <div className="flex flex-wrap gap-2 p-3 bg-slate-900/30 rounded-2xl border border-white/5">
+            {shuffledQuestions.map((q, idx) => {
+              const isSelected = selectedAnswers[q.id] !== undefined;
+              const isCorrect = selectedAnswers[q.id] === q.correctIndex;
+              const isActive = idx === currentIndex;
+              
+              let circleStyle = "bg-slate-950/50 border-white/5 text-slate-400 hover:border-violet-500/20";
+              if (isSelected) {
+                circleStyle = isCorrect 
+                  ? "bg-emerald-600/10 border-emerald-500/30 text-emerald-400 font-bold" 
+                  : "bg-rose-600/10 border-rose-500/30 text-rose-400 font-bold";
+              }
+              if (isActive) {
+                circleStyle += " ring-2 ring-violet-500/50 border-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.2)]";
+              }
+              
+              return (
+                <button
+                  key={q.id}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`w-8 h-8 rounded-lg border text-xs flex items-center justify-center transition-all cursor-pointer ${circleStyle}`}
+                  title={`Đi tới câu ${idx + 1}`}
+                >
+                  {idx + 1}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Thẻ câu hỏi hoạt động */}
+          <div className="space-y-5 py-2">
+            <div className="flex items-start gap-3">
+              <span className="flex items-center justify-center w-6 h-6 rounded-md bg-violet-600/10 border border-violet-500/20 text-xs font-extrabold text-violet-400 shrink-0">
+                {currentIndex + 1}
+              </span>
+              <div className="text-sm text-slate-200 font-medium leading-relaxed flex-1">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm, remarkMath]} 
+                  rehypePlugins={[rehypeKatex]}
+                  components={{
+                    p: ({node, ...props}) => <p className="mb-2 text-slate-200" {...props} />,
+                    code: ({node, className, children, ...props}: any) => {
+                      const match = /language-(\w+)/.exec(className || "");
+                      return match ? (
+                        <pre className="p-4 my-3 overflow-x-auto text-xs text-violet-200 font-mono leading-relaxed bg-slate-950/60 rounded-xl border border-white/5">
+                          <code>{children}</code>
+                        </pre>
+                      ) : (
+                        <code className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-violet-300 font-mono text-xs" {...props}>
+                          {children}
+                        </code>
+                      );
+                    }
+                  }}
+                >
+                  {activeQuestion.question}
+                </ReactMarkdown>
+              </div>
+            </div>
+
+            {/* Các lựa chọn đáp án */}
+            <div className="grid grid-cols-1 gap-3 pl-9">
+              {activeQuestion.options.map((opt, optIdx) => {
+                const userChoice = selectedAnswers[activeQuestion.id];
+                const hasAnswered = userChoice !== undefined;
+                const isSelected = userChoice === optIdx;
+                const isCorrectOption = optIdx === activeQuestion.correctIndex;
+                
+                let optStyle = "border-white/5 bg-slate-900/20 hover:border-violet-500/20 text-slate-300";
+                
+                if (hasAnswered) {
+                  if (isCorrectOption) {
+                    optStyle = "border-emerald-500 bg-emerald-500/10 text-emerald-400 font-semibold";
+                  } else if (isSelected) {
+                    optStyle = "border-rose-500 bg-rose-500/10 text-rose-400 font-semibold";
+                  } else {
+                    optStyle = "border-white/5 bg-slate-950/30 text-slate-500 opacity-60";
+                  }
+                }
+                
+                return (
+                  <button
+                    key={optIdx}
+                    disabled={hasAnswered}
+                    onClick={() => handleSelectOption(optIdx)}
+                    className={`w-full text-left p-3.5 rounded-xl border text-xs transition-all flex items-center gap-3 ${
+                      !hasAnswered ? "cursor-pointer active:scale-[0.99] hover:bg-white/5" : "cursor-default"
+                    } ${optStyle}`}
+                  >
+                    {/* Vòng tròn A, B, C, D */}
+                    <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 text-[10px] font-bold ${
+                      hasAnswered 
+                        ? isCorrectOption 
+                          ? "border-emerald-500 bg-emerald-500 text-white" 
+                          : isSelected 
+                            ? "border-rose-500 bg-rose-500 text-white" 
+                            : "border-slate-855 text-slate-700"
+                        : isSelected 
+                          ? "border-violet-500 bg-violet-500 text-white" 
+                          : "border-slate-700 text-slate-400 group-hover:border-violet-500/30"
+                    }`}>
+                      {hasAnswered && isCorrectOption ? "✓" : hasAnswered && isSelected ? "✗" : String.fromCharCode(65 + optIdx)}
+                    </div>
+                    
+                    {/* Text phương án */}
+                    <span className="leading-relaxed flex-1">
+                      <ReactMarkdown 
+                        remarkPlugins={[remarkGfm, remarkMath]} 
+                        rehypePlugins={[rehypeKatex]}
+                        components={{
+                          p: ({node, ...props}) => <span {...props} />,
+                          code: ({node, className, children, ...props}: any) => (
+                            <code className="px-1 py-0.5 rounded bg-white/5 text-violet-300 font-mono text-xs" {...props}>
+                              {children}
+                            </code>
+                          )
+                        }}
+                      >
+                        {opt}
+                      </ReactMarkdown>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Hộp giải thích sau khi trả lời */}
+            {selectedAnswers[activeQuestion.id] !== undefined && (
+              <div className="pl-9 animate-fade-in">
+                <div className="bg-violet-950/10 border border-violet-500/20 p-4.5 rounded-2xl space-y-2 text-xs">
+                  <div className="flex items-center gap-2 font-bold text-violet-400">
+                    <HelpCircle className="w-4 h-4 shrink-0" />
+                    <span>Giải thích chi tiết:</span>
+                    {selectedAnswers[activeQuestion.id] === activeQuestion.correctIndex ? (
+                      <span className="text-emerald-400 font-extrabold ml-auto flex items-center gap-1">
+                        <CheckCircle className="w-3.5 h-3.5" />
+                        Đúng rồi!
+                      </span>
+                    ) : (
+                      <span className="text-rose-400 font-extrabold ml-auto flex items-center gap-1">
+                        <XCircle className="w-3.5 h-3.5" />
+                        Chưa chính xác!
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="leading-relaxed text-slate-300">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm, remarkMath]} 
+                      rehypePlugins={[rehypeKatex]}
+                      components={{
+                        p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                        code: ({node, className, children, ...props}: any) => {
+                          const match = /language-(\w+)/.exec(className || "");
+                          return match ? (
+                            <pre className="p-3 my-2 overflow-x-auto text-xs text-violet-200 font-mono leading-relaxed bg-slate-950/60 rounded-xl border border-white/5">
+                              <code>{children}</code>
+                            </pre>
+                          ) : (
+                            <code className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-violet-300 font-mono text-xs" {...props}>
+                              {children}
+                            </code>
+                          );
+                        }
+                      }}
+                    >
+                      {activeQuestion.explanation}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Chân trang điều hướng */}
+          <footer className="flex items-center justify-between pt-4 border-t border-white/5">
+            <button
+              onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
+              disabled={currentIndex === 0}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold bg-white/5 hover:bg-white/10 disabled:opacity-40 border border-white/5 text-slate-300 hover:text-white rounded-xl transition-all cursor-pointer disabled:cursor-not-allowed"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>Câu trước</span>
+            </button>
+            
+            {/* Nút nộp bài hiển thị khi làm xong toàn bộ */}
+            {answeredCount === totalQuestions && !showResults ? (
+              <button
+                onClick={() => setShowResults(true)}
+                className="flex items-center gap-1.5 px-5 py-2 text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl transition-all shadow-[0_4px_15px_rgba(16,185,129,0.2)] active:scale-95 cursor-pointer animate-pulse"
+              >
+                <Trophy className="w-4 h-4" />
+                <span>Xem kết quả trắc nghiệm</span>
+              </button>
+            ) : (
+              currentIndex === totalQuestions - 1 ? (
+                <button
+                  onClick={() => setShowResults(true)}
+                  className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold bg-white/5 hover:bg-violet-600/20 border border-white/5 hover:border-violet-500/30 text-slate-300 hover:text-white rounded-xl transition-all cursor-pointer"
+                >
+                  <span>Xem tổng kết</span>
+                  <Trophy className="w-4 h-4 text-amber-400" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => setCurrentIndex((prev) => Math.min(totalQuestions - 1, prev + 1))}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 hover:text-white rounded-xl transition-all cursor-pointer"
+                >
+                  <span>Câu tiếp theo</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              )
+            )}
+          </footer>
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function LessonDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -239,6 +690,19 @@ export default function LessonDetailPage() {
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isCompilerMaximized, setIsCompilerMaximized] = useState(false);
+  const [completedLessons, setCompletedLessons] = useState<string[]>([]);
+
+  // Tải trạng thái các bài học đã hoàn thành từ localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("susu_completed_lessons");
+    if (saved) {
+      try {
+        setCompletedLessons(JSON.parse(saved));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, []);
 
   // Auto scroll to top when changing lesson
   useEffect(() => {
@@ -321,37 +785,72 @@ export default function LessonDetailPage() {
             <div className="flex flex-col gap-2">
               {currentWeek.lessons.map((lesson, index) => {
                 const isActive = index === activeLessonIndex;
+                const isCompleted = completedLessons.includes(lesson.id);
+                const isUnlocked = index === 0 || (() => {
+                  const prevLesson = currentWeek.lessons[index - 1];
+                  const hasNoQuiz = !prevLesson.quizQuestions || prevLesson.quizQuestions.length === 0;
+                  return completedLessons.includes(prevLesson.id) || hasNoQuiz;
+                })();
+
                 return (
                   <button
                     key={lesson.id}
-                    onClick={() => router.push(`/week/${weekId}/lesson/${index + 1}`)}
-                    className={`w-full text-left rounded-xl transition-all flex items-center justify-between group cursor-pointer ${
+                    disabled={!isUnlocked}
+                    onClick={() => {
+                      if (isUnlocked) {
+                        router.push(`/week/${weekId}/lesson/${index + 1}`);
+                      }
+                    }}
+                    className={`w-full text-left rounded-xl transition-all flex items-center justify-between group ${
                       isSidebarCollapsed ? "p-2 justify-center" : "p-3.5"
                     } ${
-                      isActive 
-                        ? "bg-violet-600/15 border border-violet-500/30 text-white font-semibold shadow-[0_0_15px_rgba(139,92,246,0.1)]" 
-                        : "border border-transparent text-slate-400 hover:bg-white/5 hover:text-slate-200"
+                      !isUnlocked 
+                        ? "opacity-40 cursor-not-allowed border border-transparent text-slate-600"
+                        : isActive 
+                          ? "bg-violet-600/15 border border-violet-500/30 text-white font-semibold shadow-[0_0_15px_rgba(139,92,246,0.1)]" 
+                          : "border border-transparent text-slate-400 hover:bg-white/5 hover:text-slate-200 cursor-pointer"
                     }`}
                   >
                     {isSidebarCollapsed ? (
-                      <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${
-                        isActive ? "bg-violet-500 text-white" : "bg-white/5 text-slate-400"
+                      <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs relative ${
+                        !isUnlocked
+                          ? "bg-slate-900 border border-white/5 text-slate-600"
+                          : isActive 
+                            ? "bg-violet-500 text-white" 
+                            : "bg-white/5 text-slate-400"
                       }`} title={lesson.title}>
                         {index + 1}
+                        {!isUnlocked && (
+                          <div className="absolute -bottom-1 -right-1 bg-slate-950 p-0.5 rounded-full border border-white/5">
+                            <Lock className="w-2.5 h-2.5 text-slate-500" />
+                          </div>
+                        )}
                       </span>
                     ) : (
                       <>
                         <div className="space-y-1">
-                          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Bài {index + 1}</div>
+                          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <span>Bài {index + 1}</span>
+                            {isCompleted && <Check className="w-3 h-3 text-emerald-400" />}
+                          </div>
                           <div className="text-sm line-clamp-1">{lesson.title}</div>
                         </div>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                          lesson.difficulty === "Dễ" ? "bg-emerald-500/10 text-emerald-400" :
-                          lesson.difficulty === "Trung bình" ? "bg-amber-500/10 text-amber-400" :
-                          "bg-rose-500/10 text-rose-400"
-                        }`}>
-                          {lesson.difficulty}
-                        </span>
+                        
+                        {!isUnlocked ? (
+                          <Lock className="w-3.5 h-3.5 text-slate-600" />
+                        ) : isCompleted ? (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded uppercase bg-emerald-500/10 text-emerald-400 flex items-center gap-1">
+                            Xong
+                          </span>
+                        ) : (
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
+                            lesson.difficulty === "Dễ" ? "bg-emerald-500/10 text-emerald-400" :
+                            lesson.difficulty === "Trung bình" ? "bg-amber-500/10 text-amber-400" :
+                            "bg-rose-500/10 text-rose-400"
+                          }`}>
+                            {lesson.difficulty}
+                          </span>
+                        )}
                       </>
                     )}
                   </button>
@@ -570,6 +1069,31 @@ export default function LessonDetailPage() {
               <div className="glass-panel p-12 rounded-3xl text-center text-slate-500">
                 Vui lòng chọn bài học từ danh sách bên trái.
               </div>
+            )}
+
+            {/* Interactive Quiz Section */}
+            {currentLesson && currentLesson.quizQuestions && currentLesson.quizQuestions.length > 0 && (
+              <LessonQuiz 
+                questions={currentLesson.quizQuestions} 
+                onComplete={(percentage) => {
+                  if (percentage >= 80) {
+                    const saved = localStorage.getItem("susu_completed_lessons");
+                    let completed: string[] = [];
+                    if (saved) {
+                      try {
+                        completed = JSON.parse(saved);
+                      } catch (e) {
+                        console.error(e);
+                      }
+                    }
+                    if (!completed.includes(currentLesson.id)) {
+                      completed.push(currentLesson.id);
+                      localStorage.setItem("susu_completed_lessons", JSON.stringify(completed));
+                      setCompletedLessons(completed);
+                    }
+                  }
+                }}
+              />
             )}
 
             {/* 3. Bài tập về nhà (Homework Problems) */}
