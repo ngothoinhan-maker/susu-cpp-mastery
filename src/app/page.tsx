@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLearning } from "@/store/learning-store";
 import { 
   BookOpen, 
@@ -30,6 +30,19 @@ export default function Dashboard() {
     addCodingTime, 
     resetProgress 
   } = useLearning();
+
+  const [completedLessons, setCompletedLessons] = useState<string[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("susu_completed_lessons");
+    if (saved) {
+      try {
+        setCompletedLessons(JSON.parse(saved));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, []);
 
   const completedWeeksCount = weeks.filter((w) => w.status === "completed").length;
   const progressPercent = Math.round((completedWeeksCount / weeks.length) * 100);
@@ -278,22 +291,47 @@ export default function Dashboard() {
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   
-                  {activeWeek === 2 && (
-                    <div className="flex flex-col gap-2 w-full">
-                      <Link 
-                        href="/week/2/exam"
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_15px_rgba(245,158,11,0.3)] active:scale-95 text-center text-xs"
-                      >
-                        <span>📝 Làm Bài Kiểm Tra Tuần 2 (60 Phút)</span>
-                      </Link>
-                      <Link 
-                        href="/week/2/exam2"
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_15px_rgba(239,68,68,0.3)] active:scale-95 text-center text-xs"
-                      >
-                        <span>📝 Làm Bài Kiểm Tra Số 2 Tuần 2 (60 Phút)</span>
-                      </Link>
-                    </div>
-                  )}
+                  {(activeWeek === 2 || activeWeek === 3) && (() => {
+                    const currentWeekLessons = weeks[activeWeek - 1]?.lessons || [];
+                    const lastLessonId = currentWeekLessons[currentWeekLessons.length - 1]?.id;
+                    const isLastLessonCompleted = lastLessonId ? completedLessons.includes(lastLessonId) : true;
+
+                    return (
+                      <div className="flex flex-col gap-2 w-full">
+                        {isLastLessonCompleted ? (
+                          <>
+                            <Link 
+                              href={`/week/${activeWeek}/exam`}
+                              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_15px_rgba(245,158,11,0.3)] active:scale-95 text-center text-xs"
+                            >
+                              <span>📝 Làm Bài Kiểm Tra Tuần {activeWeek} (60 Phút)</span>
+                            </Link>
+                            <Link 
+                              href={`/week/${activeWeek}/exam2`}
+                              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-semibold rounded-xl transition-all shadow-[0_4px_15px_rgba(239,68,68,0.3)] active:scale-95 text-center text-xs"
+                            >
+                              <span>📝 Làm Bài Kiểm Tra Số 2 Tuần {activeWeek} (60 Phút)</span>
+                            </Link>
+                          </>
+                        ) : (
+                          <>
+                            <div 
+                              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-800 text-slate-500 font-semibold rounded-xl opacity-50 cursor-not-allowed text-center text-xs border border-white/5"
+                              title="Cần hoàn thành trắc nghiệm bài học cuối cùng đạt từ 80% trở lên để mở khóa"
+                            >
+                              <span>🔒 Làm Bài Kiểm Tra Tuần {activeWeek} (Chưa mở khóa)</span>
+                            </div>
+                            <div 
+                              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-800 text-slate-500 font-semibold rounded-xl opacity-50 cursor-not-allowed text-center text-xs border border-white/5"
+                              title="Cần hoàn thành trắc nghiệm bài học cuối cùng đạt từ 80% trở lên để mở khóa"
+                            >
+                              <span>🔒 Làm Bài Kiểm Tra Số 2 Tuần {activeWeek} (Chưa mở khóa)</span>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
               

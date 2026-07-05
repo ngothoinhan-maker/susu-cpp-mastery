@@ -54,7 +54,7 @@ const WEEK2_EXAM2_QUESTIONS: Question[] = [
   },
   {
     id: 4,
-    question: "Đoạn code sau có bị lỗi tràn số khi thực hiện nhân không?\n```cpp\nlong long a = 1000000;\nint b = 1000000;\nlong long c = a * b;\n```",
+    question: "Đoạn code sau có bị lỗi tràn số khi thực hiện nhân không?\n```cpp\nlong long a = 1000000; \nint b = 1000000;\nlong long c = a * b;\n```",
     options: [
       "Có bị tràn số, vì biến b là kiểu int.",
       "Không bị tràn số, vì phép nhân được thực hiện dưới dạng long long và lưu trữ chính xác.",
@@ -123,7 +123,7 @@ const WEEK2_EXAM2_QUESTIONS: Question[] = [
     question: "Độ phức tạp thời gian Big-O của vòng lặp sau là bao nhiêu?\n```cpp\nfor (int i = 1; i <= N; i *= 2) {\n    // Phép toán cơ bản O(1)\n}\n```",
     options: ["$O(N)$", "$O(\\log_2 N)$", "$O(1)$", "$O(N \\log_2 N)$"],
     correctAnswer: 1,
-    explanation: "Biến đếm `i` được nhân đôi sau mỗi bước lặp ($1, 2, 4, 8, 16...$). Số lần lặp để `i` vượt quá `N` là $\\log_2 N$. Trong phân tích thuật toán, độ phức tạp này được biểu diễn là $O(\\log_2 N)$ (trong tài liệu học thuật thường viết gọn là $O(\\log N)$ vì sự thay đổi cơ số logarit chỉ chênh lệch nhau một hằng số nhân và không làm thay đổi cấp độ phức tạp Big-O)."
+    explanation: "Biến đếm `i` được nhân đôi sau mỗi bước lặp ($1, 2, 4, 8, 16...$). Số lần lặp để `i` vượt quá `N` là $\\log_2 N$. Trong phân tích thuật toán, độ phức tạp này được biểu diễn là $O(\\log_2 N)$."
   },
   {
     id: 13,
@@ -148,43 +148,296 @@ const WEEK2_EXAM2_QUESTIONS: Question[] = [
   },
   {
     id: 16,
-    question: "Đoạn code sau in ra màn hình kết quả gì?\n```cpp\nint x = 10;\nif (x > 5)\n    if (x < 8) cout << \"A\";\n    else cout << \"B\";\n```",
-    options: ["A", "B", "Không in ra gì", "Báo lỗi biên dịch"],
-    correctAnswer: 1,
-    explanation: "Trong C++, từ khóa `else` luôn được kết nối với câu lệnh `if` gần nhất phía trước nó nếu không có dấu ngoặc nhọn `{}` định nghĩa khác. Do đó `else` thuộc về `if (x < 8)`. Vì `x = 10 > 5` đúng, đi vào trong. Vì `x < 8` sai, nhảy vào `else` của nó và in ra 'B'."
+    question: "Vòng lặp sau thực hiện bao nhiêu lần lặp?\n```cpp\nint count = 0;\nfor (int i = 1; i <= 5; i++) {\n    for (int j = 1; j <= 5; j++) {\n        count++;\n    }\n}\n```",
+    options: ["5 lần", "10 lần", "25 lần", "50 lần"],
+    correctAnswer: 2,
+    explanation: "Vòng lặp bên ngoài chạy 5 lần. Với mỗi lần của vòng ngoài, vòng lặp bên trong chạy tiếp 5 lần. Tổng số lần lặp là $5 \\times 5 = 25$ lần."
   },
   {
     id: 17,
-    question: "Trong kỹ thuật tách chữ số của một số nguyên dương N, phép toán nào được dùng để xóa đi chữ số ở hàng đơn vị (chữ số cuối cùng)?",
-    options: ["N % 10", "N / 10", "N - 10", "N * 10"],
+    question: "Một số nguyên dương N bất kỳ có bao nhiêu chữ số khi biểu diễn ở hệ thập phân?",
+    options: [
+      "Khoảng $N$ chữ số",
+      "Khoảng $\\log_{10} N + 1$ chữ số (phần nguyên)",
+      "Khoảng $\\sqrt{N}$ chữ số",
+      "Đúng 10 chữ số"
+    ],
     correctAnswer: 1,
-    explanation: "Phép chia lấy phần nguyên cho 10 (`N / 10`) giúp dịch số sang bên phải 1 chữ số, tương ứng với việc loại bỏ chữ số cuối cùng ở hàng đơn vị."
+    explanation: "Số lượng chữ số của một số nguyên dương $N$ trong hệ thập phân xấp xỉ bằng $\\lfloor \\log_{10} N \\rfloor + 1$."
   },
   {
     id: 18,
-    question: "Biểu thức nào sau đây kiểm tra xem một số nguyên dương `n` có phải số lẻ hay không?",
-    options: ["n % 2 == 0", "n % 2 != 0", "n / 2 != 0", "n % 2 == 2"],
-    correctAnswer: 1,
-    explanation: "Một số là số lẻ nếu phần dư của nó khi chia cho 2 khác 0. Do đó biểu thức đúng là `n % 2 != 0`."
+    question: "Nếu một bài toán yêu cầu kết quả đầu ra in ra 6 chữ số thập phân sau dấu phẩy, ta nên định dạng luồng cout như thế nào?",
+    options: [
+      "cout << fixed << setprecision(6) << ketQua;",
+      "cout << setprecision(6) << ketQua;",
+      "cout << fixed << ketQua;",
+      "cout << precision(6) << ketQua;"
+    ],
+    correctAnswer: 0,
+    explanation: "Sự kết hợp của bộ thao tác định dạng `fixed` và `setprecision(6)` đảm bảo số thực luôn in ra chính xác 6 chữ số ở phần thập phân sau dấu phẩy."
   },
   {
     id: 19,
-    question: "Chương trình sau bị lỗi gì khi biên dịch?\n```cpp\nconst double PI = 3.14;\nPI = 3.14159;\n```",
-    options: [
-      "Không bị lỗi gì.",
-      "Lỗi biên dịch do cố tình thay đổi giá trị của hằng số const.",
-      "Lỗi cú pháp do khai báo kiểu double.",
-      "Lỗi runtime khi chạy chương trình."
-    ],
-    correctAnswer: 1,
-    explanation: "Từ khóa `const` khai báo một hằng số. Giá trị của hằng số là bất biến và chỉ được khởi tạo 1 lần duy nhất lúc khai báo. Cố tình gán lại giá trị mới cho hằng số sẽ gây ra lỗi biên dịch ngay lập tức."
+    question: "Kiểu dữ liệu `long long` trong C++ sử dụng bao nhiêu byte bộ nhớ RAM?",
+    options: ["2 byte", "4 byte", "8 byte", "16 byte"],
+    correctAnswer: 2,
+    explanation: "Kiểu `long long` là số nguyên 64-bit có dấu, chiếm đúng 8 byte (64 bit) bộ nhớ."
   },
   {
     id: 20,
-    question: "Một bài toán kiểm thi có $10^9$ phép tính cơ bản. Thời gian chạy ước tính trên máy chấm thi thông thường là bao nhiêu?",
-    options: ["Khoảng 0.1 giây", "Khoảng 1 giây", "Khoảng 10 giây (gây lỗi quá thời gian TLE)", "Khoảng 100 giây"],
+    question: "Kỹ thuật tách lần lượt tất cả chữ số của số nguyên dương N kết thúc khi nào?",
+    options: [
+      "Khi N nhỏ hơn 10",
+      "Khi N bằng 0 (sau khi liên tục chia cho 10: `N /= 10`)",
+      "Khi N âm",
+      "Sau đúng 10 bước chia"
+    ],
+    correctAnswer: 1,
+    explanation: "Trong vòng lặp tách chữ số `while (N > 0)`, ta liên tục lấy `N % 10` để lấy chữ số cuối cùng và `N /= 10` để cắt bỏ nó. Quá trình dừng lại khi `N` giảm xuống bằng 0."
+  }
+];
+
+const WEEK3_EXAM2_QUESTIONS: Question[] = [
+  {
+    id: 1,
+    question: "Hai số nguyên dương $a$ và $b$ được gọi là nguyên tố cùng nhau khi và chỉ khi:",
+    options: [
+      "Cả hai đều là số nguyên tố.",
+      "Một số là số nguyên tố, số còn lại là số hợp số.",
+      "Ước chung lớn nhất (UCLN) của chúng bằng 1.",
+      "Bội chung nhỏ nhất (BCNN) của chúng bằng 1."
+    ],
     correctAnswer: 2,
-    explanation: "Vì máy tính chấm thi thông thường chỉ chạy được tối đa khoảng $10^8$ phép tính cơ bản trong 1 giây. Do đó, $10^9$ phép tính sẽ tốn khoảng 10 giây để hoàn thành, vượt quá giới hạn 1 giây thông thường (bị lỗi TLE)."
+    explanation: "Theo định nghĩa, hai số nguyên tố cùng nhau có UCLN bằng 1. Chúng không nhất thiết phải là các số nguyên tố (ví dụ: 8 và 9 nguyên tố cùng nhau)."
+  },
+  {
+    id: 2,
+    question: "Thuật toán kiểm tra số nguyên tố bằng cách duyệt tất cả các số từ 2 đến $N - 1$ có độ phức tạp thời gian là gì?",
+    options: [
+      "$O(1)$",
+      "$O(N)$",
+      "$O(\\sqrt{N})$",
+      "$O(\\log N)$"
+    ],
+    correctAnswer: 1,
+    explanation: "Thuật toán duyệt tuần tự qua $N - 2$ phần tử nên có độ phức tạp thời gian tuyến tính $O(N)$."
+  },
+  {
+    id: 3,
+    question: "Bội chung nhỏ nhất (BCNN) của hai số 12 và 18 là bao nhiêu?",
+    options: [
+      "6",
+      "36",
+      "72",
+      "216"
+    ],
+    correctAnswer: 1,
+    explanation: "UCLN(12, 18) = 6. BCNN(12, 18) = (12 × 18) / 6 = 36."
+  },
+  {
+    id: 4,
+    question: "Để dùng mảng sàng số nguyên tố Eratosthenes đánh dấu các số nguyên tố không vượt quá $10^{6}$, kích thước tối thiểu của mảng cần khai báo là bao nhiêu?",
+    options: [
+      "1,000,000 phần tử (từ chỉ số 0 đến 999,999)",
+      "1,000,001 phần tử (từ chỉ số 0 đến 1,000,000)",
+      "500,000 phần tử",
+      "Không giới hạn"
+    ],
+    correctAnswer: 1,
+    explanation: "Vì ta cần truy cập đến chỉ số $10^{6}$, mảng cần chứa các chỉ số từ 0 đến $10^{6}$, tức là cần tối thiểu $1,000,001$ phần tử."
+  },
+  {
+    id: 5,
+    question: "Ước chung lớn nhất của số 0 và một số nguyên dương $N$ (`gcd(0, N)`) bằng bao nhiêu?",
+    options: [
+      "0",
+      "1",
+      "N",
+      "Không xác định"
+    ],
+    correctAnswer: 2,
+    explanation: "Ước lớn nhất chia hết cho cả 0 và $N$ là chính $N$ (vì mọi số đều chia hết cho 0, và ước lớn nhất của $N$ là $N$)."
+  },
+  {
+    id: 6,
+    question: "Đoạn code sau xảy ra lỗi gì?\n```cpp\nint a[5] = {1, 2, 3, 4, 5};\na[5] = 10;\n```",
+    options: [
+      "Lỗi cú pháp không biên dịch được.",
+      "Lỗi chia cho 0.",
+      "Lỗi truy cập bộ nhớ ngoài phạm vi mảng (Out of bounds) vì chỉ số mảng chỉ chạy từ 0 đến 4.",
+      "Không có lỗi gì."
+    ],
+    correctAnswer: 2,
+    explanation: "Mảng gồm 5 phần tử thì chỉ số hợp lệ là từ 0 đến 4. `a[5]` cố gắng ghi đè vào ô nhớ nằm ngoài mảng, gây lỗi truy cập bộ nhớ nguy hiểm."
+  },
+  {
+    id: 7,
+    question: "Một số nguyên tố $P$ bất kỳ có chính xác bao nhiêu ước số nguyên dương?",
+    options: [
+      "1",
+      "2",
+      "3",
+      "Vô số"
+    ],
+    correctAnswer: 1,
+    explanation: "Mọi số nguyên tố chỉ có đúng hai ước nguyên dương là 1 và chính nó."
+  },
+  {
+    id: 8,
+    question: "Trong Sàng Eratosthenes, khi gạch các bội số của số nguyên tố `i`, ta bắt đầu duyệt từ `j = i * i` và ở mỗi bước `j` tăng thêm bao nhiêu?",
+    options: [
+      "1 đơn vị (`j++`)",
+      "2 đơn vị (`j += 2`)",
+      "`i` đơn vị (`j += i`)",
+      "`i * i` đơn vị (`j += i * i`)"
+    ],
+    correctAnswer: 2,
+    explanation: "Bội số của `i` sẽ cách nhau `i` đơn vị. Do đó, sau `i * i`, các bội tiếp theo là `i * i + i`, `i * i + 2*i`, ..., ta cập nhật `j += i`."
+  },
+  {
+    id: 9,
+    question: "Đoạn code sau in ra màn hình kết quả gì?\n```cpp\nfor (int i = 1; i <= 5; i++) {\n    if (i % 2 == 0) continue;\n    cout << i << \" \";\n}\n```",
+    options: [
+      "1 3 5",
+      "2 4",
+      "1 2 3 4 5",
+      "1"
+    ],
+    correctAnswer: 0,
+    explanation: "Khi `i % 2 == 0` (các số chẵn 2, 4), lệnh `continue` bỏ qua việc in và nhảy sang bước lặp kế tiếp. Do đó chỉ có các số lẻ `1 3 5` được in ra."
+  },
+  {
+    id: 10,
+    question: "Số nguyên dương nhỏ nhất là số nguyên tố là số nào?",
+    options: [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    correctAnswer: 2,
+    explanation: "Số 2 là số nguyên tố nhỏ nhất và cũng là số nguyên tố chẵn duy nhất."
+  },
+  {
+    id: 11,
+    question: "Nếu chỉ cần sàng các số nguyên tố, ta có thể bỏ qua việc gạch các số chẵn lớn hơn 2. Kỹ thuật này giúp tiết kiệm bao nhiêu phần trăm bộ nhớ/thời gian gạch bội của 2?",
+    options: [
+      "Khoảng 10%",
+      "Khoảng 25%",
+      "Khoảng 50%",
+      "Không tiết kiệm được gì"
+    ],
+    correctAnswer: 2,
+    explanation: "Bằng cách không lưu trữ các số chẵn (chỉ sàng các số lẻ), kích thước mảng sàng giảm đi 2 lần (tiết kiệm 50% bộ nhớ) và ta không cần tốn công gạch bội số của 2."
+  },
+  {
+    id: 12,
+    question: "Một số nguyên dương $N$ có dạng phân tích thừa số nguyên tố là $N = p_{1}^{a_1} \\times p_{2}^{a_2} \\times ... \\times p_{k}^{a_k}$. Công thức tính số lượng ước số nguyên dương của $N$ là gì?",
+    options: [
+      "$a_1 + a_2 + ... + a_k$",
+      "$(a_1 + 1) \\times (a_2 + 1) \\times ... \\times (a_k + 1)$",
+      "$p_1 \\times p_2 \\times ... \\times p_k$",
+      "$a_1 \\times a_2 \\times ... \\times a_k$"
+    ],
+    correctAnswer: 1,
+    explanation: "Số lượng ước số nguyên dương của $N$ được tính bằng tích của các số mũ cộng thêm 1: $(a_1 + 1) \\times (a_2 + 1) \\times ... \\times (a_k + 1)$."
+  },
+  {
+    id: 13,
+    question: "Hệ thức nào sau đây luôn đúng với mọi cặp số nguyên dương $a$ và $b$?",
+    options: [
+      "$a + b = \\text{gcd}(a, b) + \\text{lcm}(a, b)$",
+      "$a \\times b = \\text{gcd}(a, b) \\times \\text{lcm}(a, b)$",
+      "$a \\times b = \\text{gcd}(a, b) + \\text{lcm}(a, b)$",
+      "$\\text{gcd}(a, b) = \\text{lcm}(a, b)$"
+    ],
+    correctAnswer: 1,
+    explanation: "Tích của hai số nguyên dương luôn bằng tích của ước chung lớn nhất và bội chung nhỏ nhất của chúng."
+  },
+  {
+    id: 14,
+    question: "Đoạn code phân tích thừa số nguyên tố sau đây in ra kết quả gì khi truyền vào `n = 34`?\n```cpp\nvoid phanTich(int n) {\n    for (int i = 2; i * i <= n; i++) {\n        while (n % i == 0) {\n            cout << i << \" \";\n            n /= i;\n        }\n    }\n    if (n > 1) cout << n;\n}\n```",
+    options: [
+      "2",
+      "2 17",
+      "17",
+      "2 34"
+    ],
+    correctAnswer: 1,
+    explanation: "Vòng lặp duyệt `i` từ 2 đến `i * i <= 34`:\n- Với `i = 2`: $34 \\% 2 == 0 \\to$ in 2, $n$ giảm còn 17.\n- Vòng lặp tăng lên `i = 3`, vì $3 \\times 3 = 9 \\le 17$ (Đúng), nhưng $17 \\% 3 != 0$.\n- Tiếp tục `i = 4`: $4 \\times 4 = 16 \\le 17$ (Đúng), nhưng $17 \\% 4 != 0$.\n- Tiếp tục `i = 5`: $5 \\times 5 = 25 > 17$ (Sai) -> thoát vòng lặp `for`.\n- Vì $n = 17 > 1$, chương trình in tiếp 17. Kết quả in ra là '2 17'."
+  },
+  {
+    id: 15,
+    question: "Gọi $d = \\text{gcd}(a, b)$. Khi đó, ước chung lớn nhất của $a$ và $a + b$ (tức là $\\text{gcd}(a, a + b)$) bằng bao nhiêu?",
+    options: [
+      "$d$",
+      "$2 \\times d$",
+      "$a$",
+      "$a + b$"
+    ],
+    correctAnswer: 0,
+    explanation: "Theo tính chất của phép chia dư và thuật toán Euclid: $\\text{gcd}(a, a + b) = \\text{gcd}(a, (a + b) \\% a) = \\text{gcd}(a, b) = d$."
+  },
+  {
+    id: 16,
+    question: "Khi thực hiện thuật toán Sàng Eratosthenes để tìm số nguyên tố đến $N = 10^{7}$, phép gạch các hợp số chia hết cho 2 thực hiện khoảng bao nhiêu bước gạch?",
+    options: [
+      "$10^{7}$ bước",
+      "Khoảng $5 \\times 10^{6}$ bước (xấp xỉ $N / 2$ bước)",
+      "Khoảng $\\sqrt{10^{7}}$ bước",
+      "1 bước duy nhất"
+    ],
+    correctAnswer: 1,
+    explanation: "Bội của 2 gồm 4, 6, 8, ... đến $10^{7}$. Số lượng phần tử chẵn cần gạch là khoảng $N / 2 = 5 \times 10^{6}$ bước."
+  },
+  {
+    id: 17,
+    question: "Cho số nguyên dương $N = 2^{4} \\times 3^{3} \\times 5^{2}$. Hỏi $N$ có bao nhiêu ước số nguyên dương là số chính phương?",
+    options: [
+      "24 ước số",
+      "12 ước số",
+      "6 ước số",
+      "3 ước số"
+    ],
+    correctAnswer: 1,
+    explanation: "Một ước số chính phương của $N$ có dạng $2^{x} \\times 3^{y} \\times 5^{z}$ với các số mũ $x, y, z$ phải là số chẵn.\n- $x \\in \\{0, 2, 4\\}$ (3 cách chọn)\n- $y \\in \\{0, 2\\}$ (2 cách chọn)\n- $z \\in \\{0, 2\\}$ (2 cách chọn)\nTổng số ước chính phương là $3 \\times 2 \\times 2 = 12$."
+  },
+  {
+    id: 18,
+    question: "Cho hai số nguyên tố cùng nhau $a$ và $b$. Theo định lý Bezout, luôn tồn tại hai số nguyên $x$ và $y$ sao cho biểu thức nào dưới đây đúng?",
+    options: [
+      "$a \\times x + b \\times y = 0$",
+      "$a \\times x + b \\times y = 1$",
+      "$a \\times x - b \\times y = a \\times b$",
+      "Không tồn tại $x, y$ nguyên thỏa mãn"
+    ],
+    correctAnswer: 1,
+    explanation: "Định lý Bezout phát biểu rằng luôn tồn tại hai số nguyên $x, y$ sao cho $a \\times x + b \\times y = \\text{gcd}(a, b)$. Vì $a, b$ nguyên tố cùng nhau nên $\\text{gcd}(a, b) = 1$, do đó $a \\times x + b \\times y = 1$."
+  },
+  {
+    id: 19,
+    question: "Cho bài toán: Có $Q = 10^{6}$ câu hỏi, mỗi câu hỏi yêu cầu kiểm tra xem số $N_i$ ($1 \\le N_i \\le 10^{6}$) có phải là số nguyên tố hay không. Cách giải quyết nào sau đây tối ưu nhất để tránh bị quá thời gian (TLE)?",
+    options: [
+      "Dùng hàm kiểm tra nguyên tố $O(\\sqrt{N})$ độc lập cho từng câu hỏi.",
+      "Dùng Sàng Eratosthenes dựng sẵn bảng nguyên tố đến $10^{6}$ trong $O(M \\log(\\log M))$, sau đó trả lời mỗi câu hỏi trong $O(1)$ bằng cách truy cập mảng đánh dấu.",
+      "Sử dụng vòng lặp từ 2 đến $N - 1$ cho từng câu hỏi.",
+      "Duyệt tất cả ước chung của từng số."
+    ],
+    correctAnswer: 1,
+    explanation: "Sàng Eratosthenes cho phép chuẩn bị trước (precompute) trạng thái của toàn bộ các số đến $10^{6}$ trong tích tắc. Sau đó, với mỗi câu hỏi, ta chỉ cần tra cứu mảng trong $O(1)$. Tổng độ phức tạp là $O(M \\log(\\log M) + Q)$, chạy mất khoảng 0.05 giây."
+  },
+  {
+    id: 20,
+    question: "Giả thuyết Goldbach phát biểu rằng mọi số chẵn lớn hơn 2 đều có thể biểu diễn dưới dạng tổng của hai số nguyên tố. Với một số chẵn $N$ ($4 \\le N \\le 10^{6}$), đoạn code nào sau đây đếm số cách phân tích $N = p_1 + p_2$ ($p_1 \\le p_2$) hiệu quả nhất bằng cách sử dụng mảng sàng `is_prime` đã được dựng sẵn?",
+    options: [
+      "```cpp\nint dem = 0;\nfor (int p1 = 2; p1 <= n; p1++) {\n    for (int p2 = 2; p2 <= n; p2++) {\n        if (is_prime[p1] && is_prime[p2] && p1 + p2 == n && p1 <= p2) dem++;\n    }\n}\n```",
+      "```cpp\nint dem = 0;\nfor (int p1 = 2; p1 <= n / 2; p1++) {\n    if (is_prime[p1] && is_prime[n - p1]) {\n        dem++;\n    }\n}\n```",
+      "```cpp\nint dem = 0;\nfor (int p1 = 2; p1 <= n; p1++) {\n    if (is_prime[p1]) dem++;\n}\n```",
+      "```cpp\nint dem = 0;\nif (is_prime[n / 2]) dem = 1;\n```"
+    ],
+    correctAnswer: 1,
+    explanation: "Vì ta chỉ cần tìm cặp số nguyên tố $(p_1, p_2)$ sao cho $p_1 + p_2 = N$ và $p_1 \\le p_2$, ta có thể cho $p_1$ chạy từ 2 đến $N / 2$. Với mỗi $p_1$, số còn lại bắt buộc phải là $p_2 = N - p_1$. Ta chỉ việc kiểm tra xem cả $p_1$ và $N - p_1$ có đồng thời là số nguyên tố (tức là `is_prime[p1]` và `is_prime[n - p1]` đều bằng `true`) hay không. Cách này chỉ tốn $O(N)$ và cực kỳ tối ưu."
   }
 ];
 
@@ -207,44 +460,103 @@ export default function WeekExam2Page() {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const isModalOpenRef = useRef(false);
   const lastWarningTimeRef = useRef(0);
-
-  // Code answers
-  const [codeAnswer1, setCodeAnswer1] = useState(
-`// Viết hàm laSoChinhPhuong(n) với độ phức tạp tối ưu O(1)
-#include <cmath>
-
-bool laSoChinhPhuong(long long n) {
-    if (n < 0) return false;
-    
-    // Viết thuật toán O(1) không dùng vòng lặp tại đây...
-    
-    
-    
-    return false;
-}`
-  );
   
-  const [codeAnswer2, setCodeAnswer2] = useState(
-`// Nhập số N (N <= 10^18)
-// Đếm xem N có bao nhiêu chữ số chẵn (0, 2, 4, 6, 8) và bao nhiêu chữ số lẻ (1, 3, 5, 7, 9)
+  // Code answers
+  const [codeAnswer1, setCodeAnswer1] = useState("");
+  const [codeAnswer2, setCodeAnswer2] = useState("");
+
+  const getInitialCode1 = (wId: number) => {
+    if (wId === 3) {
+      return `// Nhập N (2 <= N <= 10^12) và in ra phân tích thừa số nguyên tố dưới dạng tích các lũy thừa
+// Ví dụ: N = 60 -> in ra "2^2 * 3^1 * 5^1"
 #include <iostream>
 using namespace std;
 
 int main() {
     long long N;
     if (cin >> N) {
-        int soChan = 0;
-        int soLe = 0;
+        // Viết tiếp thuật toán phân tích ở đây...
         
-        // Viết tiếp code tách chữ số và đếm chẵn lẻ tại đây...
-        
-        
-        
-        cout << "Chan: " << soChan << ", Le: " << soLe << endl;
     }
     return 0;
-}`
-  );
+}`;
+    }
+    return `// Viết hàm laSoChinhPhuong(n) độ phức tạp O(1)
+bool laSoChinhPhuong(long long n) {
+    if (n < 0) return false;
+    
+    // Viết tiếp thuật toán ở đây...
+    
+    
+    return false;
+}`;
+  };
+
+  const getInitialCode2 = (wId: number) => {
+    if (wId === 3) {
+      return `// Nhập A và B (1 <= A, B <= 10^12). Tìm ước lớn nhất của B mà không vượt quá A.
+#include <iostream>
+using namespace std;
+
+int main() {
+    long long A, B;
+    if (cin >> A >> B) {
+        long long ans = 1;
+        // Viết tiếp thuật toán tìm ước ở đây...
+        
+        cout << ans << endl;
+    }
+    return 0;
+}`;
+    }
+    return `// Nhập vào 2 số nguyên dương a, b (a, b <= 10^9). Tìm ước chung lớn nhất (UCLN) của chúng.
+#include <iostream>
+using namespace std;
+
+long long gcd(long long a, long long b) {
+    // Viết hàm tìm UCLN ở đây...
+    return 1;
+}
+
+int main() {
+    long long a, b;
+    if (cin >> a >> b) {
+        cout << gcd(a, b) << endl;
+    }
+    return 0;
+}`;
+  };
+
+  const getExerciseTitle1 = (wId: number) => {
+    return wId === 3 
+      ? "Bài 1: Phân tích thừa số nguyên tố số nguyên lớn" 
+      : "Bài 1: Viết hàm kiểm tra Số Chính Phương";
+  };
+
+  const getExerciseDesc1 = (wId: number) => {
+    return wId === 3
+      ? "Cho số nguyên dương $N$ ($2 \\le N \\le 10^{12}$). Phân tích $N$ thành các thừa số nguyên tố và in ra màn hình dưới dạng tích các lũy thừa tăng dần (Ví dụ: $60$ in ra `2^2 * 3^1 * 5^1`)."
+      : "Viết hàm `bool laSoChinhPhuong(long long n)` kiểm tra số chính phương có độ phức tạp thời gian tối ưu $O(1)$. Tránh dùng vòng lặp vì sẽ gây quá giới hạn thời gian (TLE).";
+  };
+
+  const getExerciseTitle2 = (wId: number) => {
+    return wId === 3 
+      ? "Bài 2: Ước số lớn nhất không vượt quá A" 
+      : "Bài 2: Tìm ước chung lớn nhất (UCLN)";
+  };
+
+  const getExerciseDesc2 = (wId: number) => {
+    return wId === 3
+      ? "Cho hai số nguyên dương $A$ và $B$ ($1 \\le A, B \\le 10^{12}$). Tìm ước lớn nhất của $B$ sao cho ước này không vượt quá $A$. Thiết kế thuật toán có độ phức tạp tối ưu $O(\\sqrt{B})$."
+      : "Viết chương trình nhập vào hai số nguyên dương $a, b$ ($1 \\le a, b \\le 10^{9}$). Tìm và in ra ước chung lớn nhất (UCLN) của chúng sử dụng thuật toán Euclid tối ưu.";
+  };
+
+  useEffect(() => {
+    setCodeAnswer1(getInitialCode1(weekId));
+    setCodeAnswer2(getInitialCode2(weekId));
+  }, [weekId]);
+
+  const questions = weekId === 3 ? WEEK3_EXAM2_QUESTIONS : WEEK2_EXAM2_QUESTIONS;
 
   // Lắng nghe phím tắt Ctrl + D + B để quay về Dashboard bí mật
   useEffect(() => {
@@ -344,7 +656,7 @@ int main() {
       document.removeEventListener("copy", handleCopyPaste);
       document.removeEventListener("paste", handleCopyPaste);
       document.removeEventListener("cut", handleCopyPaste);
-      window.removeEventListener("keydown", handleKeyDownBlock);
+      window.addEventListener("keydown", handleKeyDownBlock);
     };
   }, [isStarted, isSubmitted]);
 
@@ -389,20 +701,20 @@ int main() {
     
     // Tính điểm trắc nghiệm
     let correct = 0;
-    WEEK2_EXAM2_QUESTIONS.forEach((q) => {
+    questions.forEach((q) => {
       if (selectedAnswers[q.id] === q.correctAnswer) {
         correct++;
       }
     });
 
     setCorrectCount(correct);
-    // Phần trắc nghiệm chiếm 5 điểm (mỗi câu 0.25 điểm), phần code chiếm 5 điểm
+    // Phần trắc nghiệm chiếm 5 điểm (mỗi câu 0.25 điểm), phần code chiếm 5 điểm (phụ huynh tự chấm/đọc file)
     const mcqScore = correct * 0.25;
     setScore(mcqScore);
     setIsSubmitted(true);
 
     // Tự động unlock tuần sau nếu Susu làm bài xong
-    completeWeek(2);
+    completeWeek(weekId);
 
     // Kích hoạt tải file Markdown kết quả
     downloadMarkdownResult(correct, mcqScore, warningCount);
@@ -415,7 +727,7 @@ int main() {
     const timeSpentSecs = timeSpentSeconds % 60;
     const timeSpentStr = `${timeSpentMins} phút ${timeSpentSecs} giây`;
 
-    let mdContent = `# BÁO CÁO KẾT QUẢ BÀI KIỂM TRA TỔNG HỢP SỐ 2 TUẦN 2 (60 PHÚT)
+    let mdContent = `# BÁO CÁO KẾT QUẢ BÀI KIỂM TRA SỐ 2 TUẦN ${weekId} (60 PHÚT)
     
 **Học sinh:** ${studentName}
 **Thời gian làm bài:** ${timeSpentStr}
@@ -430,7 +742,7 @@ int main() {
 
 `;
 
-    WEEK2_EXAM2_QUESTIONS.forEach((q) => {
+    questions.forEach((q) => {
       const selectedIdx = selectedAnswers[q.id];
       const isCorrect = selectedIdx === q.correctAnswer;
       const statusSymbol = isCorrect ? "✓ ĐÚNG" : "✗ SAI";
@@ -438,7 +750,7 @@ int main() {
       mdContent += `### Câu ${q.id}: ${q.question.replace(/\n/g, "\n    ")}
 * **Các phương án lựa chọn:**
 ${q.options.map((opt, i) => `  ${i === q.correctAnswer ? "[x] (Đáp án chuẩn)" : "[ ]"} ${opt}`).join("\n")}
-* **Susu chọn:** ${selectedIdx !== undefined ? q.options[selectedIdx] : "(Không trả lời)"} &rarr; **${statusSymbol}**
+* **Susu chọn:** ${selectedIdx !== undefined ? q.options[selectedIdx] : "(Không trả lời)"} -> **${statusSymbol}**
 * **Giải thích chi tiết:** ${q.explanation}
 
 `;
@@ -448,17 +760,95 @@ ${q.options.map((opt, i) => `  ${i === q.correctAnswer ? "[x] (Đáp án chuẩn
 
 ## 💻 PHẦN 2: LỜI GIẢI PHẦN TỰ LUẬN (VIẾT CODE C++)
 
-### Bài 1: Hàm laSoChinhPhuong(n) độ phức tạp $O(1)$
-* **Yêu cầu:** Viết hàm kiểm tra số chính phương chạy trong thời gian tối ưu O(1) không dùng vòng lặp.
+`;
+
+    if (weekId === 3) {
+      mdContent += `### Bài 1: Phân tích thừa số nguyên tố số nguyên lớn
+* **Yêu cầu:** Cho số nguyên dương N (2 <= N <= 10^12). Phân tích N thành tích các lũy thừa số nguyên tố tăng dần.
 * **Bài làm của Susu:**
 \`\`\`cpp
 ${codeAnswer1}
 \`\`\`
 
-* **Đánh giá/Lời giải chuẩn tham khảo (Kỹ thuật sqrt):**
+* **Đánh giá/Lời giải chuẩn tham khảo:**
+\`\`\`cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    long long N;
+    if (cin >> N) {
+        bool first = true;
+        for (long long i = 2; i * i <= N; i++) {
+            if (N % i == 0) {
+                int mu = 0;
+                while (N % i == 0) {
+                    mu++;
+                    N /= i;
+                }
+                if (!first) cout << " * ";
+                cout << i << "^" << mu;
+                first = false;
+            }
+        }
+        if (N > 1) {
+            if (!first) cout << " * ";
+            cout << N << "^1";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+\`\`\`
+
+---
+
+### Bài 2: Ước số lớn nhất không vượt quá A
+* **Yêu cầu:** Cho A và B (1 <= A, B <= 10^12). Tìm ước lớn nhất của B không vượt quá A. Độ phức tạp tối ưu O(căn B).
+* **Bài làm của Susu:**
+\`\`\`cpp
+${codeAnswer2}
+\`\`\`
+
+* **Đánh giá/Lời giải chuẩn tham khảo:**
+\`\`\`cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    long long A, B;
+    if (cin >> A >> B) {
+        long long ans = 1;
+        for (long long i = 1; i * i <= B; i++) {
+            if (B % i == 0) {
+                // i là ước
+                if (i <= A) {
+                    ans = max(ans, i);
+                }
+                // B / i là ước
+                if (B / i <= A) {
+                    ans = max(ans, B / i);
+                }
+            }
+        }
+        cout << ans << endl;
+    }
+    return 0;
+}
+\`\`\`
+`;
+    } else {
+      mdContent += `### Bài 1: Hàm laSoChinhPhuong(n) độ phức tạp O(1)
+* **Yêu cầu:** Viết hàm kiểm tra số chính phương tối ưu O(1).
+* **Bài làm của Susu:**
+\`\`\`cpp
+${codeAnswer1}
+\`\`\`
+
+* **Đánh giá/Lời giải chuẩn tham khảo:**
 \`\`\`cpp
 #include <cmath>
-
 bool laSoChinhPhuong(long long n) {
     if (n < 0) return false;
     long long can = round(sqrt(n));
@@ -468,42 +858,39 @@ bool laSoChinhPhuong(long long n) {
 
 ---
 
-### Bài 2: Đếm chữ số chẵn và chữ số lẻ của N
-* **Yêu cầu:** Nhập một số nguyên dương N (lên tới $10^{18}$), đếm xem N có bao nhiêu chữ số chẵn (0, 2, 4, 6, 8) và bao nhiêu chữ số lẻ (1, 3, 5, 7, 9).
+### Bài 2: Tìm ước chung lớn nhất (UCLN)
+* **Yêu cầu:** Viết hàm tìm UCLN của hai số a, b (a, b <= 10^9) bằng thuật toán Euclid tối ưu.
 * **Bài làm của Susu:**
 \`\`\`cpp
 ${codeAnswer2}
 \`\`\`
 
-* **Đánh giá/Lời giải chuẩn tham khảo (Tách chữ số chẵn lẻ):**
+* **Đánh giá/Lời giải chuẩn tham khảo (Thuật toán Euclid):**
 \`\`\`cpp
 #include <iostream>
 using namespace std;
 
+long long gcd(long long a, long long b) {
+    while (b > 0) {
+        long long r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
 int main() {
-    long long N;
-    if (cin >> N) {
-        if (N == 0) {
-            cout << "Chan: 1, Le: 0" << endl;
-            return 0;
-        }
-        int soChan = 0;
-        int soLe = 0;
-        while (N > 0) {
-            int d = N % 10;
-            if (d % 2 == 0) {
-                soChan++;
-            } else {
-                soLe++;
-            }
-            N /= 10;
-        }
-        cout << "Chan: " << soChan << ", Le: " << soLe << endl;
+    long long a, b;
+    if (cin >> a >> b) {
+        cout << gcd(a, b) << endl;
     }
     return 0;
 }
 \`\`\`
+`;
+    }
 
+    mdContent += `
 ---
 *Báo cáo được sinh tự động bởi hệ thống Susu C++ & Algorithm Mastery vào ngày ${new Date().toLocaleDateString("vi-VN")} lúc ${new Date().toLocaleTimeString("vi-VN")}.*
 `;
@@ -513,7 +900,7 @@ int main() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", `susu_ket_qua_kiem_tra_tuan_2_bai_2.md`);
+    link.setAttribute("download", `susu_ket_qua_kiem_tra_tuan_${weekId}_lan2.md`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -530,7 +917,7 @@ int main() {
         {/* Navigation back (Hidden, accessible only via Ctrl + D + B) */}
         <div className="flex items-center justify-end">
           <div className="text-xs font-bold text-violet-400 uppercase tracking-widest bg-violet-500/10 px-3.5 py-1 rounded-full border border-violet-500/20">
-            Kỳ thi số 2 Tuần 2
+            Kỳ thi tổng hợp - Đề số 2
           </div>
         </div>
 
@@ -543,10 +930,12 @@ int main() {
             
             <div className="space-y-2">
               <h1 className="text-3xl font-extrabold tracking-tight text-white">
-                Bài Kiểm Tra Số 2 Tuần 2 (Khắc Phục Điểm Yếu)
+                Bài Kiểm Tra Số 2 Tuần {weekId}
               </h1>
               <p className="text-slate-400 text-sm">
-                Nội dung tập trung củng cố kiến thức: break/continue, phép gán trong if, độ phức tạp thuật toán và thao tác tách chữ số chẵn/lẻ.
+                {weekId === 3 
+                  ? "Đánh giá tổng hợp chuyên sâu Lý thuyết Số học, Số nguyên tố cùng nhau, Ước lượng số lượng ước số và Tìm ước lớn nhất."
+                  : "Đánh giá bổ sung kiến thức Cú pháp C++, Số chính phương, Ước chung lớn nhất, Vòng lặp lồng nhau & Tràn số."}
               </p>
             </div>
 
@@ -558,8 +947,8 @@ int main() {
               </h3>
               <ul className="text-xs text-slate-400 space-y-2 list-disc pl-5">
                 <li>Thời gian làm bài: <strong>60 phút</strong> đếm ngược liên tục.</li>
-                <li>Phần 1: <strong>20 câu hỏi trắc nghiệm</strong> kiểm tra lý thuyết nâng cao và gỡ bẫy lỗi (5.0 điểm).</li>
-                <li>Phần 2: <strong>2 bài tập lập trình C++</strong> (5.0 điểm) để viết hàm chính phương O(1) và đếm chữ số chẵn/lẻ.</li>
+                <li>Phần 1: <strong>20 câu hỏi trắc nghiệm</strong> kiểm tra lý thuyết và bẫy lỗi (5.0 điểm).</li>
+                <li>Phần 2: <strong>2 bài tập lập trình C++</strong> (5.0 điểm) để gõ giải thuật trực tiếp.</li>
                 <li><strong>Quy chế chống gian lận:</strong> Hệ thống tự động chặn chuột phải, chặn sao chép/dán, và chặn in ấn. Mọi hành vi rời màn hình thi (chuyển tab, mở phần mềm khác) sẽ bị kích hoạt cảnh báo và ghi nhận số lần vi phạm vào báo cáo gửi ba mẹ.</li>
                 <li>Sau khi hoàn thành hoặc hết thời gian, hệ thống sẽ tự động chấm điểm trắc nghiệm và xuất kết quả bài làm thành file **Markdown (.md)** lưu về máy tính của ba mẹ để xem lại.</li>
               </ul>
@@ -627,9 +1016,9 @@ int main() {
                 </div>
                 
                 <div className="space-y-2">
-                  <h2 className="text-2xl font-black text-white">Chúc Mừng Susu Đã Hoàn Thành Bài Kiểm Tra Số 2!</h2>
+                  <h2 className="text-2xl font-black text-white">Chúc Mừng Susu Đã Hoàn Thành Bài Kiểm Tra!</h2>
                   <p className="text-slate-400 text-sm max-w-md mx-auto">
-                    Hệ thống đã chấm điểm phần trắc nghiệm và tải báo cáo chi tiết `.md` về máy tính của ba mẹ để xem lại.
+                    Hệ thống đã kiểm tra phần trắc nghiệm và tải xuống báo cáo chi tiết bài làm `.md` về máy tính.
                   </p>
                 </div>
 
@@ -651,8 +1040,9 @@ int main() {
                     className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-[0_4px_15px_rgba(16,185,129,0.2)] active:scale-95 cursor-pointer text-xs"
                   >
                     <Download className="w-4 h-4" />
-                    <span>Tải lại file báo cáo (.md)</span>
+                    <span>Tải lại kết quả (.md)</span>
                   </button>
+
                   <Link href="/" className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white/5 border border-white/10 hover:border-violet-500/20 text-slate-300 hover:text-white font-bold rounded-xl transition-all active:scale-95 text-xs">
                     <span>Quay về Dashboard chính</span>
                   </Link>
@@ -660,7 +1050,7 @@ int main() {
               </div>
             )}
 
-            {/* PHẦN 1: TRẮC NGHIỆM (20 CÂU) */}
+            {/* PHẦN 1: TRẮC NGHIỆM */}
             <section className="glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
               <div className="flex items-center gap-2 pb-4 border-b border-white/5 text-violet-400 font-bold uppercase tracking-wider text-sm">
                 <BookOpen className="w-5 h-5" />
@@ -668,7 +1058,7 @@ int main() {
               </div>
 
               <div className="space-y-8">
-                {WEEK2_EXAM2_QUESTIONS.map((q, qIdx) => {
+                {questions.map((q, qIdx) => {
                   const isCorrect = selectedAnswers[q.id] === q.correctAnswer;
                   const isWrong = selectedAnswers[q.id] !== undefined && selectedAnswers[q.id] !== q.correctAnswer;
                   
@@ -715,9 +1105,9 @@ int main() {
 
                           if (isSubmitted) {
                             if (optIdx === q.correctAnswer) {
-                               optStyle = "border-emerald-500 bg-emerald-500/10 text-emerald-400 font-semibold";
+                              optStyle = "border-emerald-500 bg-emerald-500/10 text-emerald-400 font-semibold";
                             } else if (isSelected && isWrong) {
-                               optStyle = "border-rose-500 bg-rose-500/10 text-rose-400 font-semibold";
+                              optStyle = "border-rose-500 bg-rose-500/10 text-rose-400 font-semibold";
                             }
                           }
 
@@ -771,7 +1161,7 @@ int main() {
                             <AlertCircle className="w-3.5 h-3.5" />
                             <span>Giải thích đáp án:</span>
                           </div>
-                           <div className="leading-relaxed">
+                          <div className="leading-relaxed">
                             <ReactMarkdown 
                               remarkPlugins={[remarkGfm, remarkMath]} 
                               rehypePlugins={[rehypeKatex]}
@@ -814,12 +1204,18 @@ int main() {
                 {/* Bài 1 */}
                 <div className="space-y-4">
                   <div className="space-y-1">
-                    <h3 className="text-sm font-bold text-white">Bài 1: Viết hàm kiểm tra Số Chính Phương</h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      Số chính phương là số có căn bậc hai là một số nguyên. 
-                      Ví dụ: $9$ (vì $3 \times 3 = 9$), $16$ (vì $4 \times 4 = 16$).
-                      {"Hãy viết hàm `bool laSoChinhPhuong(long long n)` với độ phức tạp tối ưu $O(1)$ sử dụng hàm `sqrt` của thư viện `<cmath>`, tránh dùng vòng lặp chạy từ 1 đến căn N."}
-                    </p>
+                    <h3 className="text-sm font-bold text-white">{getExerciseTitle1(weekId)}</h3>
+                    <div className="text-xs text-slate-400 leading-relaxed markdown-content">
+                      <ReactMarkdown 
+                        remarkPlugins={[remarkGfm, remarkMath]} 
+                        rehypePlugins={[rehypeKatex]}
+                        components={{
+                          p: ({node, ...props}) => <span {...props} />,
+                        }}
+                      >
+                        {getExerciseDesc1(weekId)}
+                      </ReactMarkdown>
+                    </div>
                   </div>
 
                   <textarea
@@ -834,12 +1230,18 @@ int main() {
                 {/* Bài 2 */}
                 <div className="space-y-4">
                   <div className="space-y-1">
-                    <h3 className="text-sm font-bold text-white">Bài 2: Đếm chữ số Chẵn & Lẻ của số nguyên N</h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      Nhập vào một số nguyên dương $N$ ($1 \le N \le 10^{18}$). 
-                      Đếm và in ra số lượng chữ số chẵn (0, 2, 4, 6, 8) và số lượng chữ số lẻ (1, 3, 5, 7, 9) cấu thành nên số N.
-                      Ví dụ: Với $N = 1024$, in ra `Chan: 3, Le: 1` (do chữ số chẵn gồm 0, 2, 4 và chữ số lẻ là 1).
-                    </p>
+                    <h3 className="text-sm font-bold text-white">{getExerciseTitle2(weekId)}</h3>
+                    <div className="text-xs text-slate-400 leading-relaxed markdown-content">
+                      <ReactMarkdown 
+                        remarkPlugins={[remarkGfm, remarkMath]} 
+                        rehypePlugins={[rehypeKatex]}
+                        components={{
+                          p: ({node, ...props}) => <span {...props} />,
+                        }}
+                      >
+                        {getExerciseDesc2(weekId)}
+                      </ReactMarkdown>
+                    </div>
                   </div>
 
                   <textarea

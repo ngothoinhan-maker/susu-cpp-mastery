@@ -309,8 +309,8 @@ function LessonQuiz({
   };
 
   const totalQuestions = shuffledQuestions.length;
-  const correctCountValue = getCorrectCount();
-  const percentage = totalQuestions > 0 ? Math.round((correctCountValue / totalQuestions) * 100) : 0;
+  const correctCount = getCorrectCount();
+  const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
 
   // Gọi callback khi bài làm đạt màn hình kết quả
   useEffect(() => {
@@ -1158,34 +1158,70 @@ export default function LessonDetailPage() {
               </section>
             )}
 
-            {/* Exam CTA for Week 2, Lesson 3 */}
-            {weekId === 2 && lessonNumber === 3 && (
-              <section className="glass-panel p-6 sm:p-8 rounded-3xl border-violet-500/30 bg-violet-950/5 flex flex-col md:flex-row items-center justify-between gap-6 mt-6">
-                <div className="space-y-1 text-center md:text-left flex-1">
-                  <span className="text-[10px] font-bold text-violet-400 uppercase tracking-widest bg-violet-500/10 px-2.5 py-1 rounded-full border border-violet-500/20">
-                    🏆 Thử thách cuối tuần
-                  </span>
-                  <h3 className="text-lg font-bold text-white mt-2">Đánh Giá & Luyện Tập Tuần 2</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Susu hãy thực hiện các bài đánh giá năng lực cuối tuần để củng cố vững chắc toàn bộ kiến thức cú pháp C++, vòng lặp, tràn số và viết hàm nhé!
-                  </p>
-                </div>
-                <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0 w-full sm:w-auto">
-                  <Link 
-                    href={`/week/${weekId}/exam`}
-                    className="px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold rounded-xl text-xs transition-all shadow-[0_4px_15px_rgba(245,158,11,0.3)] active:scale-95 text-center whitespace-nowrap"
-                  >
-                    Bắt Đầu Bài Kiểm Tra 1 (60 Phút)
-                  </Link>
-                  <Link 
-                    href={`/week/${weekId}/exam2`}
-                    className="px-6 py-3 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold rounded-xl text-xs transition-all shadow-[0_4px_15px_rgba(239,68,68,0.3)] active:scale-95 text-center whitespace-nowrap"
-                  >
-                    Bắt Đầu Bài Kiểm Tra 2 (Khắc phục điểm yếu)
-                  </Link>
-                </div>
-              </section>
-            )}
+            {/* Exam CTA for last lesson of Week 2 & Week 3 */}
+            {(weekId === 2 || weekId === 3) && lessonNumber === currentWeek.lessons.length && (() => {
+              const lastLesson = currentWeek.lessons[currentWeek.lessons.length - 1];
+              const isLastLessonCompleted = completedLessons.includes(lastLesson.id) || 
+                                            !lastLesson.quizQuestions || 
+                                            lastLesson.quizQuestions.length === 0;
+
+              const examDesc = weekId === 3
+                ? "Susu hãy thực hiện các bài đánh giá năng lực cuối tuần để củng cố vững chắc toàn bộ kiến thức về Số nguyên tố, Sàng Eratosthenes, UCLN/BCNN và tránh lỗi tràn số nhé!"
+                : "Susu hãy thực hiện các bài đánh giá năng lực cuối tuần để củng cố vững chắc toàn bộ kiến thức cú pháp C++, vòng lặp, tràn số và viết hàm nhé!";
+
+              return (
+                <section className="glass-panel p-6 sm:p-8 rounded-3xl border-violet-500/30 bg-violet-950/5 flex flex-col md:flex-row items-center justify-between gap-6 mt-6">
+                  <div className="space-y-1 text-center md:text-left flex-1">
+                    <span className="text-[10px] font-bold text-violet-400 uppercase tracking-widest bg-violet-500/10 px-2.5 py-1 rounded-full border border-violet-500/20">
+                      🏆 Thử thách cuối tuần
+                    </span>
+                    <h3 className="text-lg font-bold text-white mt-2">Đánh Giá & Luyện Tập Tuần {weekId}</h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      {examDesc}
+                    </p>
+                    {!isLastLessonCompleted && (
+                      <p className="text-xs text-rose-400 font-semibold mt-2 flex items-center gap-1.5 justify-center md:justify-start">
+                        <Lock className="w-3.5 h-3.5" />
+                        Susu cần hoàn thành trắc nghiệm lý thuyết Bài {lessonNumber} đạt từ 80% trở lên để mở khóa bài kiểm tra.
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0 w-full sm:w-auto">
+                    {isLastLessonCompleted ? (
+                      <>
+                        <Link 
+                          href={`/week/${weekId}/exam`}
+                          className="px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold rounded-xl text-xs transition-all shadow-[0_4px_15px_rgba(245,158,11,0.3)] active:scale-95 text-center whitespace-nowrap"
+                        >
+                          Bắt Đầu Bài Kiểm Tra 1 (60 Phút)
+                        </Link>
+                        <Link 
+                          href={`/week/${weekId}/exam2`}
+                          className="px-6 py-3 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold rounded-xl text-xs transition-all shadow-[0_4px_15px_rgba(239,68,68,0.3)] active:scale-95 text-center whitespace-nowrap"
+                        >
+                          Bắt Đầu Bài Kiểm Tra 2 (Khắc phục điểm yếu)
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <button 
+                          disabled
+                          className="px-6 py-3 bg-slate-800 text-slate-500 font-bold rounded-xl text-xs opacity-50 cursor-not-allowed text-center whitespace-nowrap border border-white/5"
+                        >
+                          🔒 Bài Kiểm Tra 1 (Đang khóa)
+                        </button>
+                        <button 
+                          disabled
+                          className="px-6 py-3 bg-slate-800 text-slate-500 font-bold rounded-xl text-xs opacity-50 cursor-not-allowed text-center whitespace-nowrap border border-white/5"
+                        >
+                          🔒 Bài Kiểm Tra 2 (Đang khóa)
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </section>
+              );
+            })()}
 
           </div>
 
