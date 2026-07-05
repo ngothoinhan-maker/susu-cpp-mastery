@@ -444,7 +444,7 @@ const WEEK3_EXAM2_QUESTIONS: Question[] = [
 export default function WeekExam2Page() {
   const params = useParams();
   const router = useRouter();
-  const { weeks, completeWeek } = useLearning();
+  const { weeks, completeWeek, userRole } = useLearning();
 
   const weekId = parseInt(params.weekId as string) || 2;
 
@@ -454,6 +454,13 @@ export default function WeekExam2Page() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(3600); // 60 phút = 3600 giây
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
+  
+  // Tự động điền tên nếu là admin
+  useEffect(() => {
+    if (userRole === "admin" && !isStarted) {
+      setStudentName("Admin");
+    }
+  }, [userRole, isStarted]);
   
   // State cảnh báo chống gian lận (chuyển tab/mất focus)
   const [warningCount, setWarningCount] = useState(0);
@@ -592,7 +599,7 @@ int main() {
 
   // Cảnh báo mất tập trung / chuyển tab / mở phần mềm khác
   useEffect(() => {
-    if (!isStarted || isSubmitted) return;
+    if (!isStarted || isSubmitted || userRole === "admin") return;
 
     const handleFocusLoss = () => {
       const now = Date.now();
@@ -622,7 +629,7 @@ int main() {
 
   // Chặn sao chép, chuột phải, in ấn và các phím tắt Inspect
   useEffect(() => {
-    if (!isStarted || isSubmitted) return;
+    if (!isStarted || isSubmitted || userRole === "admin") return;
 
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();

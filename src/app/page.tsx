@@ -15,7 +15,9 @@ import {
   ChevronRight,
   TrendingUp,
   BrainCircuit,
-  FileCode2
+  FileCode2,
+  LogOut,
+  User
 } from "lucide-react";
 import Link from "next/link";
 
@@ -24,7 +26,10 @@ export default function Dashboard() {
     weeks, 
     dailyActivity, 
     totalCodingTime, 
-    totalSolved, 
+    totalSolved,
+    currentUser,
+    userRole,
+    logout,
     toggleChecklist, 
     completeWeek, 
     addCodingTime, 
@@ -88,21 +93,33 @@ export default function Dashboard() {
           </div>
           
           <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg mr-2">
+              <User className="w-4 h-4 text-slate-400" />
+              <span className="text-xs text-slate-300 font-medium">Chào, {currentUser}</span>
+            </div>
             <button 
               onClick={() => addCodingTime(30)}
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-200 bg-white/5 border border-white/10 hover:border-violet-500/30 rounded-lg backdrop-blur-md transition-all active:scale-95 cursor-pointer"
             >
               <PlusCircle className="w-4 h-4 text-violet-400" />
-              <span>Code Thêm 30 Phút</span>
+              <span className="hidden sm:inline">Code Thêm 30 Phút</span>
             </button>
             
             <button 
               onClick={resetProgress}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-400 bg-transparent border border-transparent hover:border-red-500/20 hover:text-red-400 rounded-lg transition-all active:scale-95 cursor-pointer"
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-400 bg-transparent border border-transparent hover:border-red-500/20 hover:text-red-400 rounded-lg transition-all active:scale-95 cursor-pointer"
               title="Đặt lại toàn bộ tiến độ tự học"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>Đặt lại</span>
+            </button>
+
+            <button 
+              onClick={logout}
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-400 bg-transparent border border-transparent hover:border-slate-500/20 hover:text-slate-300 rounded-lg transition-all active:scale-95 cursor-pointer"
+              title="Đăng xuất"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline">Đăng xuất</span>
             </button>
           </div>
         </header>
@@ -372,7 +389,7 @@ export default function Dashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {weeks.map((week) => {
-              const isLocked = week.status === "locked";
+              const isLocked = userRole === "admin" ? false : (week.status === "locked");
               const isCompleted = week.status === "completed";
               const isUnlocked = week.status === "unlocked";
               

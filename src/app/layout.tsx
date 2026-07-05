@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 import { LearningProvider } from "@/store/learning-store";
-
+import { LoginGuard } from "@/components/login-guard";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -37,7 +37,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col notranslate">
         <LearningProvider>
-          {children}
+          <LoginGuard>
+            {children}
+          </LoginGuard>
         </LearningProvider>
       </body>
     </html>

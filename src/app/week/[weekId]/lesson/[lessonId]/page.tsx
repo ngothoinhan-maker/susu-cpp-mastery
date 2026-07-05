@@ -30,7 +30,8 @@ import {
   XCircle,
   RotateCcw,
   Trophy,
-  Lock
+  Lock,
+  LogOut
 } from "lucide-react";
 
 // Component con CodeBlock nâng cấp hỗ trợ biên dịch Wandbox API tại chỗ và Sao chép nhanh
@@ -680,7 +681,7 @@ function LessonQuiz({
 export default function LessonDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const { weeks } = useLearning();
+  const { weeks, userRole, logout } = useLearning();
   
   const weekId = parseInt(params.weekId as string) || 1;
   const lessonNumber = parseInt(params.lessonId as string) || 1;
@@ -771,7 +772,12 @@ export default function LessonDetailPage() {
           }`}>
             <div className="flex items-center justify-between px-2">
               {!isSidebarCollapsed && (
-                <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Danh sách bài học</h2>
+                <div className="flex flex-col gap-1">
+                  <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Danh sách bài học</h2>
+                  <button onClick={logout} className="text-[10px] flex items-center gap-1 text-slate-500 hover:text-red-400 transition-colors w-fit" title="Đăng xuất">
+                    <LogOut className="w-3 h-3" /> Đăng xuất
+                  </button>
+                </div>
               )}
               <button 
                 onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
@@ -786,7 +792,7 @@ export default function LessonDetailPage() {
               {currentWeek.lessons.map((lesson, index) => {
                 const isActive = index === activeLessonIndex;
                 const isCompleted = completedLessons.includes(lesson.id);
-                const isUnlocked = index === 0 || (() => {
+                const isUnlocked = userRole === "admin" || index === 0 || (() => {
                   const prevLesson = currentWeek.lessons[index - 1];
                   const hasNoQuiz = !prevLesson.quizQuestions || prevLesson.quizQuestions.length === 0;
                   return completedLessons.includes(prevLesson.id) || hasNoQuiz;
@@ -1161,7 +1167,7 @@ export default function LessonDetailPage() {
             {/* Exam CTA for last lesson of Week 2 & Week 3 */}
             {(weekId === 2 || weekId === 3) && lessonNumber === currentWeek.lessons.length && (() => {
               const lastLesson = currentWeek.lessons[currentWeek.lessons.length - 1];
-              const isLastLessonCompleted = completedLessons.includes(lastLesson.id) || 
+              const isLastLessonCompleted = userRole === "admin" || completedLessons.includes(lastLesson.id) || 
                                             !lastLesson.quizQuestions || 
                                             lastLesson.quizQuestions.length === 0;
 

@@ -57,6 +57,10 @@ interface LearningContextType {
   dailyActivity: DailyActivity[];
   totalCodingTime: number;
   totalSolved: number;
+  currentUser: string | null;
+  userRole: "admin" | "student" | null;
+  login: (user: string, role: "admin" | "student") => void;
+  logout: () => void;
   toggleChecklist: (weekNumber: number, field: "visualDrawn" | "complexityAnalyzed") => void;
   completeWeek: (weekNumber: number) => void;
   addCodingTime: (minutes: number) => void;
@@ -8760,8 +8764,17 @@ export const LearningProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [dailyActivity, setDailyActivity] = useState<DailyActivity[]>(SEED_ACTIVITY);
   const [totalCodingTime, setTotalCodingTime] = useState<number>(590);
   const [totalSolved, setTotalSolved] = useState<number>(24);
+  const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<"admin" | "student" | null>(null);
 
   useEffect(() => {
+    const savedUser = localStorage.getItem("susu_user");
+    const savedRole = localStorage.getItem("susu_role");
+    if (savedUser && savedRole) {
+      setCurrentUser(savedUser);
+      setUserRole(savedRole as "admin" | "student");
+    }
+
     const savedWeeks = localStorage.getItem("susu_weeks");
     const savedActivity = localStorage.getItem("susu_activity");
     const savedTime = localStorage.getItem("susu_time");
@@ -8840,8 +8853,35 @@ export const LearningProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     saveToStorage(SEED_WEEKS, SEED_ACTIVITY, 590, 24);
   };
 
+  const login = (user: string, role: "admin" | "student") => {
+    setCurrentUser(user);
+    setUserRole(role);
+    localStorage.setItem("susu_user", user);
+    localStorage.setItem("susu_role", role);
+  };
+
+  const logout = () => {
+    setCurrentUser(null);
+    setUserRole(null);
+    localStorage.removeItem("susu_user");
+    localStorage.removeItem("susu_role");
+  };
+
   return (
-    <LearningContext.Provider value={{ weeks, dailyActivity, totalCodingTime, totalSolved, toggleChecklist, completeWeek, addCodingTime, resetProgress }}>
+    <LearningContext.Provider value={{ 
+      weeks, 
+      dailyActivity, 
+      totalCodingTime, 
+      totalSolved, 
+      currentUser,
+      userRole,
+      login,
+      logout,
+      toggleChecklist, 
+      completeWeek, 
+      addCodingTime, 
+      resetProgress 
+    }}>
       {children}
     </LearningContext.Provider>
   );
