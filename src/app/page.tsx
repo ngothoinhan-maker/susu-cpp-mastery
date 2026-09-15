@@ -36,6 +36,11 @@ export default function Dashboard() {
     resetProgress 
   } = useLearning();
 
+  const isAdmin = 
+    userRole === "admin" || 
+    currentUser === "admin" || 
+    (typeof window !== "undefined" && (localStorage.getItem("susu_role") === "admin" || localStorage.getItem("susu_user") === "admin"));
+
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
 
   useEffect(() => {
@@ -311,7 +316,7 @@ export default function Dashboard() {
                   {(activeWeek === 2 || activeWeek === 3) && (() => {
                     const currentWeekLessons = weeks[activeWeek - 1]?.lessons || [];
                     const lastLessonId = currentWeekLessons[currentWeekLessons.length - 1]?.id;
-                    const isLastLessonCompleted = lastLessonId ? completedLessons.includes(lastLessonId) : true;
+                    const isLastLessonCompleted = isAdmin || (lastLessonId ? completedLessons.includes(lastLessonId) : true);
 
                     return (
                       <div className="flex flex-col gap-2 w-full">
@@ -389,13 +394,18 @@ export default function Dashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {weeks.map((week) => {
-              const isLocked = userRole === "admin" ? false : (week.status === "locked");
               const isCompleted = week.status === "completed";
               const isUnlocked = week.status === "unlocked";
+              const isLocked = isAdmin ? false : (week.status === "locked");
               
               let cardStyle = "glass-panel";
-              if (isCompleted) cardStyle += " border-emerald-500/20 bg-emerald-950/5 hover:border-emerald-500/40";
-              if (isUnlocked) cardStyle += " border-violet-500/30 bg-violet-950/5 hover:border-violet-500/50";
+              if (isCompleted) {
+                cardStyle += " border-emerald-500/20 bg-emerald-950/5 hover:border-emerald-500/40";
+              } else if (isUnlocked) {
+                cardStyle += " border-violet-500/30 bg-violet-950/5 hover:border-violet-500/50";
+              } else if (isAdmin) {
+                cardStyle += " border-sky-500/30 bg-sky-950/10 hover:border-sky-500/50";
+              }
               
               return (
                 <div key={week.weekNumber} className={`${cardStyle} p-6 rounded-2xl flex flex-col justify-between relative group`}>
@@ -406,6 +416,9 @@ export default function Dashboard() {
                   )}
                   {isUnlocked && (
                     <div className="absolute top-0 right-0 w-2 h-16 bg-violet-500 rounded-tr-2xl rounded-bl-lg shadow-[0_0_15px_rgba(139,92,246,0.5)] animate-pulse" />
+                  )}
+                  {isAdmin && !isCompleted && !isUnlocked && (
+                    <div className="absolute top-0 right-0 w-2 h-16 bg-sky-500 rounded-tr-2xl rounded-bl-lg shadow-[0_0_15px_rgba(14,165,233,0.5)]" />
                   )}
 
                   <div className="space-y-4">
@@ -428,10 +441,16 @@ export default function Dashboard() {
                             Đang học
                           </span>
                         )}
-                        {isLocked && (
+                        {week.status === "locked" && !isAdmin && (
                           <span className="text-xs font-semibold text-slate-500 flex items-center gap-1">
                             <Lock className="w-3.5 h-3.5" />
                             Khóa
+                          </span>
+                        )}
+                        {week.status === "locked" && isAdmin && (
+                          <span className="text-xs font-semibold text-sky-400 flex items-center gap-1">
+                            <Unlock className="w-3.5 h-3.5" />
+                            Admin mở khóa
                           </span>
                         )}
                       </div>
@@ -483,6 +502,23 @@ export default function Dashboard() {
                             Đánh giá độ phức tạp thuật toán (Big O)
                           </span>
                         </label>
+                      </div>
+                    )}
+
+                    {/* Direct CTA button to enter the week */}
+                    {!isLocked && (
+                      <div className="pt-2">
+                        <Link 
+                          href={`/week/${week.weekNumber}/lesson/1`}
+                          className={`w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold transition-all ${
+                            isAdmin && week.status === "locked"
+                              ? "bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 hover:text-white border border-sky-500/30 hover:border-sky-500/50"
+                              : "bg-violet-600/10 hover:bg-violet-600/25 text-violet-300 hover:text-white border border-violet-500/20 hover:border-violet-500/40"
+                          }`}
+                        >
+                          <span>{isAdmin && week.status === "locked" ? "Xem tuần học (Admin)" : `Học bài Tuần ${week.weekNumber}`}</span>
+                          <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                        </Link>
                       </div>
                     )}
                   </div>

@@ -681,7 +681,7 @@ function LessonQuiz({
 export default function LessonDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const { weeks, userRole, logout } = useLearning();
+  const { weeks, userRole, currentUser, logout } = useLearning();
   
   const weekId = parseInt(params.weekId as string) || 1;
   const lessonNumber = parseInt(params.lessonId as string) || 1;
@@ -692,6 +692,11 @@ export default function LessonDetailPage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isCompilerMaximized, setIsCompilerMaximized] = useState(false);
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
+
+  const isAdmin = 
+    userRole === "admin" || 
+    currentUser === "admin" || 
+    (typeof window !== "undefined" && (localStorage.getItem("susu_role") === "admin" || localStorage.getItem("susu_user") === "admin"));
 
   // Tải trạng thái các bài học đã hoàn thành từ localStorage
   useEffect(() => {
@@ -719,8 +724,8 @@ export default function LessonDetailPage() {
     );
   }
 
-  // Check if week is locked
-  if (currentWeek.status === "locked") {
+  // Check if week is locked (Bypass for admin)
+  if (currentWeek.status === "locked" && !isAdmin) {
     return (
       <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center gap-4">
         <AlertTriangle className="w-16 h-16 text-amber-500 animate-bounce" />
@@ -734,6 +739,18 @@ export default function LessonDetailPage() {
   }
 
   const currentLesson: Lesson | undefined = currentWeek.lessons[activeLessonIndex];
+
+  if (!currentLesson) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center gap-4">
+        <h2 className="text-2xl font-bold">Không tìm thấy bài học yêu cầu!</h2>
+        <p className="text-slate-400 text-sm">Vui lòng quay lại danh sách bài học của Tuần {weekId}.</p>
+        <Link href={`/week/${weekId}/lesson/1`} className="px-4 py-2 bg-violet-600 hover:bg-violet-500 rounded-lg font-semibold mt-2 transition-all">
+          Đến Bài 1 Tuần {weekId}
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 bg-grid-pattern relative py-8 px-4 sm:px-6 lg:px-8">
@@ -792,7 +809,7 @@ export default function LessonDetailPage() {
               {currentWeek.lessons.map((lesson, index) => {
                 const isActive = index === activeLessonIndex;
                 const isCompleted = completedLessons.includes(lesson.id);
-                const isUnlocked = userRole === "admin" || index === 0 || (() => {
+                const isUnlocked = isAdmin || index === 0 || (() => {
                   const prevLesson = currentWeek.lessons[index - 1];
                   const hasNoQuiz = !prevLesson.quizQuestions || prevLesson.quizQuestions.length === 0;
                   return completedLessons.includes(prevLesson.id) || hasNoQuiz;
@@ -1167,7 +1184,7 @@ export default function LessonDetailPage() {
             {/* Exam CTA for last lesson of Week 2 & Week 3 */}
             {(weekId === 2 || weekId === 3) && lessonNumber === currentWeek.lessons.length && (() => {
               const lastLesson = currentWeek.lessons[currentWeek.lessons.length - 1];
-              const isLastLessonCompleted = userRole === "admin" || completedLessons.includes(lastLesson.id) || 
+              const isLastLessonCompleted = isAdmin || completedLessons.includes(lastLesson.id) || 
                                             !lastLesson.quizQuestions || 
                                             lastLesson.quizQuestions.length === 0;
 

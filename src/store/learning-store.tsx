@@ -8770,9 +8770,13 @@ export const LearningProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     const savedUser = localStorage.getItem("susu_user");
     const savedRole = localStorage.getItem("susu_role");
-    if (savedUser && savedRole) {
+    if (savedUser) {
       setCurrentUser(savedUser);
-      setUserRole(savedRole as "admin" | "student");
+      const determinedRole: "admin" | "student" = (savedRole as "admin" | "student") || (savedUser === "admin" ? "admin" : "student");
+      setUserRole(determinedRole);
+      if (!savedRole) {
+        localStorage.setItem("susu_role", determinedRole);
+      }
     }
 
     const savedWeeks = localStorage.getItem("susu_weeks");

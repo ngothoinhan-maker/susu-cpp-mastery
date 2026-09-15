@@ -449,7 +449,12 @@ const WEEK3_EXAM_QUESTIONS: Question[] = [
 export default function WeekExamPage() {
   const params = useParams();
   const router = useRouter();
-  const { weeks, completeWeek, userRole } = useLearning();
+  const { weeks, completeWeek, userRole, currentUser } = useLearning();
+
+  const isAdmin = 
+    userRole === "admin" || 
+    currentUser === "admin" || 
+    (typeof window !== "undefined" && (localStorage.getItem("susu_role") === "admin" || localStorage.getItem("susu_user") === "admin"));
 
   const weekId = parseInt(params.weekId as string) || 2;
 
@@ -462,10 +467,10 @@ export default function WeekExamPage() {
   
   // Tự động điền tên nếu là admin
   useEffect(() => {
-    if (userRole === "admin" && !isStarted) {
+    if (isAdmin && !isStarted) {
       setStudentName("Admin");
     }
-  }, [userRole, isStarted]);
+  }, [isAdmin, isStarted]);
   
   // State cảnh báo chống gian lận (chuyển tab/mất focus)
   const [warningCount, setWarningCount] = useState(0);
@@ -609,7 +614,7 @@ int main() {
 
   // Cảnh báo mất tập trung / chuyển tab / mở phần mềm khác
   useEffect(() => {
-    if (!isStarted || isSubmitted || userRole === "admin") return;
+    if (!isStarted || isSubmitted || isAdmin) return;
 
     const handleFocusLoss = () => {
       const now = Date.now();
@@ -635,11 +640,11 @@ int main() {
       window.removeEventListener("blur", handleFocusLoss);
       document.addEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [isStarted, isSubmitted]);
+  }, [isStarted, isSubmitted, isAdmin]);
 
   // Chặn sao chép, chuột phải, in ấn và các phím tắt Inspect
   useEffect(() => {
-    if (!isStarted || isSubmitted || userRole === "admin") return;
+    if (!isStarted || isSubmitted || isAdmin) return;
 
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
